@@ -1,0 +1,1257 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0910" />
+  <meta name="description" content="مه بر دره‌ی آوَرن — یک ماجراجویی متنی با راوی هوشمند." />
+  <title>مه بر دره‌ی آوَرن</title>
+  <style>:root {
+  --bg: #0b0910;
+  --bg-2: #14101c;
+  --ink: #ece6d8;
+  --ink-soft: #c3bba9;
+  --muted: #8b8275;
+  --amber: #d9a441;
+  --amber-soft: rgba(217, 164, 65, 0.14);
+  --teal: #4f9a92;
+  --danger: #c9605a;
+  --line: rgba(236, 230, 216, 0.1);
+  --line-strong: rgba(236, 230, 216, 0.18);
+  --surface: rgba(255, 255, 255, 0.035);
+  --surface-2: rgba(255, 255, 255, 0.06);
+  --radius: 14px;
+  --radius-lg: 20px;
+  --font: "Vazirmatn", "IRANSansX", "IRANSans", "Segoe UI", Tahoma, system-ui, sans-serif;
+  --font-prose: "Vazirmatn", "IRANSansX", "IRANSans", "Segoe UI", Tahoma, system-ui, sans-serif;
+  --prose-size: 17px;
+  --shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.9);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior-y: none;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 70% at 50% -10%, rgba(217, 164, 65, 0.09), transparent 60%),
+    radial-gradient(90% 60% at 100% 100%, rgba(79, 154, 146, 0.08), transparent 65%),
+    radial-gradient(80% 60% at 0% 90%, rgba(120, 70, 160, 0.1), transparent 60%);
+  z-index: 0;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  background: none;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+::selection {
+  background: rgba(217, 164, 65, 0.3);
+}
+
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+/* ---------- scrollbars ---------- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(236, 230, 216, 0.18) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(236, 230, 216, 0.16);
+  border-radius: 99px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---------- shared bits ---------- */
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  color: var(--ink-soft);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+.icon-btn:hover {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+.icon-btn:active {
+  transform: scale(0.95);
+}
+.icon-btn[aria-pressed="false"] {
+  color: var(--muted);
+}
+.icon-btn[aria-pressed="false"] .wave {
+  opacity: 0.25;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 13.5px;
+  transition: background 0.18s ease, border-color 0.18s ease;
+}
+.btn:hover {
+  background: var(--surface-2);
+  border-color: rgba(217, 164, 65, 0.4);
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--ink-soft);
+}
+
+/* ---------- settings sheet ---------- */
+.sheet {
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, #17121f, #0f0c15);
+  color: var(--ink);
+  padding: 0;
+  width: min(440px, calc(100vw - 28px));
+  box-shadow: 0 30px 70px -30px #000;
+}
+.sheet::backdrop {
+  background: rgba(5, 4, 8, 0.7);
+  backdrop-filter: blur(3px);
+}
+.sheet__inner {
+  padding: 18px 20px 22px;
+  display: grid;
+  gap: 18px;
+}
+.sheet__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sheet__head h2 {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+.field__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.field__hint {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.field output {
+  font-size: 12.5px;
+  color: var(--amber);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- api / narrator controls ---------- */
+.api-panel {
+  display: grid;
+  gap: 16px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.025);
+}
+.api-panel[hidden] {
+  display: none;
+}
+
+.segmented {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 11px;
+  border: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.25);
+}
+.segmented button {
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--muted);
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.segmented button:hover {
+  color: var(--ink-soft);
+}
+.segmented button[aria-pressed="true"] {
+  background: rgba(217, 164, 65, 0.16);
+  color: var(--amber);
+  box-shadow: inset 0 0 0 1px rgba(217, 164, 65, 0.32);
+}
+
+.text-input,
+.select-input {
+  width: 100%;
+  height: 38px;
+  padding: 0 11px;
+  border-radius: 9px;
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--ink);
+  font-size: 13.5px;
+  transition: border-color 0.18s ease;
+}
+.text-input:focus,
+.select-input:focus {
+  outline: none;
+  border-color: rgba(217, 164, 65, 0.55);
+}
+.text-input::placeholder {
+  color: var(--muted);
+}
+.select-input {
+  width: auto;
+  min-width: 150px;
+  padding-inline-end: 6px;
+  cursor: pointer;
+}
+.select-input option {
+  background: #17121f;
+  color: var(--ink);
+}
+
+.badge {
+  display: inline-block;
+  margin-inline-start: 6px;
+  padding: 1px 6px;
+  border-radius: 5px;
+  font-size: 9.5px;
+  letter-spacing: 0.6px;
+  vertical-align: 1px;
+  color: #0f0c15;
+  background: var(--amber);
+  font-weight: 700;
+}
+.badge[hidden] {
+  display: none;
+}
+
+.btn.is-busy {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* ---------- hero card ---------- */
+.hero-card {
+  display: grid;
+  gap: 9px;
+  padding: 11px 12px;
+  border-radius: 11px;
+  border: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.22);
+}
+.hero-card__attrs {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+.attr {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 12px;
+}
+.attr__name {
+  color: var(--muted);
+}
+.attr b {
+  color: var(--amber);
+  font-variant-numeric: tabular-nums;
+}
+.hero-card__items {
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.8;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 22px;
+  background: transparent;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 99px;
+  background: rgba(236, 230, 216, 0.16);
+}
+input[type="range"]::-moz-range-track {
+  height: 4px;
+  border-radius: 99px;
+  background: rgba(236, 230, 216, 0.16);
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  margin-top: -6px;
+  border-radius: 50%;
+  background: var(--amber);
+  border: 2px solid #0f0c15;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--amber);
+  border: 2px solid #0f0c15;
+}
+
+.switch {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+}
+.switch input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+.switch__track {
+  width: 42px;
+  height: 24px;
+  border-radius: 99px;
+  background: rgba(236, 230, 216, 0.14);
+  border: 1px solid var(--line);
+  transition: background 0.2s ease;
+  display: block;
+}
+.switch__thumb {
+  display: block;
+  width: 18px;
+  height: 18px;
+  margin: 2px;
+  border-radius: 50%;
+  background: var(--ink-soft);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.switch input:checked + .switch__track {
+  background: rgba(217, 164, 65, 0.32);
+  border-color: rgba(217, 164, 65, 0.5);
+}
+.switch input:checked + .switch__track .switch__thumb {
+  background: var(--amber);
+  transform: translateX(-18px);
+}
+.switch input:focus-visible + .switch__track {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+/* ---------- toast ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(96px + env(safe-area-inset-bottom));
+  transform: translate(-50%, 12px);
+  padding: 9px 16px;
+  border-radius: 99px;
+  background: rgba(23, 18, 31, 0.96);
+  border: 1px solid var(--line-strong);
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 40;
+  max-width: calc(100vw - 40px);
+  text-align: center;
+}
+.toast.is-on {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+</style>
+  <style>.app {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  height: 100vh;
+  height: 100dvh;
+  max-width: 860px;
+  margin: 0 auto;
+  border-inline: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(20, 16, 28, 0.55), rgba(11, 9, 16, 0.9));
+}
+
+/* ---------------- top bar ---------------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  padding-top: calc(10px + env(safe-area-inset-top));
+  border-bottom: 1px solid var(--line);
+  background: rgba(11, 9, 16, 0.72);
+  backdrop-filter: blur(12px);
+  position: relative;
+  z-index: 3;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+.brand__sigil {
+  color: var(--amber);
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--amber-soft);
+  border: 1px solid rgba(217, 164, 65, 0.24);
+  flex: none;
+}
+.brand__text {
+  min-width: 0;
+}
+.brand__title {
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.brand__chapter {
+  font-size: 11.5px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.vitals {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+}
+.vital {
+  display: grid;
+  gap: 3px;
+  min-width: 66px;
+}
+.vital__label {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.2px;
+}
+.vital__label b {
+  font-weight: 500;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.vital__bar {
+  height: 4px;
+  border-radius: 99px;
+  background: rgba(236, 230, 216, 0.12);
+  overflow: hidden;
+}
+.vital__fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.4s ease;
+}
+.vital--health .vital__fill {
+  background: linear-gradient(90deg, #b8524c, #e0786f);
+}
+.vital--hope .vital__fill {
+  background: linear-gradient(90deg, #3f7f79, #6fc0b6);
+}
+.vital.is-low .vital__fill {
+  animation: pulseLow 1.6s ease-in-out infinite;
+}
+@keyframes pulseLow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+.topbar__actions {
+  display: flex;
+  gap: 6px;
+  flex: none;
+}
+
+/* ---------------- stage ---------------- */
+.stage {
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+}
+
+.art {
+  position: relative;
+  height: 168px;
+  flex: none;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background: #0a0810;
+}
+.art svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.art__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(11, 9, 16, 0.85) 100%);
+  pointer-events: none;
+}
+.art__caption {
+  position: absolute;
+  inset-inline-start: 16px;
+  bottom: 10px;
+  font-size: 11.5px;
+  letter-spacing: 0.6px;
+  color: rgba(236, 230, 216, 0.55);
+  z-index: 2;
+}
+
+.mist ellipse {
+  animation: drift 26s linear infinite;
+}
+.mist ellipse:nth-child(2) { animation-duration: 34s; animation-direction: reverse; }
+.mist ellipse:nth-child(3) { animation-duration: 44s; }
+@keyframes drift {
+  from { transform: translateX(-40px); }
+  to { transform: translateX(40px); }
+}
+
+.flicker {
+  animation: flicker 3.4s ease-in-out infinite;
+  transform-origin: center;
+}
+@keyframes flicker {
+  0%, 100% { opacity: 0.85; }
+  45% { opacity: 0.6; }
+  70% { opacity: 1; }
+}
+
+/* ---------------- chronicle ---------------- */
+.chronicle {
+  padding: 20px 18px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.msg {
+  animation: rise 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.msg--narrator .msg__text {
+  font-family: var(--font-prose);
+  font-size: var(--prose-size);
+  line-height: 2.05;
+  color: var(--ink);
+  letter-spacing: 0.1px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+.msg--narrator .msg__text p + p {
+  margin-top: 0.85em;
+}
+.msg--narrator .msg__text p:first-child::first-letter {
+  color: var(--amber);
+}
+
+.msg__speaker {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 7px;
+  font-size: 10.5px;
+  letter-spacing: 1.2px;
+  color: var(--muted);
+}
+.msg__speaker::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, var(--line), transparent);
+}
+
+.msg--player {
+  align-self: flex-start;
+  max-width: min(78%, 460px);
+  padding: 9px 14px;
+  border-radius: 14px 14px 14px 4px;
+  background: rgba(217, 164, 65, 0.1);
+  border: 1px solid rgba(217, 164, 65, 0.22);
+  color: #f0e3c6;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.msg--system {
+  align-self: center;
+  font-size: 11.5px;
+  color: var(--muted);
+  padding: 3px 12px;
+  border-radius: 99px;
+  border: 1px dashed var(--line-strong);
+  text-align: center;
+}
+
+.msg--ending {
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+  margin-top: 6px;
+}
+.msg--ending .msg__text {
+  font-size: calc(var(--prose-size) + 1px);
+  line-height: 2.1;
+  color: #f4ead6;
+}
+
+/* ---------------- dice roll ---------------- */
+.msg--roll {
+  align-self: flex-start;
+}
+.roll {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 100%;
+  gap: 9px;
+  padding: 7px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 12px;
+  animation: rollIn 0.5s cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+@keyframes rollIn {
+  0% { opacity: 0; transform: translateY(6px) scale(0.94); }
+  60% { transform: translateY(0) scale(1.02); }
+  100% { opacity: 1; transform: none; }
+}
+.roll__die {
+  font-size: 14px;
+  line-height: 1;
+}
+.roll__label {
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+.roll__math {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.3px;
+  padding: 1px 7px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.25);
+}
+.roll__outcome {
+  font-weight: 600;
+  padding: 1px 8px;
+  border-radius: 6px;
+}
+.roll[data-outcome="success"] .roll__outcome,
+.roll[data-outcome="crit"] .roll__outcome {
+  color: #7fd3c7;
+  background: rgba(79, 154, 146, 0.16);
+}
+.roll[data-outcome="partial"] .roll__outcome {
+  color: var(--amber);
+  background: rgba(217, 164, 65, 0.16);
+}
+.roll[data-outcome="fail"] .roll__outcome {
+  color: #e08b85;
+  background: rgba(201, 96, 90, 0.16);
+}
+.roll[data-outcome="critfail"] .roll__outcome {
+  color: #f0a8a2;
+  background: rgba(201, 96, 90, 0.26);
+}
+.roll[data-outcome="crit"] {
+  border-color: rgba(217, 164, 65, 0.5);
+  box-shadow: 0 0 0 1px rgba(217, 164, 65, 0.18), 0 6px 20px -12px rgba(217, 164, 65, 0.7);
+}
+.roll[data-outcome="critfail"] {
+  border-color: rgba(201, 96, 90, 0.45);
+}
+
+.msg__replay {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--muted);
+  padding: 3px 8px;
+  border-radius: 8px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.msg__replay:hover {
+  color: var(--amber);
+  background: var(--amber-soft);
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-inline-start: 2px;
+  vertical-align: -0.15em;
+  background: var(--amber);
+  animation: blink 1s steps(2) infinite;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* ---------------- thinking ---------------- */
+.thinking {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 20px 18px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.thinking[hidden] {
+  display: none;
+}
+.thinking__dots {
+  display: inline-flex;
+  gap: 3px;
+}
+.thinking__dots i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--amber);
+  opacity: 0.35;
+  animation: dot 1.2s ease-in-out infinite;
+}
+.thinking__dots i:nth-child(2) { animation-delay: 0.16s; }
+.thinking__dots i:nth-child(3) { animation-delay: 0.32s; }
+@keyframes dot {
+  0%, 100% { opacity: 0.25; transform: translateY(0); }
+  40% { opacity: 1; transform: translateY(-3px); }
+}
+
+/* ---------------- choices ---------------- */
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 14px;
+  border-top: 1px solid var(--line);
+  background: rgba(13, 10, 19, 0.6);
+  max-height: 34vh;
+  overflow-y: auto;
+}
+.choices:empty {
+  display: none;
+}
+
+.choice {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 11px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-size: 13.5px;
+  line-height: 1.5;
+  text-align: start;
+  max-width: 100%;
+  transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.16s ease;
+}
+.choice:hover {
+  background: rgba(217, 164, 65, 0.1);
+  border-color: rgba(217, 164, 65, 0.45);
+  color: var(--ink);
+}
+.choice:active {
+  transform: scale(0.985);
+}
+.choice__icon {
+  font-size: 13px;
+  opacity: 0.75;
+  flex: none;
+}
+.choice--danger:hover {
+  background: rgba(201, 96, 90, 0.12);
+  border-color: rgba(201, 96, 90, 0.45);
+}
+.choice--restart {
+  border-color: rgba(217, 164, 65, 0.5);
+  color: var(--amber);
+}
+
+/* ---------------- composer ---------------- */
+.composer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  background: rgba(11, 9, 16, 0.9);
+  backdrop-filter: blur(10px);
+}
+.composer__input {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  padding: 0 15px;
+  border-radius: 12px;
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--ink);
+  font-size: 16px;
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+.composer__input::placeholder {
+  color: var(--muted);
+  font-size: 13.5px;
+}
+.composer__input:focus {
+  outline: none;
+  border-color: rgba(217, 164, 65, 0.55);
+  background: rgba(255, 255, 255, 0.06);
+}
+.composer__send {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #e0b055, #c08e2f);
+  color: #1a1206;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+.composer__send:hover {
+  filter: brightness(1.08);
+}
+.composer__send:active {
+  transform: scale(0.94);
+}
+.composer__send:disabled {
+  filter: grayscale(0.7) brightness(0.7);
+  cursor: default;
+}
+
+.app.is-busy .choices,
+.app.is-busy .composer__input,
+.app.is-busy .composer__send {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* ---------------- responsive ---------------- */
+@media (max-width: 620px) {
+  .app {
+    border-inline: 0;
+  }
+  .topbar {
+    flex-wrap: wrap;
+    gap: 8px 10px;
+    padding: 9px 12px;
+    padding-top: calc(9px + env(safe-area-inset-top));
+  }
+  .brand {
+    order: 1;
+    flex: 1 1 auto;
+  }
+  .topbar__actions {
+    order: 2;
+  }
+  .vitals {
+    order: 3;
+    width: 100%;
+    gap: 14px;
+  }
+  .vital {
+    flex: 1;
+    min-width: 0;
+  }
+  .brand__title {
+    font-size: 13.5px;
+  }
+  .art {
+    height: 116px;
+  }
+  .chronicle {
+    padding: 16px 14px 20px;
+    gap: 14px;
+  }
+  .choices {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px 12px;
+    max-height: none;
+    scrollbar-width: none;
+  }
+  .choices::-webkit-scrollbar {
+    display: none;
+  }
+  .choice {
+    flex: none;
+    white-space: nowrap;
+    font-size: 13px;
+  }
+  .composer__input {
+    height: 46px;
+  }
+  .composer__send {
+    width: 46px;
+    height: 46px;
+  }
+  .msg--narrator .msg__text {
+    text-align: start;
+    line-height: 1.95;
+  }
+  .msg--player {
+    max-width: 88%;
+  }
+}
+
+@media (min-width: 900px) {
+  .art {
+    height: 210px;
+  }
+  .chronicle {
+    padding: 26px 30px 34px;
+  }
+}
+</style>
+</head>
+<body>
+  <dialog id="languageDialog" class="sheet">
+    <div class="sheet__inner">
+      <h2>Choose your language / زبان بازی را انتخاب کنید</h2>
+      <p>Choose a language to begin. / برای شروع یک زبان انتخاب کنید.</p>
+      <div class="segmented">
+        <button type="button" data-language="fa">فارسی</button>
+        <button type="button" data-language="en">English</button>
+      </div>
+    </div>
+  </dialog>
+  <div class="app" id="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand__sigil" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="26" height="26">
+            <path d="M16 3 L19.2 12.2 L29 13.4 L21.6 19.6 L24 29 L16 23.6 L8 29 L10.4 19.6 L3 13.4 L12.8 12.2 Z"
+                  fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" />
+            <circle cx="16" cy="15.6" r="3" fill="currentColor" opacity=".75" />
+          </svg>
+        </span>
+        <div class="brand__text">
+          <h1 class="brand__title">مه بر دره‌ی آوَرن</h1>
+          <p class="brand__chapter">
+            <span id="chapterLabel">پرده‌ی یکم</span>
+            <span class="badge" id="modeBadge" hidden title="راوی هوش مصنوعی">AI</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="vitals" id="vitals" aria-label="وضعیت قهرمان"></div>
+
+      <div class="topbar__actions">
+        <button class="icon-btn" id="btnVoice" type="button" aria-pressed="true" title="صدای راوی">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true">
+            <path d="M4 9v6h3.5L13 19V5L7.5 9H4Z" fill="currentColor" />
+            <path class="wave" d="M16 8.5a5 5 0 0 1 0 7M18.6 6a8.5 8.5 0 0 1 0 12"
+                  fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </button>
+        <button class="icon-btn" id="btnSettings" type="button" title="تنظیمات">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true">
+            <circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6" />
+            <path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"
+                  fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="stage">
+      <div class="art" id="sceneArt" aria-hidden="true"></div>
+      <section class="chronicle" id="chronicle" aria-live="polite" aria-label="دفتر روایت"></section>
+      <div class="thinking" id="thinking" hidden>
+        <span class="thinking__dots"><i></i><i></i><i></i></span>
+        <span id="thinkingLabel">راوی در حال نوشتن است…</span>
+      </div>
+    </main>
+
+    <section class="choices" id="choices" aria-label="کارهای پیش‌رو"></section>
+
+    <form class="composer" id="composer" autocomplete="off">
+      <label class="sr-only" for="playerInput">کاری که می‌کنی</label>
+      <input id="playerInput" class="composer__input" type="text" enterkeyhint="send"
+             placeholder="چه می‌کنی؟ مثلاً: شمشیرم را می‌کشم و جلو می‌روم" />
+      <button class="composer__send" type="submit" title="بفرست" aria-label="بفرست">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path d="M20 12 4 5l3.2 7L4 19l16-7Z" fill="currentColor" />
+        </svg>
+      </button>
+    </form>
+  </div>
+
+  <dialog class="sheet" id="settingsDialog">
+    <form method="dialog" class="sheet__inner">
+      <div class="sheet__head">
+        <h2>تنظیمات</h2>
+        <button class="icon-btn" value="close" aria-label="بستن">✕</button>
+      </div>
+      <div class="field"><button type="button" class="btn" id="changeLanguage">Language / زبان</button></div>
+
+      <div class="field">
+        <div class="field__row">
+          <span>راوی</span>
+          <span class="field__hint" id="modeHint"></span>
+        </div>
+        <div class="segmented" id="narratorMode" role="group" aria-label="نوع راوی">
+          <button type="button" data-mode="local">محلی</button>
+          <button type="button" data-mode="ai">هوش مصنوعی</button>
+          <button type="button" data-mode="codex">Codex</button>
+        </div>
+      </div>
+
+      <div class="api-panel" id="codexPanel" hidden>
+        <p class="field__hint">
+          در این حالت راوی خودِ دستیار Codex است: هر نوبت در پوشه‌ی <code>bridge/inbox</code> صف می‌شود
+          و وقتی دستیار جوابش را بنویسد، روایت روی صفحه می‌آید. کلید API لازم نیست.
+        </p>
+        <p class="field__hint">
+          برای هر نوبت، در چت Codex بنویس «نوبت را جواب بده» تا صف را بخواند و ادامه بدهد.
+        </p>
+      </div>
+
+      <div class="api-panel" id="aiPanel" hidden>
+        <div class="field">
+          <div class="field__row">
+            <span>سرویس</span>
+            <select id="optProvider" class="select-input">
+              <option value="deepseek">DeepSeek</option>
+              <option value="openai">سازگار با OpenAI</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="field__row"><span>کلید API</span></div>
+          <input type="password" id="optKey" class="text-input" dir="ltr" spellcheck="false"
+                 autocomplete="off" placeholder="sk-..." />
+          <p class="field__hint">کلید فقط در همین مرورگر ذخیره می‌شود و مستقیم به سرویس می‌رود.</p>
+        </div>
+
+        <div class="field">
+          <div class="field__row"><span>مدل</span></div>
+          <input type="text" id="optModel" class="text-input" dir="ltr" spellcheck="false" list="modelList" />
+          <datalist id="modelList">
+            <option value="deepseek-flash"></option>
+            <option value="deepseek-v4-pro"></option>
+          </datalist>
+        </div>
+
+        <div class="field" id="baseUrlField" hidden>
+          <div class="field__row"><span>آدرس پایه</span></div>
+          <input type="text" id="optBaseUrl" class="text-input" dir="ltr" spellcheck="false" />
+        </div>
+
+        <div class="field">
+          <div class="field__row">
+            <span>مسیر درخواست</span>
+            <select id="optTransport" class="select-input">
+              <option value="direct">مستقیم از مرورگر</option>
+              <option value="proxy">پروکسی محلی</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="field__row">
+            <span>آزمایش اتصال</span>
+            <button type="button" class="btn" id="btnTestApi">تست</button>
+          </div>
+          <p class="field__hint" id="apiStatus"></p>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field__row">
+          <span>صدای راوی</span>
+          <label class="switch">
+            <input type="checkbox" id="optVoice" />
+            <span class="switch__track"><span class="switch__thumb"></span></span>
+          </label>
+        </div>
+        <p class="field__hint" id="voiceHint"></p>
+      </div>
+
+      <div class="field">
+        <div class="field__row">
+          <span>سرعت گفتار</span>
+          <output id="rateOut">۱٫۰×</output>
+        </div>
+        <input type="range" id="optRate" min="0.7" max="1.4" step="0.1" />
+      </div>
+
+      <div class="field">
+        <div class="field__row">
+          <span>اندازه‌ی متن</span>
+          <output id="fontOut">۱۷</output>
+        </div>
+        <input type="range" id="optFont" min="15" max="22" step="1" />
+      </div>
+
+      <div class="field">
+        <div class="field__row"><span>کارت قهرمان</span></div>
+        <div class="hero-card" id="heroCard"></div>
+      </div>
+
+      <div class="field">
+        <div class="field__row">
+          <span>نوشتن حرف‌به‌حرف</span>
+          <label class="switch">
+            <input type="checkbox" id="optTypewriter" />
+            <span class="switch__track"><span class="switch__thumb"></span></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field__row">
+          <span>ماجراجویی</span>
+          <button type="button" class="btn btn--ghost" id="btnRestart">شروع دوباره</button>
+        </div>
+        <p class="field__hint">ذخیره‌ی خودکار در همین مرورگر نگه داشته می‌شود.</p>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module">const sources={"js/engine/agency.js":"/**\n * Player-agency guard.\n *\n * The narrator describes the world's reaction to what the player did. It must\n * never decide for the hero, never speak in the hero's voice, and never ask the\n * player to choose. Prompting alone is not enough for a model, so every turn is\n * passed through this filter before it reaches the screen.\n */\nimport { normalizeFa } from \"../util.js\";\n\nconst DECISION_PATTERNS = [\n  /(?:^|[^\\p{L}])(?:تو|آرمان)\\s+(?:هم\\s+)?(?:تصمیم|انتخاب|قصد|اراده|نیت)\\s*(?:می|کرد|گرف)/u,\n  /(?:تصمیم|انتخاب)\\s*(?:می‌گیری|گرفتی|می‌کنی|کردی)/u,\n  /(?:^|[^\\p{L}])(?:تو|آرمان)\\s+(?:می‌گویی|گفتی|می‌پرسی|پرسیدی|فریاد\\s*می‌زنی|زمزمه\\s*می‌کنی|اعلام\\s*می‌کنی)\\s*[:؛«\"]/u,\n  /(?:تو\\s+)?باید\\s+(?:انتخاب|تصمیم)/u,\n  /^(?:خب،?\\s*)?(?:حالا\\s+)?(?:چه|چی)\\s+(?:می‌خواهی\\s+)?(?:کار\\s+)?(?:می‌کنی|کنی)؟?$/u,\n];\n\n/** Second-person verbs that put words in the hero's mouth. */\nconst PLAYER_SPEECH = /(?:می‌گویی|گفتی|می‌پرسی|پرسیدی|فریاد\\s*می‌زنی|زمزمه\\s*می‌کنی)/u;\n\nfunction quotes(text) {\n  return [...String(text).matchAll(/[«\"“]([^»\"”]{2,})[»\"”]/g)].map((m) => normalizeFa(m[1]));\n}\n\nfunction isAgencyViolation(sentence, actionNorm) {\n  const s = String(sentence).trim();\n  if (!s) return false;\n\n  if (DECISION_PATTERNS.some((re) => re.test(s))) return true;\n\n  // The hero says something the player never typed.\n  if (PLAYER_SPEECH.test(s)) {\n    const said = quotes(s);\n    if (said.length && !said.some((q) => actionNorm.includes(q) || q.includes(actionNorm))) return true;\n  }\n\n  return false;\n}\n\n/**\n * Drops the sentences that break player agency.\n * If the whole turn is a violation, the original text is kept: a slightly\n * pushy paragraph is better than an empty screen.\n */\nexport function sanitizeNarration(text, playerAction = \"\") {\n  const original = String(text || \"\").trim();\n  const actionNorm = normalizeFa(playerAction);\n  const removed = [];\n\n  const paragraphs = original\n    .split(/\\n{2,}/)\n    .map((p) => {\n      const sentences = p.split(/(?\u003c=[.!؟…])\\s+/);\n      const kept = sentences.filter((s) => {\n        if (isAgencyViolation(s, actionNorm)) {\n          removed.push(s.trim());\n          return false;\n        }\n        return true;\n      });\n      return kept.join(\" \").trim();\n    })\n    .filter(Boolean);\n\n  const clean = paragraphs.join(\"\\n\\n\").trim();\n  if (!clean) return { text: original, removed: [] };\n  return { text: clean, removed };\n}\n\nexport function violatesAgency(text, playerAction = \"\") {\n  return sanitizeNarration(text, playerAction).removed.length > 0;\n}\n","js/engine/ai.js":"import { SCENES, PLAYER } from \"./story.js\";\nimport { applyAIDeltas } from \"./effects.js\";\nimport { parseIntents } from \"./intents.js\";\nimport { rollD20, resolveCheck, ATTRIBUTES } from \"./dice.js\";\nimport { pick, clamp, sleep } from \"../util.js\";\nimport { worldBrief, spineText, markSpine, resolveScene, registerScene, ART_KEYS } from \"./world.js\";\nimport { sanitizeNarration } from \"./agency.js\";\n\nexport const DEFAULT_API = {\n  provider: \"deepseek\",\n  key: \"\",\n  model: \"deepseek-flash\",\n  baseUrl: \"https://api.deepseek.com\",\n  transport: \"direct\",\n  thinking: false,\n  bridgeTimeoutMs: 900000,\n};\n\nconst PROVIDER_DEFAULTS = {\n  deepseek: { baseUrl: \"https://api.deepseek.com\", model: \"deepseek-flash\" },\n  openai: { baseUrl: \"https://api.openai.com/v1\", model: \"gpt-4o-mini\" },\n};\n\nexport function providerDefaults(provider) {\n  return PROVIDER_DEFAULTS[provider] || PROVIDER_DEFAULTS.deepseek;\n}\n\n/* ------------------------------------------------------------------ */\n/* prompt                                                              */\n/* ------------------------------------------------------------------ */\n\nconst ICONS = {\n  attack: \"⚔\",\n  talk: \"🗣\",\n  sneak: \"🤫\",\n  flee: \"🏃\",\n  search: \"👁\",\n  listen: \"👂\",\n  use: \"✋\",\n  pray: \"🙏\",\n  help: \"🤝\",\n  enter: \"🚪\",\n  wait: \"⏳\",\n  give: \"🎁\",\n};\n\nexport function iconForAction(label) {\n  const intent = parseIntents(label)[0];\n  return ICONS[intent] || \"•\";\n}\n\n/** Neighbouring canon scenes — only a hint for the prompt now, not a gate. */\nexport function allowedScenes(scene) {\n  const ids = new Set([scene.id]);\n  for (const beat of scene.beats || []) {\n    const targets = [beat.goto, beat.check?.success?.goto, beat.check?.partial?.goto, beat.check?.fail?.goto];\n    for (const target of targets) {\n      if (target && SCENES[target] && !SCENES[target].ending) ids.add(target);\n    }\n  }\n  return [...ids];\n}\n\nfunction nearbyText(scene) {\n  const list = allowedScenes(scene)\n    .filter((id) => id !== scene.id)\n    .map((id) => `- ${id}: ${SCENES[id].brief || SCENES[id].title}`)\n    .join(\"\\n\");\n  return list || \"- (هیچ مکانی از پیش تعریف نشده)\";\n}\n\nfunction systemPrompt(state) {\n  const languageInstruction = state.settings?.language === \"en\" ? \"Write all narration, choices, scene descriptions and summary in English. All JSON keys must remain in English.\\n\\n\" : \"\";\n  return `${languageInstruction}تو راوی و مدیر ماجرا (DM) یک بازی نقش‌آفرینی متنی فارسی هستی. تو دنیا را می‌سازی و به کنش بازیکن واکنش نشان می‌دهی. بازیکن تنها کسی است که نقش ${PLAYER.name} را بازی می‌کند.\n\n${worldBrief()}\n\nقهرمان\n${PLAYER.name} — ${PLAYER.title}. ${PLAYER.blurb}\n\nقوانین آهنین (هیچ‌وقت نقض نشوند)\n۱. هرگز به جای بازیکن تصمیم نگیر، حرف نزن، فکر نکن، یا احساس تعیین نکن. تو فقط دنیا، آدم‌ها و پیامدها را می‌نویسی.\n۲. هر کنشی که بازیکن می‌گوید را در دنیا اجرا کن و واکنش منطقی‌اش را نشان بده — حتی اگر ناگهانی، عجیب یا خارج از انتظار باشد.\n۳. اگر کنشی ناممکن یا بی‌فایده است، آن را رد نکن و نگو «نمی‌شود»؛ نشان بده در دنیا چه اتفاقی می‌افتد و چرا نتیجه نداد.\n۴. هرگز از بازیکن سؤال نپرس، نگو «چه می‌کنی؟»، و نگو «حالا باید انتخاب کنی».\n۵. گزینه‌ها را داخل متن روایت تکرار نکن. روایت باید با یک وضعیتِ تازه تمام شود، نه با یک تصمیم.\n۶. اگر بازیکن کاری کرد که دنیا را تغییر می‌دهد، همان تغییر را بپذیر و ادامه بده؛ به وضعیت قبلی برنگرد.\n\nآزادی و بداهه\n- بازیکن می‌تواند هر کاری بکند: حرف بزند، دروغ بگوید، فرار کند، چیزی بسازد، با کسی معامله کند، یا کاری کند که تو پیش‌بینی نکرده‌ای.\n- اگر بازیکن به جایی رفت که در فهرست نیست، می‌توانی صحنه‌ی تازه بسازی و در فیلد scene توضیحش بدهی.\n- NPCهای تازه هم مجازند، به شرطی که با قانون‌های دنیا جور باشند.\n- اما قانون‌های ثابت دنیا و ستون فقرات داستان را نشکن.\n\nستون فقرات داستان (این رویدادها باید در مسیر رخ بدهند؛ ترتیب و نحوه‌ی رسیدن آزاد است)\n${spineText(state)}\nاگر یکی از این رویدادها در این نوبت واقعاً رخ داد، شناسه‌اش را در فیلد spine بگذار. اگر رخ نداد، null.\n\nقواعد نوشتن\n۱. همیشه دوم‌شخص و زمان حال: «می‌ایستی»، «مه عقب می‌نشیند».\n۲. دو تا چهار پاراگراف کوتاه، مجموعاً حدود ۸۰ تا ۱۵۰ کلمه.\n۳. با یک جزئیات حسی مشخص شروع کن (صدا، بو، سرما، بافت)، نه با خلاصه.\n۴. NPCها کوتاه و مستقیم حرف بزنند؛ نقل‌قول با «...».\n۵. مرگ فقط وقتی رخ دهد که وضعیت واقعاً ایجاب کند؛ بی‌دلیل نکش.\n۶. از تکرار عبارت‌های کلیشه‌ای و توضیح اضافه پرهیز کن. جزئیات تازه بساز که با دنیا جور باشد.\n۷. هرگز درباره‌ی قواعد بازی، JSON یا هوش مصنوعی حرف نزن. فقط روایت.\n\nخروجی\nفقط یک شیء JSON برگردان، بدون هیچ متن اضافه، با این کلیدها:\n{\n  \"narration\": \"متن روایت، با \\\\n\\\\n بین پاراگراف‌ها\",\n  \"choices\": [\"سه یا چهار پیشنهاد کوتاه، هر کدام حداکثر ۸ کلمه\"],\n  \"effects\": { \"health\": 0, \"hope\": 0, \"flags\": [], \"items\": [] },\n  \"scene\": null,\n  \"check\": null,\n  \"spine\": null,\n  \"summary\": \"یک یا دو جمله خلاصه‌ی وضعیت فعلی برای حافظه‌ی بعدی\"\n}\n\nدرباره‌ی choices: این‌ها فقط پیشنهادند، نه فهرست بسته. باید متفاوت باشند: یکی جسورانه، یکی محافظه‌کارانه، یکی اجتماعی یا کنجکاوانه. از دید بازیکن نوشته شوند («به سراغش برو»، «عقب بکش»). اگر بازیکن کار غیرمنتظره‌ای کرد، پیشنهادها را با وضعیت تازه هماهنگ کن.\n\nدرباره‌ی effects: فقط وقتی وضعیت واقعاً عوض شده. health بین -۳ تا +۲، hope بین -۲ تا +۲. flags شناسه‌های کوتاه انگلیسی مثل \"knowsNilaa\". items فقط شیء تازه‌ای که بازیکن واقعاً برداشته.\n\nدرباره‌ی scene:\n- اگر بازیکن در همان مکان ماند: null.\n- اگر به مکانی رفت که از قبل وجود دارد: شناسه‌اش را به‌صورت رشته بده.\n- اگر مکانی تازه ساختی: یک شیء بده:\n  {\"id\":\"slug-انگلیسی\",\"title\":\"نام کوتاه\",\"brief\":\"یک جمله برای حافظه\",\"chapter\":\"پرده یا عنوان\",\"art\":\"gate|tavern|well|mine|tunnel|cultist|chamber|silence|free|bargain|death\"}\n\nمکان‌های مجاور از پیش تعریف‌شده (فقط راهنما):\n${nearbyText(SCENES[state.sceneId] || {})}\n\nدرباره‌ی check (آزمون تاس)\nاگر کنش بازیکن نتیجه‌ی نامعلومی دارد و شکستش پیامد واقعی دارد، آزمون لازم است. اگر کار بدیهی است (حرف زدن ساده، نگاه کردن، راه رفتن) آزمون نگذار.\nیک attribute از «might» (زور و تحمل)، «wits» (زیرکی و دقت)، «presence» (حضور و نفوذ کلام) و یک dc بین ۱۰ تا ۱۶ انتخاب کن.\nعدد d20 در پیام بعدی به تو داده می‌شود. جمع = d20 + modifier همان attribute. نتیجه:\n- d20 = ۲۰ → موفقیت درخشان\n- d20 = ۱ → شکست سخت\n- جمع >= dc → موفقیت\n- جمع >= dc-۳ → موفقیت با هزینه (به هدف می‌رسی ولی چیزی از دست می‌دهی)\n- جمع \u003c dc-۳ → شکست\nروایت را دقیقاً بر اساس همین نتیجه بنویس. در فیلد check بنویس: {\"attribute\":\"might\",\"dc\":12}. اگر آزمون لازم نیست، null.\n\nدرباره‌ی summary: این متن جای تاریخچه‌ی طولانی را می‌گیرد. کوتاه، دقیق، و شامل چیزهایی که بعداً مهم می‌شوند.`;\n}\n\nexport function buildMessages(state, scene, action, { d20, event } = {}) {\n  const messages = [{ role: \"system\", content: systemPrompt(state) }];\n\n  const history = (state.log || [])\n    .filter((e) => e.role === \"narrator\" || e.role === \"player\")\n    .slice(-12);\n  for (const entry of history) {\n    messages.push({\n      role: entry.role === \"narrator\" ? \"assistant\" : \"user\",\n      content: entry.text,\n    });\n  }\n\n  const { health, maxHealth, hope, maxHope } = state.stats;\n  const items = state.inventory.map((i) => i.name).join(\"، \") || \"هیچ\";\n  const flags = Object.keys(state.flags).filter((k) => state.flags[k]).join(\"، \") || \"هیچ\";\n  const attrs = state.attributes || {};\n  const attrLine = Object.entries(ATTRIBUTES)\n    .map(([key, meta]) => `${meta.label} ${attrs[key] ?? 0}`)\n    .join(\" | \");\n  const eventBlock = event\n    ? `\\n[رویداد محیطی این نوبت]\\n${event.text}\\n(این رویداد را کوتاه و طبیعی در روایت بگنجان؛ لازم نیست توضیحش بدهی.)\\n`\n    : \"\";\n\n  messages.push({\n    role: \"user\",\n    content: `[خلاصه‌ی تا اینجا]\n${state.summary || \"—\"}\n\n[وضعیت]\nصحنه: ${scene.id} — ${scene.title}\nجان: ${health} از ${maxHealth} | امید: ${hope} از ${maxHope}\n${attrLine}\nاشیاء: ${items}\nپرچم‌ها: ${flags}\n${eventBlock}\n[تاس این نوبت]\nd20 = ${d20 ?? \"—\"}\n\n[کنش بازیکن]\n${action}\n\nپاسخ فقط JSON.`,\n  });\n\n  return messages;\n}\n\n/* ------------------------------------------------------------------ */\n/* transport                                                           */\n/* ------------------------------------------------------------------ */\n\nfunction buildPayload(config, messages, { maxTokens = 1200, json = true } = {}) {\n  const payload = {\n    model: config.model || DEFAULT_API.model,\n    messages,\n    temperature: 0.95,\n    max_tokens: maxTokens,\n  };\n  if (json) payload.response_format = { type: \"json_object\" };\n  // DeepSeek enables thinking by default; a DM turn does not need it.\n  if (config.provider === \"deepseek\") {\n    payload.thinking = { type: config.thinking ? \"enabled\" : \"disabled\" };\n  }\n  return payload;\n}\n\n/** Queues the turn and waits for a human/agent to answer it (Codex mode). */\nasync function callBridge(config, messages, meta) {\n  const payload = buildPayload(config, messages);\n  const started = await fetch(\"/api/bridge/turn\", {\n    method: \"POST\",\n    headers: { \"content-type\": \"application/json\" },\n    body: JSON.stringify({ payload, meta }),\n  });\n  if (!started.ok) throw new Error(`پل Codex در دسترس نیست (${started.status})`);\n  const { id } = await started.json();\n  if (!id) throw new Error(\"پل Codex شناسه نداد\");\n\n  const deadline = Date.now() + (Number(config.bridgeTimeoutMs) || DEFAULT_API.bridgeTimeoutMs);\n  while (Date.now() \u003c deadline) {\n    await sleep(1200);\n    const res = await fetch(`/api/bridge/turn/${id}`);\n    if (!res.ok) continue;\n    const data = await res.json();\n    if (data.status === \"done\") return String(data.content || \"\");\n    if (data.status === \"error\") throw new Error(data.error || \"راوی خطا داد\");\n  }\n  throw new Error(\"راوی در زمان مقرر جواب نداد\");\n}\n\nasync function callChat(config, messages, { maxTokens = 1200, json = true, timeoutMs = 60000, meta } = {}) {\n  if (config.transport === \"bridge\") return callBridge(config, messages, meta);\n\n  const base = (config.baseUrl || DEFAULT_API.baseUrl).replace(/\\/+$/, \"\");\n  const url = config.transport === \"proxy\" ? \"/api/narrate\" : `${base}/chat/completions`;\n  const payload = buildPayload(config, messages, { maxTokens, json });\n\n  const headers = { \"content-type\": \"application/json\" };\n  if (config.key) headers.authorization = `Bearer ${config.key}`;\n\n  const controller = new AbortController();\n  const timer = setTimeout(() => controller.abort(), timeoutMs);\n\n  try {\n    const res = await fetch(url, {\n      method: \"POST\",\n      headers,\n      body: JSON.stringify(config.transport === \"proxy\" ? { baseUrl: base, payload } : payload),\n      signal: controller.signal,\n    });\n\n    if (!res.ok) {\n      const detail = await res.text().catch(() => \"\");\n      throw new Error(`HTTP ${res.status}${detail ? ` — ${detail.slice(0, 180)}` : \"\"}`);\n    }\n\n    const data = await res.json();\n    const content = data?.choices?.[0]?.message?.content;\n    if (!content || !String(content).trim()) throw new Error(\"پاسخ خالی از سرویس\");\n    return String(content);\n  } catch (err) {\n    if (err.name === \"AbortError\") throw new Error(\"سرویس به موقع پاسخ نداد\");\n    throw err;\n  } finally {\n    clearTimeout(timer);\n  }\n}\n\n/* ------------------------------------------------------------------ */\n/* parsing                                                             */\n/* ------------------------------------------------------------------ */\n\nexport function parseTurn(content) {\n  let text = String(content).trim();\n  // Tolerate code fences even though JSON mode should prevent them.\n  text = text\n    .replace(/^```(?:json)?\\s*/i, \"\")\n    .replace(/```\\s*$/, \"\")\n    .trim();\n\n  const start = text.indexOf(\"{\");\n  const end = text.lastIndexOf(\"}\");\n  if (start === -1 || end \u003c= start) throw new Error(\"پاسخ JSON نبود\");\n\n  const obj = JSON.parse(text.slice(start, end + 1));\n  const narration = String(obj.narration || \"\").trim();\n  if (!narration) throw new Error(\"روایت خالی بود\");\n\n  const choices = (Array.isArray(obj.choices) ? obj.choices : [])\n    .map((c) => (typeof c === \"string\" ? c : c?.label))\n    .filter((c) => typeof c === \"string\" && c.trim())\n    .map((c) => c.trim())\n    .slice(0, 4);\n\n  let scene = null;\n  if (typeof obj.scene === \"string\" && obj.scene.trim()) scene = obj.scene.trim();\n  else if (obj.scene && typeof obj.scene === \"object\" && (obj.scene.id || obj.scene.title)) {\n    scene = {\n      id: String(obj.scene.id || obj.scene.title).trim(),\n      title: obj.scene.title ? String(obj.scene.title).trim() : \"\",\n      brief: obj.scene.brief ? String(obj.scene.brief).trim() : \"\",\n      chapter: obj.scene.chapter ? String(obj.scene.chapter).trim() : \"\",\n      art: ART_KEYS.includes(obj.scene.art) ? obj.scene.art : \"gate\",\n    };\n  }\n\n  return {\n    narration,\n    choices,\n    effects: obj.effects && typeof obj.effects === \"object\" ? obj.effects : {},\n    scene,\n    check:\n      obj.check && typeof obj.check === \"object\" && obj.check.attribute\n        ? { attribute: String(obj.check.attribute), dc: Number(obj.check.dc) || 12 }\n        : null,\n    spine: typeof obj.spine === \"string\" && obj.spine.trim() ? obj.spine.trim() : null,\n    summary: typeof obj.summary === \"string\" ? obj.summary.trim().slice(0, 800) : \"\",\n  };\n}\n\n/** Suggestions when the narrator returns none: never an empty screen. */\nexport function defaultChoices(scene) {\n  const beats = (scene?.beats || []).map((b) => b.label).filter(Boolean).slice(0, 3);\n  if (beats.length) return beats;\n  return [\"به اطراف نگاه می‌کنم\", \"گوش می‌دهم و صبر می‌کنم\", \"راه می‌افتم و جلو می‌روم\"];\n}\n\n/* ------------------------------------------------------------------ */\n/* narrator                                                            */\n/* ------------------------------------------------------------------ */\n\n/** Moves the hero, or registers a scene the narrator just invented. */\nexport function applySceneTurn(state, spec) {\n  if (!spec) return null;\n\n  if (typeof spec === \"string\") {\n    const id = spec.trim();\n    if (!id || id === state.sceneId) return null;\n    const target = resolveScene(state, id);\n    if (!target || target.ending) return null;\n    state.sceneId = id;\n    return id;\n  }\n\n  if (typeof spec === \"object\") {\n    const reg = registerScene(state, spec);\n    if (!reg || reg.scene.ending) return null;\n    if (reg.id !== state.sceneId) state.sceneId = reg.id;\n    return reg.id;\n  }\n\n  return null;\n}\n\nexport class AIChatNarrator {\n  constructor({ fallback }) {\n    this.fallback = fallback;\n  }\n\n  async narrate({ state, input }) {\n    const scene = resolveScene(state, state.sceneId);\n    if (!scene || scene.ending) return { messages: [] };\n\n    const codex = state.settings?.narrator === \"codex\";\n    const config = { ...DEFAULT_API, ...(state.settings.api || {}) };\n    if (codex) config.transport = \"bridge\";\n\n    const action = input.beatId\n      ? scene.beats?.find((b) => b.id === input.beatId)?.label || \"\"\n      : String(input.text || \"\").trim();\n\n    if (!action) return this.fallback.narrate({ state, input });\n\n    if (!codex && !config.key && config.transport === \"direct\") {\n      return this._fallback(state, input, \"کلید API تنظیم نشده است\");\n    }\n\n    try {\n      const d20 = rollD20();\n      const messages = buildMessages(state, scene, action, { d20, event: input.event });\n      const content = await callChat(config, messages, {\n        meta: { scene: scene.id, sceneTitle: scene.title, action, turn: state.turn },\n      });\n      const turn = parseTurn(content);\n\n      const messagesOut = [];\n      if (turn.check && ATTRIBUTES[turn.check.attribute]) {\n        const dc = clamp(Math.round(turn.check.dc), 8, 20);\n        const resolved = resolveCheck({\n          d20,\n          modifier: Number(state.attributes?.[turn.check.attribute] ?? 0),\n          dc,\n        });\n        messagesOut.push({\n          role: \"roll\",\n          text: \"\",\n          roll: { attribute: turn.check.attribute, ...resolved },\n        });\n      }\n\n      applySceneTurn(state, turn.scene);\n      applyAIDeltas(state, turn.effects);\n      if (turn.summary) state.summary = turn.summary;\n      if (turn.spine) markSpine(state, turn.spine);\n\n      const clean = sanitizeNarration(turn.narration, action);\n      state.aiChoices = turn.choices.length ? turn.choices : null;\n      state.turn += 1;\n\n      messagesOut.push({ role: \"narrator\", text: clean.text });\n      const out = { messages: messagesOut };\n\n      if (state.stats.health \u003c= 0 && state.sceneId !== \"end_death\") {\n        state.sceneId = \"end_death\";\n        state.aiChoices = null;\n        out.messages.push({ role: \"narrator\", text: pick(SCENES.end_death.intro, \"death\"), kind: \"ending\" });\n      } else if (resolveScene(state, state.sceneId)?.ending) {\n        out.messages[out.messages.length - 1].kind = \"ending\";\n        state.aiChoices = null;\n      }\n\n      return out;\n    } catch (err) {\n      return this._fallback(state, input, err.message || \"خطای نامشخص\");\n    }\n  }\n\n  async _fallback(state, input, reason) {\n    state.aiChoices = null;\n    const res = await this.fallback.narrate({ state, input });\n    return { ...res, fallbackReason: reason };\n  }\n}\n\n/* ------------------------------------------------------------------ */\n/* connection test                                                     */\n/* ------------------------------------------------------------------ */\n\nexport async function testConnection(config) {\n  if (config.transport === \"bridge\") {\n    return { ok: true, ms: 0, sample: \"پل Codex\" };\n  }\n  const started = Date.now();\n  const content = await callChat(\n    config,\n    [\n      { role: \"system\", content: \"فقط بنویس: OK\" },\n      { role: \"user\", content: \"سلام\" },\n    ],\n    { maxTokens: 16, json: false, timeoutMs: 25000 }\n  );\n  return { ok: true, ms: Date.now() - started, sample: content.trim().slice(0, 40) };\n}\n","js/engine/dice.js":"/** d20 checks: attribute modifier + roll against a difficulty class. */\n\nexport const ATTRIBUTES = {\n  might: { label: \"قدرت\", icon: \"💪\" },\n  wits: { label: \"زیرکی\", icon: \"🧠\" },\n  presence: { label: \"حضور\", icon: \"🗣\" },\n};\n\nexport const OUTCOMES = {\n  crit: { label: \"موفقیت درخشان\", tone: \"crit\" },\n  success: { label: \"موفقیت\", tone: \"success\" },\n  partial: { label: \"موفقیت با هزینه\", tone: \"partial\" },\n  fail: { label: \"شکست\", tone: \"fail\" },\n  critfail: { label: \"شکست سخت\", tone: \"critfail\" },\n};\n\nexport function rollD20(rng = Math.random) {\n  return 1 + Math.floor(rng() * 20);\n}\n\n/** Pure resolution so the same numbers can be shown and re-tested. */\nexport function resolveCheck({ d20, modifier, dc }) {\n  const total = d20 + modifier;\n  let outcome;\n  if (d20 === 20) outcome = \"crit\";\n  else if (d20 === 1) outcome = \"critfail\";\n  else if (total >= dc) outcome = \"success\";\n  else if (total >= dc - 3) outcome = \"partial\";\n  else outcome = \"fail\";\n  return { d20, modifier, total, dc, outcome };\n}\n\nexport function rollCheck({ attribute, dc, state, rng = Math.random }) {\n  const modifier = Number(state.attributes?.[attribute] ?? 0);\n  return { attribute, ...resolveCheck({ d20: rollD20(rng), modifier, dc }) };\n}\n\n/** A critical success/failure uses the strong branch plus a flavour line. */\nexport function branchFor(outcome) {\n  if (outcome === \"crit\") return \"success\";\n  if (outcome === \"critfail\") return \"fail\";\n  return outcome;\n}\n\nexport function isSuccess(outcome) {\n  return outcome === \"crit\" || outcome === \"success\" || outcome === \"partial\";\n}\n","js/engine/effects.js":"import { clamp } from \"../util.js\";\n\n/** Applies the declarative effects used by story beats. */\nexport function applyEffects(state, effects = []) {\n  const applied = [];\n  for (const fx of effects) {\n    if (fx.stat) {\n      const max = fx.stat === \"health\" ? state.stats.maxHealth : state.stats.maxHope;\n      const before = state.stats[fx.stat];\n      state.stats[fx.stat] = clamp(before + fx.delta, 0, max);\n      if (state.stats[fx.stat] !== before) applied.push({ ...fx, from: before, to: state.stats[fx.stat] });\n    } else if (fx.flag) {\n      state.flags[fx.flag] = fx.value === undefined ? true : fx.value;\n      applied.push(fx);\n    } else if (fx.item) {\n      if (!state.inventory.some((i) => i.id === fx.item.id)) {\n        state.inventory.push({ ...fx.item });\n        applied.push(fx);\n      }\n    } else if (fx.drop) {\n      state.inventory = state.inventory.filter((i) => i.id !== fx.drop);\n      applied.push(fx);\n    }\n  }\n  return applied;\n}\n\n/**\n * Applies effects coming from the language model.\n * Model output is untrusted, so every value is coerced and bounded:\n * a single turn can never swing the hero more than a few points.\n */\nexport function applyAIDeltas(state, fx = {}) {\n  const num = (v, lo, hi) => clamp(Math.round(Number(v) || 0), lo, hi);\n\n  const health = num(fx.health, -3, 2);\n  const hope = num(fx.hope, -2, 2);\n  if (health) state.stats.health = clamp(state.stats.health + health, 0, state.stats.maxHealth);\n  if (hope) state.stats.hope = clamp(state.stats.hope + hope, 0, state.stats.maxHope);\n\n  for (const flag of Array.isArray(fx.flags) ? fx.flags : []) {\n    if (typeof flag === \"string\" && flag.trim()) state.flags[flag.trim()] = true;\n  }\n\n  for (const item of Array.isArray(fx.items) ? fx.items : []) {\n    if (!item || !item.id) continue;\n    const id = String(item.id).trim();\n    if (!id || state.inventory.some((i) => i.id === id)) continue;\n    state.inventory.push({ id, name: String(item.name || id).trim() });\n  }\n\n  for (const id of Array.isArray(fx.drop) ? fx.drop : []) {\n    state.inventory = state.inventory.filter((i) => i.id !== id);\n  }\n}\n","js/engine/english.js":"import { SCENES } from './story.js';\n\nconst scenes = {\n  arrival: ['The old gate', 'Act I — Kohnak', 'Village gate at dusk', 'Mist rises from the valley. Ahead lies Kohnak: a silent gate, an unlit lantern and a bell that moves without making a sound.'],\n  guard: ['Hedayat, the gatekeeper', 'Act I — Kohnak', 'The watchtower', 'An old guard leans on his spear. “Hedayat,” he says. “I have guarded this gate for thirty years. Until now, I never wished nobody would come.”'],\n  tavern: ['The darkened tavern', 'Act I — Kohnak', 'Kohnak tavern', 'The tavern smells of burnt wood and stale ale. Behind the counter, a woman stares at the bottles. “We are closed, knight. But sit, if you wish.”'],\n  well: ['The dry well', 'Act I — Kohnak', 'Village square', 'The well is cold. Its rope hangs without a bucket, and from the darkness below comes a single, sustained note.'],\n  mine_mouth: ['The mine entrance', 'Act II — The mine', 'Above the mine', 'Mist pours from the mine like a slow breath. A small copper lantern shines beside a wooden post.'],\n  tunnel: ['The descending tunnel', 'Act II — The mine', 'Inside the mine', 'The tunnel slopes downward between rotten timber supports. The song is clearer here, too clear to dismiss as imagination.'],\n  cultist: ['The servant of silence', 'Act II — The mine', 'The final passage', 'A grey-robed figure stands in the mist. His lips remain closed, yet his voice comes from all around. “Knight. You are late.”'],\n  chamber: ['The chamber of the singing stone', 'Act III — The singing stone', 'Heart of the mine', 'Blue light seeps from cracks in a stone shaped like a heart. Beside it lies a sleeping girl, her hair in one crooked braid.'],\n  end_silence: ['Silence', 'Ending — Silence', 'The first ending', 'Your sword strikes the stone. The song stops and the mist falls away. Nila wakes, but memories have been lost along with the song.'],\n  end_free: ['Song', 'Ending — Song', 'The second ending', 'You sing, and the stone answers. The roof opens to the sky; the mist becomes rain. Nila wakes, and the valley begins to turn green again.'],\n  end_bargain: ['The bargain', 'Ending — The bargain', 'The third ending', 'The stone sleeps and Nila wakes. The village is safe, but wherever you travel, the mist follows.'],\n  end_death: ['Mist', 'Ending — Mist', 'The final ending', 'The mist settles over you. The last thing you hear is the song, carrying through the dark.'],\n};\n\nconst beats = {\n arrival_guard: ['Talk to the gatekeeper', 'You call toward the watchtower. An old man steps from behind a pillar, gripping a spear.'],\n arrival_tavern: ['Go to the tavern', 'A light flickers behind the tavern curtain as you approach.'],\n arrival_well: ['Approach the well', 'You cross the deserted square toward the stone well.'],\n arrival_look: ['Listen to the silence', 'Beneath the silence you hear a long note. Footprints in the mud lead toward the mine.'],\n guard_mist: ['Ask about the mist', '“Nine nights ago it came down from the mine,” Hedayat says. “Three people entered it and never returned.”'],\n guard_missing: ['Ask who is missing', '“Two shepherds, and then Nila, Mira’s seven-year-old daughter. Her lantern was found near the mine.”'],\n guard_mine: ['Ask about the mine', 'Hedayat tells you of the singing stone and the grey-clad servants who wish to silence it.'],\n guard_trust: ['Offer to search for Nila', 'Hedayat studies you, weighing your promise.'],\n guard_to_tavern: ['Go to the tavern', 'Hedayat points you toward Mira’s tavern.'], guard_to_well: ['Go to the well', 'The well stands at the centre of the village.'],\n tavern_mira: ['Speak with Mira', 'Mira folds her cloth. “Everyone wants to help, until the mist reaches their door.”'],\n tavern_nilaa: ['Ask about Nila', 'Mira describes her daughter and the lantern she carried into the mist.'],\n tavern_stone: ['Ask about the singing stone', '“My husband worked down there,” Mira says. “He said the stone was listening.”'],\n tavern_rest: ['Rest and eat', 'Mira offers soup and bread. A brief rest eases your wounds.'],\n tavern_to_mine: ['Head for the mine', 'Mira raises a lamp as you leave for the mine.'], tavern_to_well: ['Visit the well', '“It went dry the night the mist came,” Mira says.'],\n well_look: ['Look down the well', 'The darkness below seems endless. The song grows louder, almost forming your name.'],\n well_rope: ['Pull up the rope', 'The rope is too light. Its end was cut cleanly, and a dark stain marks the fibres.'],\n well_descend: ['Climb down the well', 'You test the rope and begin to descend into the darkness.'],\n well_to_mine: ['Head for the mine', 'The song fades behind you as you leave the well.'], well_to_tavern: ['Return to the tavern', 'The tavern light gleams through the mist.'],\n mine_lantern: ['Examine the lantern', 'The copper lantern bears Nila’s initials. It is still warm, though it spent the night outside.'],\n mine_carvings: ['Inspect the carvings', 'Figures with open mouths are carved into the stone beneath a wave-like shape.'],\n mine_pray: ['Kneel and pray', 'You speak your vow as the mist curls around the mine entrance.'],\n mine_enter: ['Enter the tunnel', 'The entrance shrinks behind you as you enter the mist-filled tunnel.'], mine_back: ['Return to the village', 'The mist closes behind you on the road back.'],\n tunnel_listen: ['Listen to the song', 'A voice like your own whispers: “Go back... or stay.”'],\n tunnel_light: ['Raise the lantern', 'The light pushes back the mist, revealing carvings of a heart-shaped stone.'],\n tunnel_attack: ['Draw your sword', 'A shadow emerges from the mist carrying a sword like yours.'],\n tunnel_sneak: ['Move quietly', 'You step between the loose stones, trying not to make a sound.'],\n tunnel_forward: ['Continue into the darkness', 'The tunnel turns, opening onto a figure in grey light.'],\n cultist_talk: ['Ask what he wants', '“Silence,” the grey man says. “The stone makes people forget who they are.”'],\n cultist_attack: ['Attack the servant', 'You strike through the mist toward the grey figure.'],\n cultist_sneak: ['Slip past him', 'You move along the wall, seeking a way past.'],\n cultist_give: ['Offer the lantern', 'The servant studies Nila’s lantern, then steps aside.'],\n cultist_forward: ['Walk past in silence', 'The grey figure makes room in the passage.'], cultist_leave: ['Retreat', 'The servant does not follow. “When you are ready,” his voice says.'],\n chamber_nilaa: ['Go to Nila', 'Nila breathes steadily, whispering her mother’s name. The song holds her asleep.'],\n chamber_stone: ['Listen to the stone', 'The words become clear: “I was alone.” The stone is grieving.'],\n chamber_touch: ['Touch the stone', 'The stone feels cold beneath your palm, then warm.'],\n chamber_sing: ['Sing with the stone', 'Your voice joins the note that fills the chamber.'],\n chamber_end_silence: ['Strike the stone', 'You raise your sword. The song swells like a plea.'],\n chamber_end_free: ['Sing to free the stone', 'Your voice rises with the song.'],\n chamber_end_bargain: ['Make a bargain', 'The grey servant emerges from the mist to hear your terms.'],\n};\n\nexport function englishScenes() {\n  const copy = structuredClone(SCENES);\n  for (const [id, scene] of Object.entries(copy)) {\n    const [title, chapter, caption, intro] = scenes[id];\n    Object.assign(scene, { title, chapter, caption, brief: intro, intro: [intro] });\n    for (const beat of scene.beats || []) {\n      const [label, narration] = beats[beat.id];\n      beat.label = label;\n      beat.narration = [narration];\n      for (const effect of [...(beat.effects || []), ...Object.values(beat.check || {}).flatMap(branch => branch?.effects || [])]) {\n        if (effect.item?.id === 'lantern') effect.item.name = 'Nila’s lantern';\n        if (effect.item?.id === 'oil') effect.item.name = 'A bottle of lamp oil';\n      }\n      beat.keywords = label.toLowerCase().split(/\\s+/).filter(word => word.length > 3);\n      if (beat.check) {\n        for (const [branch, text] of Object.entries({success:'Your attempt succeeds.', partial:'You succeed, but the effort takes its toll.', fail:'The attempt fails, and the danger remains.'})) {\n          if (beat.check[branch]) beat.check[branch].narration = [text];\n        }\n      }\n    }\n    if (scene.fallback) scene.fallback.narration = ['Your action draws no immediate answer. The mist shifts around you.'];\n  }\n  return copy;\n}\n","js/engine/events.js":"import { SCENES } from \"./story.js\";\n\n/**\n * Ambient events that fire between turns. They are small on purpose:\n * a shift in mood, a point of hope, a scratch — never a scene change.\n */\nexport const EVENTS = [\n  {\n    id: \"bell\",\n    text: \"ناقوسی که طنابش را باد تکان می‌داد، یک بار صدا می‌دهد. یک بار، بی‌آنکه کسی نزدیکش باشد.\",\n    effects: [{ stat: \"hope\", delta: -1 }],\n  },\n  {\n    id: \"rain\",\n    text: \"باران شروع می‌شود؛ ریز و سرد. مه کمی باز می‌شود و برای چند لحظه می‌توانی راه را ببینی.\",\n    effects: [{ stat: \"hope\", delta: 1 }],\n  },\n  {\n    id: \"dog\",\n    text: \"سگی لاغر از پشت دیوار بیرون می‌آید، به تو نگاه می‌کند و چند قدم دنبال راه می‌افتد. تنها موجود زنده‌ای که امروز دیده‌ای.\",\n    effects: [{ stat: \"hope\", delta: 1 }, { flag: \"metDog\" }],\n  },\n  {\n    id: \"voice\",\n    text: \"صدای خودت را از دور می‌شنوی که اسمت را صدا می‌زند. برنمی‌گردی.\",\n    effects: [{ stat: \"hope\", delta: -1 }],\n  },\n  {\n    id: \"stone\",\n    text: \"سنگی زیر پایت می‌لغزد و زانویت را می‌خراشد. خون، گرم است و بعد سرد.\",\n    effects: [{ stat: \"health\", delta: -1 }],\n  },\n  {\n    id: \"lantern\",\n    text: \"فانوس برای یک لحظه سوسو می‌زند و بعد محکم‌تر روشن می‌شود، انگار تصمیم گرفته باشد بماند.\",\n    effects: [{ stat: \"hope\", delta: 1 }],\n    requires: { items: [\"lantern\"] },\n  },\n  {\n    id: \"nilaa\",\n    text: \"از دور، صدای دختری می‌آید که در خواب حرف می‌زند. اسم مادرش را می‌گوید، دو بار.\",\n    effects: [{ stat: \"hope\", delta: -1 }],\n    requires: { flags: [\"knowsNilaa\"] },\n  },\n  {\n    id: \"cold\",\n    text: \"سرمای مه به استخوان‌هایت می‌رسد. دستکش‌هایت خیس شده‌اند و انگشت‌هایت دیگر حس نمی‌شوند.\",\n    effects: [{ stat: \"health\", delta: -1 }],\n  },\n  {\n    id: \"mira\",\n    text: \"یادت می‌آید میرا لیوان را چطور روی پیشخوان گذاشت. دستت روی دسته‌ی شمشیر محکم‌تر می‌شود.\",\n    effects: [{ stat: \"hope\", delta: 1 }],\n    requires: { flags: [\"metMira\"] },\n  },\n  {\n    id: \"tracks\",\n    text: \"جای پاهای تازه‌ای در گِل هست. تازه‌تر از مال خودت. یک جفت، برهنه.\",\n    effects: [{ flag: \"freshTracks\" }],\n  },\n  {\n    id: \"cough\",\n    text: \"سرفه‌ات در سکوت می‌پیچد و برنمی‌گردد. انگار چیزی آن را از هوا برداشت.\",\n    effects: [{ stat: \"hope\", delta: -1 }],\n  },\n  {\n    id: \"coin\",\n    text: \"سکه‌ای از جیبت می‌افتد و در گِل گم می‌شود. نذری که هنوز ادا نشده، سبک‌تر شد.\",\n    effects: [],\n  },\n];\n\nconst CHANCE = 0.32;\nconst COOLDOWN = 3;\n\nfunction passes(state, event) {\n  const needFlags = event.requires?.flags || [];\n  const needItems = event.requires?.items || [];\n  if (!needFlags.every((f) => state.flags[f])) return false;\n  if (!needItems.every((id) => state.inventory.some((i) => i.id === id))) return false;\n  return true;\n}\n\n/** Returns an event for this turn, or null. Deterministic given `rng`. */\nexport function rollEvent(state, rng = Math.random) {\n  if (SCENES[state.sceneId]?.ending) return null;\n  if (state.lastEventTurn != null && state.turn - state.lastEventTurn \u003c COOLDOWN) return null;\n  if (rng() > CHANCE) return null;\n\n  const pool = EVENTS.filter((e) => e.id !== state.lastEventId && passes(state, e));\n  if (!pool.length) return null;\n  return pool[Math.floor(rng() * pool.length)];\n}\n","js/engine/intents.js":"import { normalizeFa } from \"../util.js\";\n\n/**\n * Ordered intent table. Earlier entries win, so put specific verbs first.\n * Each entry maps to a canonical intent id understood by the story beats.\n */\nconst TABLE = [\n  [\"flee\", [\"فرار\", \"بگریز\", \"بگريز\", \"عقب گرد\", \"عقبگرد\", \"برمیگردم\", \"بر مى گردم\", \"دور شو\", \"بزن به چاک\", \"در بروم\", \"در برم\", \"flee\", \"run away\", \"retreat\"]],\n  [\"attack\", [\"حمله\", \"بزن\", \"بکش\", \"بکشم\", \"مبارزه\", \"نبرد\", \"ضربه\", \"شمشیر\", \"شمشير\", \"خنجر\", \"تیر\", \"شلیک\", \"لت\", \"کوبیدن\", \"بشکن\", \"خرد\", \"attack\", \"strike\", \"fight\", \"kill\", \"sword\"]],\n  [\"sneak\", [\"مخفی\", \"پنهان\", \"دزدکی\", \"دزدکى\", \"بی صدا\", \"بیصدا\", \"ارام\", \"آرام\", \"خزیدن\", \"خودم را پنهان\", \"sneak\", \"hide\", \"stealth\"]],\n  [\"help\", [\"کمک\", \"نجات\", \"نگاهش دارم\", \"درمان\", \"مرهم\", \"زخم را\", \"دنبال\", \"پیدا\", \"help\", \"save\", \"rescue\", \"heal\"]],\n  [\"use\", [\"استفاده\", \"بنوش\", \"می نوشم\", \"میخورم\", \"مشعل\", \"فانوس\", \"روشن\", \"افروختن\", \"باز کن\", \"باز میکنم\", \"کلید\", \"use\", \"light\", \"torch\", \"lantern\", \"open\"]],\n  [\"pray\", [\"دعا\", \"نیایش\", \"قسم\", \"سوگند\", \"خدا\", \"نذر\", \"طلسم\", \"جادو\", \"افسون\", \"pray\", \"magic\", \"spell\"]],\n  [\"listen\", [\"گوش\", \"دقت\", \"صدا\", \"زمزمه\", \"آواز\", \"اواز\", \"نفس\", \"listen\", \"hear\"]],\n  [\"search\", [\"نگاه\", \"بررسی\", \"جستجو\", \"بگرد\", \"ببین\", \"تماشا\", \"کاوش\", \"رد\", \"اثر\", \"بو\", \"look\", \"search\", \"examine\", \"inspect\"]],\n  [\"talk\", [\"حرف\", \"سلام\", \"بگو\", \"بپرسم\", \"میپرسم\", \"پرسیدن\", \"سوال\", \"سؤال\", \"صحبت\", \"خطاب\", \"صدا کن\", \"صدا بزن\", \"جواب\", \"talk\", \"speak\", \"ask\", \"say\"]],\n  [\"give\", [\"بدهم\", \"می دهم\", \"تسلیم\", \"بده\", \"پیشکش\", \"give\", \"offer\"]],\n  [\"wait\", [\"صبر\", \"منتظر\", \"بمان\", \"بایست\", \"وقفه\", \"wait\"]],\n  [\"enter\", [\"وارد\", \"بروم\", \"می روم\", \"میروم\", \"برو\", \"داخل\", \"پیش برو\", \"جلو\", \"go\", \"enter\", \"walk\"]],\n];\n\nconst COMPILED = TABLE.map(([intent, words]) => [intent, words.map(normalizeFa)]);\n\n/**\n * Extracts an ordered list of intents from free text.\n * @param {string} text\n * @returns {string[]}\n */\nexport function parseIntents(text) {\n  const norm = normalizeFa(text);\n  if (!norm) return [];\n  const found = [];\n  for (const [intent, words] of COMPILED) {\n    if (words.some((w) => norm.includes(w))) found.push(intent);\n  }\n  return found;\n}\n\nexport function primaryIntent(text) {\n  return parseIntents(text)[0] || null;\n}\n","js/engine/narrator.js":"import { SCENES, PLAYER } from \"./story.js\";\nimport { resolveScene } from \"./world.js\";\nimport { parseIntents } from \"./intents.js\";\nimport { applyEffects } from \"./effects.js\";\nimport { rollCheck, branchFor } from \"./dice.js\";\nimport { hash, pick, normalizeFa } from \"../util.js\";\n\n/* ------------------------------------------------------------------ */\n/* helpers                                                             */\n/* ------------------------------------------------------------------ */\n\nexport function checkRequires(state, requires) {\n  if (!requires) return true;\n  if (requires.flags && !requires.flags.every((f) => state.flags[f])) return false;\n  if (requires.notFlags && requires.notFlags.some((f) => state.flags[f])) return false;\n  if (requires.items && !requires.items.every((id) => state.inventory.some((i) => i.id === id))) return false;\n  return true;\n}\n\nexport function availableBeats(scene, state) {\n  return (scene.beats || []).filter(\n    (b) => !(b.once && state.consumed[b.id]) && checkRequires(state, b.requires)\n  );\n}\n\n/** Picks the beat that best matches free text: keywords outrank intents. */\nfunction matchBeat(beats, text) {\n  const norm = normalizeFa(text);\n  if (!norm) return null;\n\n  const intents = parseIntents(text);\n  let best = null;\n  let bestScore = 0;\n\n  beats.forEach((beat) => {\n    let score = 0;\n    for (const kw of beat.keywords || []) {\n      if (norm.includes(normalizeFa(kw))) score = Math.max(score, 100 + kw.length);\n    }\n    for (const intent of beat.intents || []) {\n      const idx = intents.indexOf(intent);\n      if (idx !== -1) score = Math.max(score, 50 - idx * 5);\n    }\n    if (score > bestScore) {\n      bestScore = score;\n      best = beat;\n    }\n  });\n\n  return best;\n}\n\nfunction interpolate(text, inputText) {\n  const trimmed = String(inputText || \"\").trim();\n  const quoted = trimmed.length > 120 ? `${trimmed.slice(0, 117)}…` : trimmed;\n  return String(text)\n    .replaceAll(\"{{input}}\", quoted)\n    .replaceAll(\"{{name}}\", PLAYER.name);\n}\n\n/** Short sensory line that reflects the hero's condition. */\nfunction conditionLine(state, seed) {\n  if (state.settings?.language === \"en\" || hash(`${seed}:cond`) % 100 > 58) return \"\";\n  const { health, hope } = state.stats;\n  if (health \u003c= 3) {\n    return pick(\n      [\n        \"زخم زیر زره‌ات دوباره باز شده؛ هر قدم، یک شمارش.\",\n        \"دستت می‌لرزد. نه از ترس — از خون.\",\n        \"دهانت مزه‌ی آهن دارد و پایت آن‌قدر مطمئن نیست که بود.\",\n      ],\n      `${seed}:h`\n    );\n  }\n  if (hope \u003c= 2) {\n    return pick(\n      [\n        \"چیزی در سینه‌ات سنگینی می‌کند؛ نه ترس، چیزی شبیه خستگی از امید.\",\n        \"برای اولین بار به این فکر می‌کنی که شاید برنگردی.\",\n        \"نوری که در سرت روشن بود، کم‌سو شده است.\",\n      ],\n      `${seed}:p`\n    );\n  }\n  return \"\";\n}\n\n/* ------------------------------------------------------------------ */\n/* narrator contract                                                   */\n/*                                                                     */\n/* Every narrator implements:                                          */\n/*   async narrate({ state, input }) -> { messages: Message[] }        */\n/* where input is { beatId } for a chosen action or { text } for       */\n/* free text, and Message is { role: 'narrator'|'system', text }.      */\n/* The narrator may mutate `state`.                                    */\n/* ------------------------------------------------------------------ */\n\nexport class LocalNarrator {\n  constructor({ rng } = {}) {\n    this.rng = rng || Math.random;\n  }\n\n  async narrate({ state, input }) {\n    const scene = resolveScene(state, state.sceneId);\n    if (!scene || scene.ending) return { messages: [] };\n\n    // Improvised places only exist for the model narrators.\n    if (scene.dynamic) {\n      state.turn += 1;\n      return {\n        messages: [\n          {\n            role: \"narrator\",\n            text: \"این مکان را راوی محلی نمی‌شناسد. برای ادامه، در تنظیمات راوی را روی «هوش مصنوعی» یا «Codex» بگذار.\",\n          },\n        ],\n      };\n    }\n\n    const beats = availableBeats(scene, state);\n    const beat = input.beatId ? beats.find((b) => b.id === input.beatId) : matchBeat(beats, input.text);\n\n    const messages = [];\n    const seed = `${state.sceneId}:${beat ? beat.id : \"fallback\"}:${state.turn}`;\n\n    if (beat) {\n      const setup = interpolate(pick(beat.narration, seed), input.text);\n      let body = setup;\n      let effects = beat.effects;\n      let goto = beat.goto;\n      let consume = Boolean(beat.once);\n\n      if (beat.check) {\n        const roll = rollCheck({\n          attribute: beat.check.attribute,\n          dc: beat.check.dc,\n          state,\n          rng: this.rng,\n        });\n        const branch = beat.check[branchFor(roll.outcome)];\n        body = `${setup}\\n\\n${interpolate(pick(branch.narration, `${seed}:${roll.outcome}`), input.text)}`;\n        effects = branch.effects;\n        goto = branch.goto;\n        // A partial result keeps the option open: you got partway, not through.\n        consume = Boolean(beat.once) && (roll.outcome === \"crit\" || roll.outcome === \"success\");\n        messages.push({ role: \"roll\", text: \"\", roll });\n      }\n\n      const extra = conditionLine(state, seed);\n      messages.push({ role: \"narrator\", text: extra ? `${body}\\n\\n${extra}` : body });\n\n      applyEffects(state, effects);\n      if (consume) state.consumed[beat.id] = true;\n\n      if (input.event) {\n        messages.push({ role: \"narrator\", text: input.event.text, kind: \"event\" });\n      }\n\n      if (goto) {\n        state.sceneId = goto;\n        const next = SCENES[goto];\n        if (next)\n          messages.push({\n            role: \"narrator\",\n            text: interpolate(pick(next.intro, `${goto}:intro`), input.text),\n            kind: next.ending ? \"ending\" : \"intro\",\n          });\n      }\n    } else {\n      const fallback = scene.fallback;\n      const variant = pick(fallback.narration, seed);\n      messages.push({ role: \"narrator\", text: interpolate(variant, input.text) });\n      if (input.event) {\n        messages.push({ role: \"narrator\", text: input.event.text, kind: \"event\" });\n      }\n    }\n\n    if (state.stats.health \u003c= 0 && state.sceneId !== \"end_death\") {\n      state.sceneId = \"end_death\";\n      messages.push({ role: \"narrator\", text: pick(SCENES.end_death.intro, \"death\"), kind: \"ending\" });\n    }\n\n    state.turn += 1;\n    return { messages };\n  }\n}\n\n","js/engine/story.js":"/**\n * The adventure content.\n *\n * A scene is a node in a small graph. Each scene owns a list of \"beats\":\n * a beat is a possible action the player can take, described declaratively.\n * The narrator resolves free text to a beat (by keyword, then by intent),\n * applies its effects and writes the prose.\n *\n * Effect ops:\n *   { stat: 'health'|'hope', delta: number }\n *   { flag: 'name', value?: true }\n *   { item: { id, name } }        // add to inventory\n *   { drop: 'itemId' }            // remove from inventory\n *\n * Beat fields:\n *   id, label, icon, keywords[], intents[], narration[variants],\n *   effects[], goto, requires{flags,notFlags,items}, once, tone\n */\n\nexport const PLAYER = {\n  name: \"آرمان\",\n  title: \"شوالیه‌ی فانوس نقره‌ای\",\n  blurb: \"شمشیر کهنه، زرهی وصله‌دار، و نذری که هنوز ادا نشده.\",\n};\n\nexport const SCENES = {\n  /* ------------------------------------------------------------------ */\n  arrival: {\n    id: \"arrival\",\n    chapter: \"پرده‌ی یکم — دروازه‌ی کُهنک\",\n    title: \"دروازه‌ی کُهنک\",\n    art: \"gate\",\n    brief: \"ورود شوالیه به دهکده در غروب؛ دروازه‌ی سنگی، فانوس خاموش، مه و سکوت.\",\n    caption: \"دروازه‌ی دهکده، غروب\",\n    intro: [\n      \"مه از کف دره بالا می‌آید؛ آرام، مثل نَفَسی که کسی در خواب می‌کشد. اسبت در گِل فرو می‌رود و گوش‌هایش را عقب می‌برد — بویی گرفته که اسب‌ها از آن می‌ترسند و شوالیه‌ها اسمش را نمی‌آورند.\\n\\nدروازه‌ی کُهنک پیش رویت است: دو ستون سنگی، فانوسی خاموش، و ناقوسی که طنابش را باد تکان می‌دهد بی‌آنکه صدایی بدهد.\\n\\nبرج نگهبانی خالی است. یا کسی آنجاست و نمی‌خواهد دیده شود.\",\n      \"راه تا کُهنک از میان درختان سوخته می‌گذرد و تو تمام راه را دست روی دسته‌ی شمشیر آمده‌ای. حالا که رسیده‌ای، دره ساکت است؛ سکوتی که مثل آب سرد از یقه‌ات پایین می‌رود.\\n\\nدهکده کوچک است — بیست و چند خانه، یک میخانه، یک چاه. دود از هیچ بام‌بامی بلند نمی‌شود.\\n\\nفقط مه هست، و بوی آهن سرد.\",\n    ],\n    beats: [\n      {\n        id: \"arrival_guard\",\n        label: \"با نگهبان دروازه حرف بزن\",\n        icon: \"🗣\",\n        keywords: [\"نگهبان\", \"پیرمرد\", \"سرباز\", \"دروازه‌بان\"],\n        intents: [\"talk\"],\n        narration: [\n          \"به سمت برج می‌روی و می‌گویی: «کسی اینجاست؟»\\n\\nسایه‌ای از پشت ستون جدا می‌شود. پیرمردی است با نیزه‌ای که بیشتر به عصا می‌ماند. «صدات رو کم کن، شوالیه.» صدایش خش دارد. «اینجا چیزهایی هست که از صدا بیدار می‌شن.»\",\n        ],\n        goto: \"guard\",\n      },\n      {\n        id: \"arrival_tavern\",\n        label: \"به میخانه برو\",\n        icon: \"🚪\",\n        keywords: [\"میخانه\", \"می خانه\", \"مسافرخانه\", \"مشروب\", \"نوشیدنی\"],\n        intents: [\"enter\"],\n        narration: [\n          \"افسارت را به تیرک می‌بندی و به سمت تنها پنجره‌ی روشن دهکده راه می‌افتی. پرده‌ی میخانه کشیده است، ولی از پشتش نور شمع می‌لرزد.\\n\\nپیش از آنکه دستت به در برسد، در خودش باز می‌شود.\",\n        ],\n        goto: \"tavern\",\n      },\n      {\n        id: \"arrival_well\",\n        label: \"به چاه دهکده نزدیک شو\",\n        icon: \"👁\",\n        keywords: [\"چاه\", \"آب\"],\n        narration: [\n          \"از میان خانه‌های خالی می‌گذری. در یکی نیمه‌باز است؛ روی میز هنوز نان هست، خشک شده. کسی برای شام برنگشته.\\n\\nچاه در مرکز دهکده است، با لبه‌ی سنگی و طنابی که آویزان مانده.\",\n        ],\n        goto: \"well\",\n      },\n      {\n        id: \"arrival_look\",\n        label: \"بایست و به سکوت گوش کن\",\n        icon: \"👂\",\n        intents: [\"listen\", \"wait\", \"search\"],\n        narration: [\n          \"می‌ایستی. چشمت را می‌بندی و گوش می‌دهی.\\n\\nباد نیست. پرنده نیست. سگ نیست. فقط یک چیز هست، آن‌قدر پایین که باید به آن فکر کنی تا بشنوی‌اش: یک نتِ کشیده، مثل کسی که در خواب آواز می‌خواند و خودش نمی‌داند.\\n\\nخم می‌شوی و به خاک نگاه می‌کنی. جای سم، جای چرخ گاری، و بعد — جای پا. چند جای پا، همه رو به بیرون، همه به یک سمت: به طرف معدن. هیچ جای پایی به دهکده برنمی‌گردد.\",\n        ],\n        effects: [{ flag: \"sawTracks\" }, { stat: \"hope\", delta: -1 }],\n        once: true,\n      },\n    ],\n    fallback: {\n      narration: [\n        \"«{{input}}» — ولی دهکده جوابی ندارد. مه کمی غلیظ‌تر می‌شود و دروازه همان‌جا می‌ماند، منتظر.\",\n        \"آن کار را می‌کنی و چند لحظه‌ای می‌گذرد. باد ناقوس را تکان می‌دهد؛ بی‌صدا. باید تصمیم بگیری از کجا شروع کنی.\",\n      ],\n    },\n  },\n\n  /* ------------------------------------------------------------------ */\n  guard: {\n    id: \"guard\",\n    chapter: \"پرده‌ی یکم — دروازه‌ی کُهنک\",\n    title: \"هدایت، نگهبان دروازه\",\n    art: \"gate\",\n    brief: \"هدایت، نگهبان پیر و ترسیده؛ می‌داند چه شده و از معدن می‌ترسد.\",\n    caption: \"برج نگهبانی\",\n    intro: [\n      \"پیرمرد نیزه‌اش را — که بیشتر عصاست — به زمین تکیه می‌دهد و تو را برانداز می‌کند. «هدایتَم. سی ساله این دروازه رو نگه می‌دارم. تا حالا هیچ‌وقت نمی‌خواستم کسی نیاد.»\",\n    ],\n    beats: [\n      {\n        id: \"guard_mist\",\n        label: \"بپرس این مه از کجا آمده\",\n        icon: \"🗣\",\n        keywords: [\"مه\", \"دود\", \"چی شده\", \"چه خبر\", \"اتفاق\"],\n        intents: [\"talk\"],\n        narration: [\n          \"«نُه شب پیش شروع شد.» هدایت به دره اشاره می‌کند. «اول مثل بخارِ صبح بود. بعد آمد پایین، از معدن. حالا هر شب یه قدم جلوتر میاد.»\\n\\n«سه نفر رفتن توی مه. هیچ‌کدوم برنگشتن.» انگشتش را روی سینه‌اش می‌کشد، جایی که نشان نقره‌ای قدیمی آویزان است. «و مه... مه صدای آدم‌ها رو برمی‌گردونه. صدای خودت رو می‌شنوی، ولی حرف اون رو نمی‌فهمی.»\",\n        ],\n        effects: [{ flag: \"knowsMist\" }],\n        once: true,\n      },\n      {\n        id: \"guard_missing\",\n        label: \"بپرس چه کسانی گم شده‌اند\",\n        icon: \"🗣\",\n        keywords: [\"گم\", \"نیلا\", \"بچه\", \"دختر\", \"کی\"],\n        intents: [\"talk\"],\n        narration: [\n          \"«اولش دو تا چوپان. بعد...» صدایش می‌شکند و با پشت دست دهانش را می‌پوشاند. «دیشب نیلا. دخترِ میرا، صاحب میخونه. هفت سالشه. فانوسش رو برداشت و رفت دنبال گوسفندهای گم‌شده. مثل همیشه.»\\n\\n«فانوسش رو صبح لبه‌ی معدن پیدا کردن. روشن بود.»\",\n        ],\n        effects: [{ flag: \"knowsNilaa\" }],\n        once: true,\n      },\n      {\n        id: \"guard_mine\",\n        label: \"درباره‌ی معدن بپرس\",\n        icon: \"🗣\",\n        keywords: [\"معدن\", \"سنگ\", \"آواز\", \"تونل\"],\n        intents: [\"talk\"],\n        narration: [\n          \"«معدنِ قدیمی. پدرم می‌گفت پدرِ پدرش هم می‌گفت دست نزنید.» هدایت آب دهانش را قورت می‌دهد. «یه سنگ اون پایین هست. مردم بهش می‌گن سنگِ آواز. می‌گن اگه گوش کنی، اسمت رو می‌شنوی.»\\n\\n«و یه دسته‌ی دیگه هم هست. خادمانِ سکوت. آدم‌های خاکستری. اونا می‌خوان سنگ بخوابه — برای همیشه. و برای اینکه بخوابه، باید...» سرش را تکان می‌دهد. «نمی‌دونم. نمی‌خوام بدونم.»\",\n        ],\n        effects: [{ flag: \"knowsStone\" }],\n        once: true,\n      },\n      {\n        id: \"guard_trust\",\n        label: \"بگو که خودت دنبال بچه می‌روی\",\n        icon: \"🤝\",\n        keywords: [\"دنبال\", \"پیدا\", \"کمک\", \"قسم\"],\n        intents: [\"help\", \"pray\"],\n        narration: [\"«من می‌روم دنبالش. قسم می‌خورم.»\\n\\nهدایت مدتی به تو نگاه می‌کند؛ آن‌قدر که فکر می‌کنی جوابی ندارد.\"],\n        check: {\n          attribute: \"presence\",\n          dc: 11,\n          success: {\n            narration: [\n              \"بعد دستش را در جیبش می‌برد و شیشه‌ی کوچکی روغن زرد بیرون می‌آورد. «روغنِ چراغ. یه شبه. بیشتر نه.»\\n\\n«و شوالیه... اگه صدای خودت رو از مه شنیدی، جوابش رو نده. اون صدای تو نیست.»\",\n            ],\n            effects: [{ item: { id: \"oil\", name: \"شیشه‌ی روغن چراغ\" } }, { flag: \"guardTrust\" }, { stat: \"hope\", delta: 1 }],\n          },\n          partial: {\n            narration: [\n              \"قبول می‌کند، ولی نه کامل. شیشه‌ی روغن را می‌دهد و بعد چیزی اضافه می‌کند که شبیه هشدار است: «من به تو اعتماد نمی‌کنم. به قسمِ تو اعتماد می‌کنم. فرقش رو می‌فهمی، نه؟»\",\n            ],\n            effects: [{ item: { id: \"oil\", name: \"شیشه‌ی روغن چراغ\" } }],\n          },\n          fail: {\n            narration: [\n              \"هدایت سرش را تکان می‌دهد. «همه قسم می‌خورن.» دستش را در جیبش می‌برد و خالی بیرون می‌آورد. «برو. ولی از من چیزی نخواه.»\",\n            ],\n            effects: [{ stat: \"hope\", delta: -1 }],\n          },\n        },\n        once: true,\n      },\n      {\n        id: \"guard_to_tavern\",\n        label: \"راهی میخانه شو\",\n        icon: \"🚪\",\n        keywords: [\"میخانه\", \"میرا\"],\n        intents: [\"enter\"],\n        narration: [\n          \"«میخونه اون‌جاست. میرا هنوز بازش کرده — نمی‌تونه قبول کنه که دخترش برنمی‌گرده.»\\n\\nهدایت راه را نشان می‌دهد و بعد چیزی زیر لب می‌گوید که شبیه دعاست.\",\n        ],\n        goto: \"tavern\",\n      },\n      {\n        id: \"guard_to_well\",\n        label: \"به سراغ چاه برو\",\n        icon: \"👁\",\n        keywords: [\"چاه\"],\n        narration: [\"از هدایت خداحافظی می‌کنی. چاه در مرکز دهکده است، جایی که همه‌ی راه‌ها به آن می‌رسند.\"],\n        goto: \"well\",\n      },\n    ],\n    fallback: {\n      narration: [\n        \"«{{input}}؟» هدایت ابرویش را بالا می‌آورد. «شوالیه، من فقط یه نیزه دارم و یه دروازه. تو باید انتخاب کنی.»\",\n        \"هدایت جوابی نمی‌دهد؛ فقط به مه نگاه می‌کند. انگار منتظر است تو اول حرف بزنی.\",\n      ],\n    },\n  },\n\n  /* ------------------------------------------------------------------ */\n  tavern: {\n    id: \"tavern\",\n    chapter: \"پرده‌ی یکم — دروازه‌ی کُهنک\",\n    title: \"میخانه‌ی چراغ خاموش\",\n    art: \"tavern\",\n    brief: \"میخانه‌ی خالی؛ میرا صاحب آن است و دختر هفت‌ساله‌اش نیلا گم شده.\",\n    caption: \"میخانه‌ی کُهنک\",\n    intro: [\n      \"میخانه بوی چوب سوخته و آبجو کهنه می‌دهد. سه میز خالی، صندلی‌های روی میز، و زنی پشت پیشخوان که به شیشه‌ها نگاه می‌کند بی‌آنکه ببیندشان.\\n\\n«تعطیله، شوالیه.» صدایش صاف است، بی‌خشم. «ولی بنشین. همه می‌نشینن.»\",\n    ],\n    beats: [\n      {\n        id: \"tavern_mira\",\n        label: \"با میرا، صاحب میخانه، حرف بزن\",\n        icon: \"🗣\",\n        keywords: [\"میرا\", \"صاحب\", \"زن\", \"پیشخوان\"],\n        intents: [\"talk\"],\n        narration: [\n          \"«می‌خوام کمک کنم.»\\n\\nمیرا پارچه‌ای را که در دستش بود تا می‌کند و می‌گذارد. «همه می‌خوان کمک کنن. تا وقتی که مه می‌رسه به درِ خونه‌شون.»\\n\\nلیوانی جلویت می‌گذارد، پر. «بخور. اگه می‌خوای بری اون پایین، حداقل با یه چیز گرم توی شکمت برو.»\",\n        ],\n        effects: [{ flag: \"metMira\" }],\n      },\n      {\n        id: \"tavern_nilaa\",\n        label: \"درباره‌ی نیلا بپرس\",\n        icon: \"🗣\",\n        keywords: [\"نیلا\", \"دختر\", \"بچه\", \"دخترت\"],\n        intents: [],\n        narration: [\n          \"«دخترت رو پیدا می‌کنم.»\\n\\nنام دخترش که از دهانت بیرون می‌آید، میرا مثل کسی می‌شود که تازه یادش افتاده نفس بکشد.\\n\\n«هفت سالشه. موهاش رو خودم می‌بافم، هر صبح، و هر صبح یه کم کج می‌شه و اون می‌خنده.» دستش می‌لرزد. «فانوسش رو برداشت. گفتم هوا تاریکه، گفتم صبر کن. گوش نکرد. مثل من.»\",\n        ],\n        check: {\n          attribute: \"presence\",\n          dc: 10,\n          success: {\n            narration: [\n              \"از زیر پیشخوان چیزی برمی‌دارد و روی چوب می‌گذارد: یک فانوس مسی کوچک، کنارش شیشه‌ی روغن. «اگه پیداش کردی... اگه فقط پیداش کردی...» بقیه‌ی جمله‌اش را نمی‌گوید.\",\n            ],\n            effects: [{ item: { id: \"lantern\", name: \"فانوس نیلا\" } }, { flag: \"knowsNilaa\" }, { stat: \"hope\", delta: -1 }],\n          },\n          partial: {\n            narration: [\n              \"فانوس را روی چوب می‌گذارد، ولی دستش روی آن می‌ماند. «این مال نیلاست.»\\n\\nمکثی می‌کند و بعد فانوس را هل می‌دهد سمت تو. «اگه گمش کنی، برنگرد.»\",\n            ],\n            effects: [{ item: { id: \"lantern\", name: \"فانوس نیلا\" } }, { flag: \"knowsNilaa\" }, { stat: \"hope\", delta: -1 }],\n          },\n          fail: {\n            narration: [\n              \"میرا پارچه را روی پیشخوان می‌اندازد. «همه می‌گن پیدا می‌کنم. هیچ‌کس پیدا نکرد.»\\n\\nپشتش را می‌کند. «اگه می‌خوای بری، برو. ولی با فانوس من نه.»\",\n            ],\n            effects: [{ flag: \"miraRefused\" }, { stat: \"hope\", delta: -1 }],\n          },\n        },\n        once: true,\n      },\n      {\n        id: \"tavern_stone\",\n        label: \"از سنگِ آواز بپرس\",\n        icon: \"👁\",\n        keywords: [\"سنگ\", \"آواز\", \"خادم\", \"سکوت\"],\n        intents: [],\n        narration: [\n          \"«سنگِ آواز؟» میرا شانه بالا می‌اندازد، ولی چشمش چیزی را پنهان می‌کند. «قصه‌ی پیرزناست. می‌گن اون پایین یه سنگه که هر کی اسمش رو بشنوه، دیگه نمی‌تونه بره.»\\n\\n«ولی من یه چیز دیگه می‌دونم، شوالیه. شوهرم — خدا بیامرزدش — ده سال پیش اون پایین کار می‌کرد. می‌گفت سنگ آواز نمی‌خونه. می‌گفت گوش می‌ده.»\\n\\nلیوان خالی را برمی‌دارد. «و آخرین شبش گفت: اونا دارن یاد می‌گیرن حرف بزنن.»\",\n        ],\n        effects: [{ flag: \"knowsStone\" }, { stat: \"hope\", delta: -1 }],\n        once: true,\n      },\n      {\n        id: \"tavern_rest\",\n        label: \"بنشین، چیزی بخور و نفسی تازه کن\",\n        icon: \"🍲\",\n        keywords: [\"استراحت\", \"بنشین\", \"غذا\", \"بخورم\", \"آب\"],\n        intents: [\"use\", \"wait\"],\n        narration: [\n          \"می‌نشینی. سوپ سرد است ولی نان تازه است و میرا بی‌آنکه چیزی بگوید کاسه‌ی دوم را هم می‌آورد.\\n\\nده دقیقه، فقط ده دقیقه، به خودت اجازه می‌دهی که شوالیه نباشی. زخم‌هایت کمی آرام می‌گیرند. وقتی بلند می‌شوی، دستت محکم‌تر است.\",\n        ],\n        effects: [{ stat: \"health\", delta: 2 }, { stat: \"hope\", delta: 1 }],\n        once: true,\n      },\n      {\n        id: \"tavern_to_mine\",\n        label: \"به طرف معدن راه بیفت\",\n        icon: \"🚪\",\n        keywords: [\"معدن\", \"راه بیفت\"],\n        intents: [\"enter\"],\n        narration: [\n          \"پشت در، مه مثل دیوار ایستاده است. میرا چیزی نمی‌گوید؛ فقط چراغی را که روی پیشخوان بود کمی بالاتر می‌برد، انگار بخواهد راه را روشن کند.\",\n        ],\n        goto: \"mine_mouth\",\n      },\n      {\n        id: \"tavern_to_well\",\n        label: \"به سراغ چاه برو\",\n        icon: \"👁\",\n        keywords: [\"چاه\"],\n        narration: [\"«چاه؟» میرا اخم می‌کند. «چاه از همون شبی که مه اومد خشک شده. ولی برو، اگه فکر می‌کنی چیزی اونجاست.»\"],\n        goto: \"well\",\n      },\n    ],\n    fallback: {\n      narration: [\n        \"«{{input}}» — میرا سرش را بلند نمی‌کند. «اینجا کسی برای حرف‌های قشنگ وقت نداره، شوالیه.»\",\n        \"می‌گویی و منتظر می‌مانی. میرا پارچه را در دستش می‌چرخاند و به پنجره‌ی تاریک نگاه می‌کند. «اگه می‌خوای کاری بکنی، بکن. فقط نذار دیر بشه.»\",\n      ],\n    },\n  },\n\n  /* ------------------------------------------------------------------ */\n  well: {\n    id: \"well\",\n    chapter: \"پرده‌ی یکم — دروازه‌ی کُهنک\",\n    title: \"چاهِ خشک\",\n    art: \"well\",\n    brief: \"چاه خشک مرکز دهکده؛ از ته آن آوازی می‌آید و طنابش بریده است.\",\n    caption: \"مرکز دهکده\",\n    intro: [\n      \"لبه‌ی چاه سرد است، سردتر از سنگی که تمام روز آفتاب خورده. طناب هنوز آویزان است، ولی سطل نیست.\\n\\nاز پایین، از عمقی که نباید صدا داشته باشد، چیزی می‌آید. نه باد. نه آب. یک نتِ کشیده.\",\n    ],\n    beats: [\n      {\n        id: \"well_look\",\n        label: \"خم شو و به ته چاه نگاه کن\",\n        icon: \"👁\",\n        intents: [\"search\", \"listen\"],\n        narration: [\n          \"خم می‌شوی. تاریکی ته چاه آن‌قدر کامل است که فکر می‌کنی چشمت خراب شده.\\n\\nو بعد آواز بلندتر می‌شود. کلمه دارد — نه، شبیه کلمه است. مثل وقتی کسی در خواب حرف می‌زند و تو فقط آهنگ جمله را می‌فهمی، نه معنی‌اش را.\\n\\nیک لحظه، فقط یک لحظه، به نظر می‌رسد آواز اسم تو را می‌گوید.\",\n        ],\n        effects: [{ flag: \"heardSong\" }, { stat: \"hope\", delta: -1 }],\n        once: true,\n      },\n      {\n        id: \"well_rope\",\n        label: \"طناب را بکش بالا\",\n        icon: \"✋\",\n        keywords: [\"طناب\", \"ریسمان\", \"سطل\"],\n        intents: [],\n        narration: [\n          \"طناب را دست‌به‌دست بالا می‌کشی. سبک است — زیادی سبک.\\n\\nانتهایش بریده است، نه پاره. برشی صاف، با چاقو یا چیزی تیزتر.\\n\\nو روی کنف، لکه‌ای هست که در تاریکی سیاه به نظر می‌رسد و در نور فانوس، قرمز است.\",\n        ],\n        effects: [{ flag: \"sawRope\" }, { stat: \"hope\", delta: -1 }],\n        once: true,\n      },\n      {\n        id: \"well_descend\",\n        label: \"پایین برو و ته چاه را ببین\",\n        icon: \"🚪\",\n        keywords: [\"پایین\", \"فرود\", \"بروم ته\"],\n        intents: [],\n        narration: [\"پایت را در حلقه‌ی طناب می‌گذاری و وزن می‌اندازی.\"],\n        check: {\n          attribute: \"might\",\n          dc: 12,\n          success: {\n            narration: [\n              \"طناب تحمل می‌کند. دو متر، سه متر — و بعد مه از پایین بالا می‌آید، نه مثل بخار؛ مثل چیزی که نفس می‌کشد.\\n\\nعقب می‌خزی و روی لبه می‌افتی. دستت می‌لرزد و خودت هم نمی‌دانی از سرماست یا نه.\\n\\nچاه جای رفتن نیست. معدن است که راه دارد.\",\n            ],\n            effects: [{ stat: \"health\", delta: -1 }],\n          },\n          partial: {\n            narration: [\n              \"طناب تحمل می‌کند تا وقتی که نازک می‌شود. یک تار پاره می‌شود، بعد دوتا.\\n\\nبالا می‌کشی و کف دستت را روی سنگ می‌خراشی. نفس‌نفس می‌زنی و از پایین، آواز آرام‌تر شده — انگار راضی باشد.\\n\\nچاه جای رفتن نیست.\",\n            ],\n            effects: [{ stat: \"health\", delta: -2 }],\n          },\n          fail: {\n            narration: [\n              \"طناب، زیر وزن زره‌ات، صدایی می‌دهد که هیچ طنابی نباید بدهد.\\n\\nروی لبه می‌افتی و شانه‌ات به سنگ می‌خورد. از پایین، آواز بلندتر می‌شود — انگار خندیده باشد.\",\n            ],\n            effects: [{ stat: \"health\", delta: -2 }, { stat: \"hope\", delta: -1 }],\n          },\n        },\n        once: true,\n      },\n      {\n        id: \"well_to_mine\",\n        label: \"به طرف معدن راه بیفت\",\n        icon: \"🚪\",\n        keywords: [\"معدن\"],\n        intents: [\"enter\"],\n        narration: [\"از چاه فاصله می‌گیری. آواز قطع نمی‌شود؛ فقط دورتر می‌شود، مثل کسی که پشت سرت راه می‌افتد.\"],\n        goto: \"mine_mouth\",\n      },\n      {\n        id: \"well_to_tavern\",\n        label: \"به میخانه برگرد\",\n        icon: \"🚪\",\n        keywords: [\"میخانه\", \"میرا\"],\n        intents: [],\n        narration: [\"برمی‌گردی. چراغ میخانه از دور مثل چشم بازِ کسی است که نمی‌خوابد.\"],\n        goto: \"tavern\",\n      },\n    ],\n    fallback: {\n      narration: [\n        \"«{{input}}» — چاه جوابی نمی‌دهد، ولی آواز یک پرده بلندتر می‌شود، انگار چیزی را شنیده باشد.\",\n        \"آن کار را می‌کنی. سنگی می‌افتد و صدای برخوردش دیر می‌آید — خیلی دیر. چاه عمیق‌تر از آن است که دهکده فکر می‌کند.\",\n      ],\n    },\n  },\n\n  /* ------------------------------------------------------------------ */\n  mine_mouth: {\n    id: \"mine_mouth\",\n    chapter: \"پرده‌ی دوم — دهانِ معدن\",\n    title: \"دهانه‌ی معدن\",\n    art: \"mine\",\n    brief: \"دهانه‌ی معدن که مه از آن بیرون می‌آید؛ فانوس نیلا روی زمین.\",\n    caption: \"لبه‌ی دره، بالای معدن\",\n    intro: [\n      \"دهانه‌ی معدن مثل دهانی است که نیمه‌باز مانده. از داخلش مه بیرون می‌آید — نه می‌غلتد؛ بیرون می‌آید، آرام و پیوسته، مثل نفس.\\n\\nکنار تیرک چوبی، چیزی برق می‌زند: یک فانوس مسی کوچک، روشن.\",\n    ],\n    beats: [\n      {\n        id: \"mine_lantern\",\n        label: \"فانوس را بردار و نگاهش کن\",\n        icon: \"✋\",\n        keywords: [\"فانوس\", \"چراغ\"],\n        intents: [\"use\", \"search\"],\n        narration: [\n          \"خم می‌شوی. فانوس مسی است، کوچک، با دسته‌ای که با نخ قرمز بسته شده. روغنش تقریباً تمام شده، ولی هنوز روشن است.\\n\\nروی بدنه‌اش، با چاقوی کوچک، حرفی کنده شده: «نی».\\n\\nفانوس را برمی‌داری. گرم است — گرم‌تر از آنکه یک شب کامل در مه مانده باشد.\",\n        ],\n        effects: [{ item: { id: \"lantern\", name: \"فانوس نیلا\" } }, { flag: \"foundLantern\" }, { stat: \"hope\", delta: 1 }],\n        once: true,\n      },\n      {\n        id: \"mine_carvings\",\n        label: \"تیرک و دیواره‌ی دهانه را بررسی کن\",\n        icon: \"👁\",\n        keywords: [\"تیرک\", \"دیواره\", \"نقش\", \"بررسی\"],\n        intents: [\"search\"],\n        narration: [\n          \"تیرک چوبی پوسیده است. دیواره‌ی سنگی نه.\\n\\nروی سنگ، خط‌هایی کنده شده: آدم‌های کوچک، همه ایستاده، همه دهان‌باز. بالای سرشان چیزی است که شبیه موج است، یا شبیه آواز.\\n\\nو در پایین، یک آدم که دهانش بسته است و از بقیه جدا ایستاده.\",\n        ],\n        effects: [{ flag: \"sawCarvings\" }],\n        once: true,\n      },\n      {\n        id: \"mine_pray\",\n        label: \"زانو بزن و نذرت را ادا کن\",\n        icon: \"🙏\",\n        intents: [\"pray\"],\n        narration: [\n          \"زانو می‌زنی، همان‌طور که در راهروی معبد یادت داده‌اند. کلمات را می‌گویی، ولی این بار معنایشان را حس می‌کنی.\\n\\nوقتی بلند می‌شوی، دستت روی دسته‌ی شمشیر محکم‌تر است. مه هم انگار یک قدم عقب رفته باشد.\",\n        ],\n        effects: [{ stat: \"hope\", delta: 2 }],\n        once: true,\n      },\n      {\n        id: \"mine_enter\",\n        label: \"وارد تونل شو\",\n        icon: \"🚪\",\n        keywords: [\"وارد\", \"تونل\", \"داخل\"],\n        intents: [\"enter\"],\n        narration: [\n          \"داخل می‌شوی. مه تا زانو می‌رسد و سرد است، ولی نه سردِ هوا؛ سردِ دستی که روی گردنت گذاشته باشند.\\n\\nپشت سرت، دهانه‌ی معدن کوچک می‌شود و بعد فقط یک نقطه‌ی خاکستری می‌ماند.\",\n        ],\n        goto: \"tunnel\",\n      },\n      {\n        id: \"mine_back\",\n        label: \"به دهکده برگرد\",\n        icon: \"🚪\",\n        keywords: [\"دهکده\", \"برگرد\", \"برگردم\"],\n        intents: [],\n        narration: [\"برمی‌گردی. مه مثل آب پشت سنگی، دوباره به هم می‌رسد.\"],\n        goto: \"tavern\",\n      },\n    ],\n    fallback: {\n      narration: [\n        \"«{{input}}» — معدن جواب نمی‌دهد، ولی مه از دهانه‌اش یک نفس دیگر بیرون می‌دهد.\",\n        \"آن کار را می‌کنی. سنگی زیر پایت می‌لغزد و صدایش در تونل می‌پیچد و برنمی‌گردد.\",\n      ],\n    },\n  },\n\n  /* ------------------------------------------------------------------ */\n  tunnel: {\n    id: \"tunnel\",\n    chapter: \"پرده‌ی دوم — دهانِ معدن\",\n    title: \"تونلِ پایین‌رو\",\n    art: \"tunnel\",\n    brief: \"تونل تاریک با تیرک‌های پوسیده؛ آواز نزدیک‌تر و کلمه‌دار شده است.\",\n    caption: \"داخل معدن\",\n    intro: [\n      \"تونل سرازیر است و هر ده قدم یک تیرک چوبی دارد که مثل دنده‌ی چیزی مرده به نظر می‌رسد.\\n\\nآواز اینجا واضح‌تر است. دیگر نمی‌شود گفت خیال است.\",\n    ],\n    beats: [\n      {\n        id: \"tunnel_listen\",\n        label: \"بایست و به آواز گوش کن\",\n        icon: \"👂\",\n        intents: [\"listen\"],\n        narration: [\n          \"می‌ایستی. آواز یک کلمه دارد که تکرار می‌شود، و تو کم‌کم می‌فهمی چرا نمی‌توانی بفهمی‌اش: چون به زبانی است که تو با آن فکر می‌کنی.\\n\\n«برگرد.»\\n\\nصدای خودت است. کاملاً صدای خودت. و بعد، پشت همان صدا، چیزی می‌گوید: «...یا بمان.»\",\n        ],\n        effects: [{ flag: \"heardWords\" }, { stat: \"hope\", delta: -1 }],\n        once: true,\n      },\n      {\n        id: \"tunnel_light\",\n        label: \"فانوس را روشن کن و دیوارها را ببین\",\n        icon: \"🔥\",\n        keywords: [\"فانوس\", \"مشعل\", \"روشن\", \"چراغ\"],\n        intents: [\"use\"],\n        requires: { items: [\"lantern\"] },\n        narration: [\n          \"فانوس را بالا می‌بری. نور، مه را عقب می‌راند — نه مثل نور معمولی؛ مثل چیزی که مه از آن می‌ترسد.\\n\\nدیوارها پر از نقش است. آدم‌ها، دهان‌باز، در صف. و در انتهای صف، یک سنگ که شبیه قلب است.\\n\\nبالای سنگ، با خطی قدیمی‌تر از بقیه، نوشته شده: «هر که آواز را بشنود، آواز او را می‌شنود.»\",\n        ],\n        effects: [{ flag: \"sawCarvings\" }, { stat: \"hope\", delta: 1 }],\n        once: true,\n      },\n      {\n        id: \"tunnel_attack\",\n        label: \"شمشیرت را بکش و جلو برو\",\n        icon: \"⚔\",\n        intents: [\"attack\"],\n        narration: [\n          \"شمشیرت را می‌کشی. صدا در تونل می‌پیچد و مه، برای اولین بار، عقب می‌نشیند.\\n\\nو بعد از دل مه چیزی می‌آید: سایه‌ای به شکل آدم، با شمشیری به شکل شمشیر تو.\",\n        ],\n        check: {\n          attribute: \"might\",\n          dc: 12,\n          success: {\n            narration: [\n              \"ضربه‌اش را روی تیغه می‌گیری و ضربه‌ی خودت را در جای خالی‌اش می‌گذاری. سایه می‌شکند و پراکنده می‌شود.\\n\\nبازویت می‌سوزد، ولی سالم ایستاده‌ای.\",\n            ],\n            effects: [{ stat: \"health\", delta: -1 }, { flag: \"foughtShadow\" }],\n          },\n          partial: {\n            narration: [\n              \"ضربه‌ها رد و بدل می‌شوند. یکی به بازویت می‌خورد، یکی به دنده‌ات.\\n\\nسایه می‌شکند، ولی تو هم روی زانو می‌افتی و چند لحظه نمی‌توانی بلند شوی.\",\n            ],\n            effects: [{ stat: \"health\", delta: -3 }, { flag: \"foughtShadow\" }],\n          },\n          fail: {\n            narration: [\n              \"ضربه‌ی تو به مه می‌خورد و ضربه‌ی او به تو.\\n\\nسایه، آرام، شمشیرش را پایین می‌آورد و منتظر می‌ماند — انگار بخواهد ببیند بلند می‌شوی یا نه. بلند می‌شوی. ولی سایه هنوز آنجاست.\",\n            ],\n            effects: [{ stat: \"health\", delta: -3 }],\n          },\n        },\n        once: true,\n      },\n      {\n        id: \"tunnel_sneak\",\n        label: \"آرام و بی‌صدا جلو برو\",\n        icon: \"🤫\",\n        intents: [\"sneak\"],\n        narration: [\"قدم‌هایت را روی سنگ می‌گذاری، نه روی شن. نفس را در سینه نگه می‌داری.\"],\n        check: {\n          attribute: \"wits\",\n          dc: 12,\n          success: {\n            narration: [\n              \"مه چیزی را حس می‌کند — سرش را می‌چرخاند، مثل کسی که اسمش را از دور شنیده — ولی تو ایستاده‌ای و نفس نمی‌کشی.\\n\\nبعد رد می‌شود. رد می‌شوی.\",\n            ],\n            effects: [{ flag: \"sneaked\" }, { stat: \"hope\", delta: 1 }],\n          },\n          partial: {\n            narration: [\n              \"مه سرش را می‌چرخاند و تو خودت را پشت تیرک می‌اندازی. چیزی از کنارت می‌گذرد — آن‌قدر نزدیک که بویش را حس می‌کنی: خاک نمناک و آهن.\\n\\nرد می‌شود. ولی حالا می‌داند کسی اینجاست.\",\n            ],\n            effects: [{ flag: \"sneaked\" }, { stat: \"hope\", delta: -1 }],\n          },\n          fail: {\n            narration: [\n              \"سنگی زیر پایت تکان می‌خورد. صدا کوچک است — ولی در تونل، هیچ صدایی کوچک نیست.\\n\\nمه برمی‌گردد و به سمت تو می‌آید، آرام، مثل کسی که وقت دارد.\",\n            ],\n            effects: [{ stat: \"health\", delta: -2 }],\n          },\n        },\n        once: true,\n      },\n      {\n        id: \"tunnel_forward\",\n        label: \"در تاریکی جلو برو\",\n        icon: \"🚪\",\n        intents: [\"enter\", \"wait\"],\n        narration: [\n          \"جلو می‌روی. تونل خم می‌شود و بعد باز می‌شود، و آنجا، در نور خاکستریِ بی‌منبع، کسی ایستاده است.\",\n        ],\n        goto: \"cultist\",\n      },\n    ],\n    fallback: {\n      narration: [\n        \"«{{input}}» — صدا در تونل می‌پیچد و برنمی‌گردد. انگار چیزی آن را خورده باشد.\",\n        \"آن کار را می‌کنی. مه تکان می‌خورد، و برای یک لحظه شکل چیزی را می‌گیرد که نمی‌خواهی بشناسی.\",\n      ],\n    },\n  },\n\n  /* ------------------------------------------------------------------ */\n  cultist: {\n    id: \"cultist\",\n    chapter: \"پرده‌ی دوم — دهانِ معدن\",\n    title: \"خادمِ سکوت\",\n    art: \"cultist\",\n    brief: \"مردی خاکستری سر راه؛ می‌خواهد سنگ بخوابد و پیشنهاد معامله دارد.\",\n    caption: \"دالانِ پایانی\",\n    intro: [\n      \"مردی است — یا چیزی که مرد بوده — با ردایی خاکستری و صورتی که مه رویش نشسته. دهانش بسته است، و با این حال، وقتی حرف می‌زند، صدایش از همه‌جای تونل می‌آید.\\n\\n«شوالیه. دیر کردی.»\",\n    ],\n    beats: [\n      {\n        id: \"cultist_talk\",\n        label: \"بپرس چه می‌خواهد\",\n        icon: \"🗣\",\n        keywords: [\"بپرس\", \"می‌خواهد\", \"می خواهد\"],\n        intents: [\"talk\"],\n        narration: [\n          \"«چه می‌خواهی؟»\\n\\n«سکوت.» سرش را کج می‌کند. «سنگ آواز می‌خواند، شوالیه. هزار سال است. و هر که بشنود، آرام‌آرام آوازِ خودش را فراموش می‌کند و آوازِ او را یاد می‌گیرد. دهکده‌ی تو — دهکده‌ی من — همین‌طور مرد. آدم‌ها نمردند. فراموش کردند که کی هستند.»\\n\\n«من می‌خواهم سنگ بخوابد. تو می‌خواهی دخترک را برگردانی. هر دو ممکن است. فقط باید یکی را انتخاب کنی.»\",\n        ],\n        effects: [{ flag: \"talkedCultist\" }],\n      },\n      {\n        id: \"cultist_attack\",\n        label: \"به او حمله کن\",\n        icon: \"⚔\",\n        intents: [\"attack\"],\n        tone: \"danger\",\n        narration: [\"جلو می‌جهی. شمشیرت از مه می‌گذرد.\"],\n        check: {\n          attribute: \"might\",\n          dc: 14,\n          success: {\n            narration: [\n              \"و به چیزی می‌خورد که مثل چوب است، نه گوشت. مرد خاکستری عقب می‌رود — یک قدم، فقط یک قدم — و این اولین بار است که عقب می‌رود.\\n\\n«خوب،» می‌گوید. «حالا جدی شدیم.»\",\n            ],\n            effects: [{ flag: \"foughtCultist\" }, { stat: \"hope\", delta: 1 }],\n          },\n          partial: {\n            narration: [\n              \"شمشیرت بازویش را می‌گیرد و او تکان نمی‌خورد؛ فقط دستش را بالا می‌آورد و مه، مثل دستی، دور سینه‌ات می‌پیچد.\\n\\nیک لحظه هیچ نفسی نیست. بعد رهایت می‌کند — نه از رحم؛ مثل کسی که حوصله‌اش سر رفته باشد. «احمق. هنوز وقتِ انتخاب نشده.»\",\n            ],\n            effects: [{ stat: \"health\", delta: -3 }, { flag: \"foughtCultist\" }],\n          },\n          fail: {\n            narration: [\n              \"شمشیرت به مه می‌خورد و مه، به تو. چیزی دور گلویت می‌پیچد و یک لحظه، فقط یک لحظه، هوا نیست.\\n\\nروی زانو می‌افتی. «وقتِ انتخاب، شوالیه. نه وقتِ جنگ.»\",\n            ],\n            effects: [{ stat: \"health\", delta: -3 }],\n          },\n        },\n      },\n      {\n        id: \"cultist_sneak\",\n        label: \"از کنارش رد شو و جلو برو\",\n        icon: \"🤫\",\n        keywords: [\"کنارش\", \"رد شو\", \"بی صدا\"],\n        intents: [\"sneak\"],\n        narration: [\"به دیوار می‌چسبی و آرام حرکت می‌کنی.\"],\n        check: {\n          attribute: \"wits\",\n          dc: 13,\n          success: {\n            narration: [\n              \"مرد خاکستری سرش را نمی‌چرخاند.\\n\\n«می‌توانی رد شوی،» می‌گوید، وقتی پشتش هستی. «همه رد می‌شوند. مسئله این است که بعدش چه می‌کنی.»\",\n            ],\n            effects: [{ flag: \"sneakedPast\" }],\n            goto: \"chamber\",\n          },\n          partial: {\n            narration: [\n              \"رد می‌شوی، ولی نه بی‌صدا. مرد خاکستری، وقتی پشتش هستی، می‌گوید: «شنیدم.»\\n\\nو بعد، پس از مکثی: «برو.» نمی‌دانی چرا. شاید چون هنوز به تو نیاز دارد.\",\n            ],\n            effects: [{ stat: \"hope\", delta: -1 }],\n            goto: \"chamber\",\n          },\n          fail: {\n            narration: [\n              \"پایت به سطل زنگ‌زده‌ای می‌خورد که کسی سال‌ها پیش آنجا جا گذاشته. صدا در تونل می‌پیچد.\\n\\nمرد خاکستری برمی‌گردد و به تو نگاه می‌کند، بی‌عجله. «نه،» می‌گوید. «از این راه نه.»\",\n            ],\n            effects: [{ stat: \"hope\", delta: -1 }],\n          },\n        },\n      },\n      {\n        id: \"cultist_give\",\n        label: \"فانوس را به او بده\",\n        icon: \"✋\",\n        intents: [\"give\"],\n        requires: { items: [\"lantern\"] },\n        narration: [\n          \"فانوس را بالا می‌گیری. مرد خاکستری برای اولین بار، چیزی شبیه تعجب نشان می‌دهد.\\n\\nفانوس را می‌گیرد و به نور نگاه می‌کند. «این مال دخترک است.»\\n\\n«پس برو. و بدان که من چیزی از تو نگرفتم که خودت نداده باشی.» راه را باز می‌کند.\",\n        ],\n        effects: [{ drop: \"lantern\" }, { flag: \"gaveLantern\" }],\n        goto: \"chamber\",\n      },\n      {\n        id: \"cultist_forward\",\n        label: \"بی‌حرف از کنارش بگذر\",\n        icon: \"🚪\",\n        keywords: [\"بگذر\", \"بی‌حرف\", \"بی حرف\"],\n        intents: [\"enter\"],\n        narration: [\"جلو می‌روی. مرد خاکستری کنار می‌رود، مثل دربانِ چیزی که خودش هم از آن می‌ترسد.\"],\n        goto: \"chamber\",\n      },\n      {\n        id: \"cultist_leave\",\n        label: \"عقب بکش و برگرد\",\n        icon: \"🏃\",\n        keywords: [\"عقب\", \"برگرد\"],\n        intents: [\"flee\"],\n        narration: [\"عقب می‌کشی. مرد خاکستری دنبال نمی‌آید. فقط صدایش می‌آید: «هر وقت آماده بودی.»\"],\n        goto: \"tunnel\",\n      },\n    ],\n    fallback: {\n      narration: [\n        \"«{{input}}» — مرد خاکستری سرش را تکان می‌دهد، مثل کسی که جواب احمقانه‌ای شنیده باشد. «هنوز نفهمیدی، شوالیه. اینجا کسی مجبورت نمی‌کند.»\",\n        \"می‌گویی و منتظر می‌مانی. مه دور پاهایت می‌چرخد. «انتخاب کن،» می‌گوید. «یا برو. هر دو برای من یکی است.»\",\n      ],\n    },\n  },\n\n  /* ------------------------------------------------------------------ */\n  chamber: {\n    id: \"chamber\",\n    chapter: \"پرده‌ی سوم — سنگِ آواز\",\n    title: \"تالارِ سنگِ آواز\",\n    art: \"chamber\",\n    brief: \"تالار سنگ آواز؛ نیلا در خواب مه؛ نقطه‌ی تصمیم نهایی.\",\n    caption: \"قلبِ معدن\",\n    intro: [\n      \"تالار بزرگ است، بزرگ‌تر از آنکه کوه اجازه بدهد. سقف پیدا نیست.\\n\\nدر مرکز، سنگی است به بلندی یک مرد، شبیه قلبی که از سنگ تراشیده باشند. از ترک‌هایش نور می‌آید — نور آبیِ سرد — و آواز از همان ترک‌ها می‌آید.\\n\\nو کنار سنگ، دختری هفت‌ساله خوابیده است. موهایش بافته است. یک بافت کج.\",\n    ],\n    beats: [\n      {\n        id: \"chamber_nilaa\",\n        label: \"به سراغ نیلا برو\",\n        icon: \"✋\",\n        keywords: [\"نیلا\", \"دختر\", \"بچه\"],\n        intents: [\"help\"],\n        narration: [\n          \"زانو می‌زنی کنارش. نفس می‌کشد — آرام، منظم، مثل کسی که خواب خوبی می‌بیند.\\n\\nوقتی دستت را روی شانه‌اش می‌گذاری، لبخند می‌زند و چیزی زیر لب می‌گوید. اسم مادرش.\\n\\nنمی‌شود بیدارش کرد. نه با تکان دادن، نه با صدا زدن. مه او را نگه داشته، نه با زور — با آواز.\",\n        ],\n        effects: [{ flag: \"sawNilaa\" }, { stat: \"hope\", delta: 1 }],\n        once: true,\n      },\n      {\n        id: \"chamber_stone\",\n        label: \"به سنگ نزدیک شو و گوش کن\",\n        icon: \"👁\",\n        keywords: [\"سنگ\"],\n        intents: [\"search\", \"listen\"],\n        narration: [\n          \"نزدیک می‌شوی. آواز آن‌قدر بلند است که در استخوان‌هایت می‌نشیند.\\n\\nو بعد کلمات را می‌فهمی. همه‌شان را.\\n\\n«من تنها بودم. من تنها بودم. من تنها بودم.»\\n\\nسنگ آواز نمی‌خواند. سنگ گریه می‌کند، به تنها راهی که بلد است.\",\n        ],\n        effects: [{ flag: \"understoodStone\" }, { stat: \"hope\", delta: -1 }],\n        once: true,\n      },\n      {\n        id: \"chamber_touch\",\n        label: \"دستت را روی سنگ بگذار\",\n        icon: \"✋\",\n        keywords: [\"دستت\", \"لمس\", \"بگذار\"],\n        intents: [\"use\"],\n        narration: [\"کف دستت را روی سنگ می‌گذاری. سرد است، و بعد گرم.\"],\n        check: {\n          attribute: \"wits\",\n          dc: 13,\n          success: {\n            narration: [\n              \"و بعد تو جای دیگری هستی: دره‌ای سبز، هزار سال پیش، و صدایی که می‌گوید «نرو». و بعد سکوت. و بعد هزار سال سکوت.\\n\\nدستت را عقب می‌کشی. نفست بند آمده. سنگ، برای یک لحظه، آرام‌تر است.\",\n            ],\n            effects: [{ flag: \"touchedStone\" }, { stat: \"health\", delta: -1 }, { stat: \"hope\", delta: 1 }],\n          },\n          partial: {\n            narration: [\n              \"چیزی می‌بینی، ولی نه کامل: دره‌ای سبز، سایه‌ای، و صدایی که نصفه قطع می‌شود.\\n\\nسرت درد می‌گیرد، مثل وقتی که از خواب بد بیدار شوی. سنگ زیر دستت تکان می‌خورد. نه — تو تکان می‌خوری.\",\n            ],\n            effects: [{ flag: \"touchedStone\" }, { stat: \"health\", delta: -2 }],\n          },\n          fail: {\n            narration: [\n              \"گرم می‌شود، و بعد داغ، و بعد چیزی از سنگ به تو می‌رود که اسم ندارد. صدایی که از دهانت بیرون می‌آید مال تو نیست و کلمه‌ای است که نمی‌فهمی.\\n\\nدستت را می‌کشی. روی کف دستت، جای سوختگی به شکل یک نتِ موسیقی مانده است.\",\n            ],\n            effects: [{ stat: \"health\", delta: -2 }, { stat: \"hope\", delta: -1 }],\n          },\n        },\n        once: true,\n      },\n      {\n        id: \"chamber_sing\",\n        label: \"با سنگ بخوان\",\n        icon: \"🙏\",\n        keywords: [\"بخوان\"],\n        intents: [\"pray\"],\n        narration: [\"نمی‌دانی چه می‌خوانی. فقط دهانت را باز می‌کنی.\"],\n        check: {\n          attribute: \"presence\",\n          dc: 12,\n          success: {\n            narration: [\n              \"صدایی از سینه‌ات بیرون می‌آید که مال تو نیست و کاملاً مال توست.\\n\\nسنگ جواب می‌دهد. نه با کلمه — با سکوت. یک سکوتِ کوتاه، مثل کسی که برای اولین بار در هزار سال، نفس می‌کشد و کسی جوابش را می‌دهد.\",\n            ],\n            effects: [{ flag: \"sang\" }, { stat: \"hope\", delta: 2 }],\n          },\n          partial: {\n            narration: [\n              \"صدایی بیرون می‌آید، ولی می‌شکند. سنگ جواب می‌دهد، نصفه، و بعد ساکت می‌شود — مثل کسی که امیدوار شده و بعد پشیمان.\\n\\nولی شنید. این را می‌دانی.\",\n            ],\n            effects: [{ flag: \"sang\" }, { stat: \"hope\", delta: 1 }],\n          },\n          fail: {\n            narration: [\n              \"دهانت باز می‌شود و هیچ صدایی بیرون نمی‌آید. فقط نفس.\\n\\nسنگ منتظر می‌ماند و بعد، آرام، آوازش را ادامه می‌دهد — انگار تو چیزی نگفته باشی.\",\n            ],\n            effects: [{ stat: \"hope\", delta: -1 }],\n          },\n        },\n        once: true,\n      },\n      {\n        id: \"chamber_end_silence\",\n        label: \"شمشیرت را بر سنگ بکوب و آواز را خاموش کن\",\n        icon: \"⚔\",\n        tone: \"danger\",\n        keywords: [\"بکوب\", \"خاموش\"],\n        intents: [\"attack\"],\n        narration: [\"شمشیرت را بالا می‌بری. آواز بلندتر می‌شود — التماس، نه تهدید.\"],\n        check: {\n          attribute: \"might\",\n          dc: 15,\n          success: { narration: [\"پایین می‌آوری.\"], goto: \"end_silence\" },\n          partial: {\n            narration: [\n              \"پایین می‌آوری، ولی ضربه کج می‌رود. سنگ ترک می‌خورد و ترک، مثل زخمی، باز می‌ماند — و آواز، برای اولین بار، نصفه قطع می‌شود.\\n\\nنیلا نفس می‌کشد. مه تکان می‌خورد. تمام نشده.\",\n            ],\n            effects: [{ stat: \"health\", delta: -2 }, { flag: \"stoneCracked\" }],\n          },\n          fail: {\n            narration: [\n              \"پایین می‌آوری و شمشیر، به جای سنگ، به چیزی می‌خورد که مثل شیشه است و مثل شیشه نمی‌شکند. دستت تا مچ بی‌حس می‌شود.\\n\\nآواز بلندتر می‌شود. سنگ هنوز آنجاست.\",\n            ],\n            effects: [{ stat: \"health\", delta: -2 }],\n          },\n        },\n      },\n      {\n        id: \"chamber_end_free\",\n        label: \"با سنگ بخوان تا آزاد شود\",\n        icon: \"🙏\",\n        intents: [],\n        keywords: [\"آزاد شود\", \"آزادش\", \"رها\", \"برهان\"],\n        narration: [\"نفس عمیق می‌کشی و آواز را از ته سینه بیرون می‌کشی — این بار با کلمه.\"],\n        goto: \"end_free\",\n      },\n      {\n        id: \"chamber_end_bargain\",\n        label: \"با خادمِ سکوت پیمان ببند\",\n        icon: \"🤝\",\n        intents: [],\n        keywords: [\"پیمان\", \"معامله\", \"قرارداد\"],\n        requires: { flags: [\"talkedCultist\"] },\n        narration: [\"«قبول می‌کنم.»\\n\\nمرد خاکستری از دل مه بیرون می‌آید، انگار همیشه آنجا بوده.\"],\n        goto: \"end_bargain\",\n      },\n    ],\n    fallback: {\n      narration: [\n        \"«{{input}}» — سنگ آوازش را قطع نمی‌کند. نیلا در خواب لبخند می‌زند. وقتش رسیده.\",\n        \"آن کار را می‌کنی. آواز یک پرده پایین می‌آید و بعد دوباره بالا. سنگ منتظر است.\",\n      ],\n    },\n  },\n\n  /* ------------------------------ endings ------------------------------ */\n  end_silence: {\n    id: \"end_silence\",\n    chapter: \"پایان — سکوت\",\n    title: \"سکوت\",\n    art: \"silence\",\n    brief: \"پایان: شکستن سنگ؛ دهکده نجات می‌یابد ولی خاطره‌ها پاک می‌شوند.\",\n    caption: \"پایانِ نخست\",\n    ending: true,\n    intro: [\n      \"شمشیر به سنگ می‌خورد و سنگ، مثل یخی که در دست گرم باشد، ترک می‌خورد.\\n\\nآواز قطع می‌شود. نه کم‌کم — یک‌باره، مثل شمعی که فوتش کنند. مه مثل پرده‌ای می‌افتد و روی زمین می‌نشیند و بعد نیست.\\n\\nنیلا بیدار می‌شود. گریه می‌کند، بعد می‌خندد، بعد می‌پرسد: «شما کی هستید؟»\\n\\nو تو نمی‌دانی چه بگویی. اسم دهکده را به یاد نمی‌آوری. اسم زنی که پشت پیشخوان ایستاده بود را هم. فقط این را می‌دانی که کاری را تمام کرده‌ای و چیزی را از دست داده‌ای که نمی‌توانی نامش را ببری.\\n\\nدر راه بازگشت، هر بار که به عقب نگاه می‌کنی، جاده‌ای است که قبلاً ندیده‌ای.\",\n    ],\n    beats: [],\n  },\n\n  end_free: {\n    id: \"end_free\",\n    chapter: \"پایان — آواز\",\n    title: \"آواز\",\n    art: \"free\",\n    brief: \"پایان: آزاد کردن سنگ؛ باران و سبزی، ولی آواز تا همیشه در گوش شوالیه.\",\n    caption: \"پایانِ دوم\",\n    ending: true,\n    intro: [\n      \"می‌خوانی. کلمه‌ها را نمی‌دانی، ولی سنگ می‌داند.\\n\\nآواز از سنگ بیرون می‌آید و از تو می‌گذرد و به سقف می‌رسد و سقف ترک می‌خورد و آسمان، برای اولین بار در هزار سال، روی معدن باز می‌شود.\\n\\nمه بالا می‌رود. بالا و بالا، و بعد ابر می‌شود، و بعد باران.\\n\\nنیلا بیدار می‌شود و به باران نگاه می‌کند و می‌گوید: «دوباره.»\\n\\nدهکده سبز می‌شود. مردم برمی‌گردند — نه همه، ولی بیشترشان. و تو در راه بازگشت، هر جا که چادر بزنی، یک نتِ کشیده در گوشت می‌ماند. نه آزاردهنده. مثل کسی که در اتاق بغلی نفس می‌کشد و تو می‌دانی تنها نیستی.\",\n    ],\n    beats: [],\n  },\n\n  end_bargain: {\n    id: \"end_bargain\",\n    chapter: \"پایان — پیمان\",\n    title: \"پیمان\",\n    art: \"bargain\",\n    brief: \"پایان: پیمان با خادم سکوت؛ دهکده نجات می‌یابد و مه پشت شوالیه راه می‌افتد.\",\n    caption: \"پایانِ سوم\",\n    ending: true,\n    intro: [\n      \"دست می‌دهی. دستش سرد است و خشک، مثل چوبی که سال‌ها در سایه مانده.\\n\\n«سنگ می‌خوابد،» می‌گوید. «دخترک بیدار می‌شود. دهکده فراموش می‌کند که چیزی گم کرده بود.»\\n\\nو همین می‌شود. آواز آرام می‌شود، مثل کسی که به خواب می‌رود. نیلا چشم باز می‌کند و اسم مادرش را می‌گوید. دهکده صبح، مثل هر صبح دیگری، بیدار می‌شود.\\n\\nفقط یک چیز عوض شده: مه پشت سرت راه می‌افتد. هر جا که بروی. هر شب، وقتی آتش را خاموش می‌کنی، صدایی از بیرون می‌گوید: «یادت هست؟»\\n\\nو تو جواب نمی‌دهی. چون جواب دادن، همان چیزی است که او می‌خواهد.\",\n    ],\n    beats: [],\n  },\n\n  end_death: {\n    id: \"end_death\",\n    chapter: \"پایان — مه\",\n    title: \"مه\",\n    art: \"death\",\n    brief: \"پایان: مرگ شوالیه در مه.\",\n    caption: \"پایانِ چهارم\",\n    ending: true,\n    intro: [\n      \"زانو می‌زنی. زره سنگین است — سنگین‌تر از همیشه.\\n\\nمه دورت می‌چرخد و بعد، آرام، مثل کسی که پتویی روی کودک می‌اندازد، رویت می‌نشیند.\\n\\nآخرین چیزی که می‌شنوی، آواز است. و آخرین چیزی که فکر می‌کنی این است که آواز، درست است.\\n\\nدر دهکده، هدایت به مه نگاه می‌کند و چیزی زیر لب می‌گوید. میرا چراغی را بالاتر می‌برد. و کسی، در جایی دور، منتظر می‌ماند.\",\n    ],\n    beats: [],\n  },\n};\n\nexport function createInitialState() {\n  return {\n    version: 1,\n    sceneId: \"arrival\",\n    turn: 0,\n    stats: { health: 12, maxHealth: 12, hope: 6, maxHope: 6 },\n    attributes: { might: 3, wits: 2, presence: 2 },\n    flags: {},\n    inventory: [],\n    consumed: {},\n    aiChoices: null,\n    dynamicScenes: {},\n    summary: \"\",\n    spineDone: [],\n    lastEventTurn: null,\n    lastEventId: null,\n    log: [],\n    settings: {\n      voice: true,\n      rate: 1,\n      fontSize: 17,\n      typewriter: true,\n      narrator: \"local\",\n      api: {},\n    },\n  };\n}\n","js/engine/world.js":"/**\n * The world bible.\n *\n * story.js is the *spine*: fixed places and fixed key events. This file is the\n * canon the narrator may never contradict, plus the list of key events that\n * must eventually happen. Everything between those events is improvised by the\n * narrator, turn by turn, from whatever the player actually does.\n */\nimport { SCENES } from \"./story.js\";\nimport { hash } from \"../util.js\";\n\nexport const ART_KEYS = [\n  \"gate\",\n  \"tavern\",\n  \"well\",\n  \"mine\",\n  \"tunnel\",\n  \"cultist\",\n  \"chamber\",\n  \"silence\",\n  \"free\",\n  \"bargain\",\n  \"death\",\n];\n\nexport const WORLD = {\n  title: \"مه بر دره‌ی آوَرن\",\n  tone:\n    \"فانتزی تاریک و کم‌صدا. ترس از چیزهایی که دیده نمی‌شوند، نه هیولاهای پرصدا. جمله‌های کوتاه، جزئیات حسی (صدا، بو، سرما، بافت)، طنز تلخ و کم.\",\n  places: [\n    \"دره‌ی آوَرن: دره‌ای باریک که مه هر شب از معدن بالای آن پایین می‌آید.\",\n    \"کُهنک: دهکده‌ای کوچک با بیست و چند خانه، یک میخانه، یک چاه سنگی و یک برج نگهبانی خالی.\",\n    \"معدن قدیمی: دهانه‌اش بالای دهکده است؛ تونل‌های باریک، داربست‌های پوسیده، هوای سرد و بوی آهن.\",\n    \"تالار سنگ: ته معدن؛ سنگِ آواز آنجاست.\",\n  ],\n  people: [\n    \"آرمان — شوالیه‌ی فانوس نقره‌ای؛ شمشیر کهنه، زره‌ی وصله‌دار، نذری که ادا نشده. بازیکن نقش او را دارد و فقط بازیکن برایش تصمیم می‌گیرد.\",\n    \"هدایت — پیرمرد نگهبان دروازه؛ نیزه‌ای دارد که بیشتر به عصا می‌ماند. می‌ترسد، ولی دروغ نمی‌گوید.\",\n    \"میرا — صاحب میخانه؛ خسته و تندزبان. دخترش نیلا در مه گم شده است.\",\n    \"نیلا — دختر هفت‌ساله؛ در مه خوابیده و در خواب اسم مادرش را می‌گوید.\",\n    \"خادم سکوت — فرقه‌ای خاکستری‌پوش با خاکستر روی پیشانی؛ می‌خواهند سنگ را برای همیشه بخوابانند، به هر قیمتی.\",\n  ],\n  facts: [\n    \"مه هر شب یک قدم جلوتر می‌آید و روزها عقب می‌نشیند.\",\n    \"هر کسی که در مه گم شود، صدایش از دور شنیده می‌شود، نه از نزدیک.\",\n    \"آواز سنگ فقط در سکوت شنیده می‌شود؛ هر که بشنود آرام‌آرام خودش را فراموش می‌کند.\",\n    \"خادم سکوت دشمن دهکده نیست؛ آنها هم می‌خواهند مه بخوابد، فقط با هزینه‌ی آدم‌ها.\",\n    \"هیچ راه‌حلی در این دره آسان و بی‌هزینه نیست.\",\n  ],\n};\n\n/** The fixed events. The narrator may improvise freely between them. */\nexport const SPINE = [\n  { id: \"arrival\", act: 1, title: \"رسیدن به کُهنک\", must: \"بازیکن می‌فهمد دهکده خالی است و مه از معدن می‌آید.\" },\n  { id: \"nilaa\", act: 1, title: \"گم‌شدن نیلا\", must: \"بازیکن می‌شنود دختری در مه گم شده.\" },\n  { id: \"tracks\", act: 2, title: \"رد پاها\", must: \"بازیکن سرنخی به سمت معدن پیدا می‌کند.\" },\n  { id: \"descent\", act: 2, title: \"پایین رفتن\", must: \"بازیکن وارد معدن می‌شود.\" },\n  { id: \"song\", act: 2, title: \"شنیدن آواز\", must: \"بازیکن آواز سنگ را از نزدیک می‌شنود.\" },\n  { id: \"servant\", act: 3, title: \"خادم سکوت\", must: \"بازیکن با خادم سکوت روبه‌رو می‌شود یا ردّشان را می‌بیند.\" },\n  { id: \"choice\", act: 3, title: \"تصمیم نهایی\", must: \"داستان به یک تصمیم برگشت‌ناپذیر درباره‌ی سنگ می‌رسد.\" },\n];\n\nexport function worldBrief() {\n  return [\n    `دنیا: ${WORLD.title}. لحن: ${WORLD.tone}`,\n    \"\",\n    \"مکان‌ها:\",\n    ...WORLD.places.map((p) => `- ${p}`),\n    \"\",\n    \"آدم‌ها:\",\n    ...WORLD.people.map((p) => `- ${p}`),\n    \"\",\n    \"قانون‌های ثابت دنیا (هیچ‌وقت نقض نشوند):\",\n    ...WORLD.facts.map((f) => `- ${f}`),\n  ].join(\"\\n\");\n}\n\nexport function spineText(state) {\n  const done = new Set(state?.spineDone || []);\n  return SPINE.map((s) => `${done.has(s.id) ? \"✓\" : \"•\"} ${s.id} — ${s.title}: ${s.must}`).join(\"\\n\");\n}\n\nexport function markSpine(state, id) {\n  if (!id || !SPINE.some((s) => s.id === id)) return false;\n  state.spineDone = state.spineDone || [];\n  if (state.spineDone.includes(id)) return false;\n  state.spineDone.push(id);\n  return true;\n}\n\n/* ------------------------------------------------------------------ */\n/* scenes: canon + improvised                                          */\n/* ------------------------------------------------------------------ */\n\nfunction slugify(value) {\n  const ascii = String(value || \"\")\n    .trim()\n    .toLowerCase()\n    .replace(/[^a-z0-9_-]+/g, \"-\")\n    .replace(/^-+|-+$/g, \"\");\n  if (ascii) return ascii.slice(0, 40);\n  const seed = String(value || \"scene\").trim() || \"scene\";\n  return `dyn-${hash(seed).toString(36).slice(0, 6)}`;\n}\n\n/** Looks a scene up in the canon first, then in the improvised ones. */\nexport function resolveScene(state, id) {\n  if (!id) return null;\n  return state?.dynamicScenes?.[id] || SCENES[id] || null;\n}\n\n/**\n * Registers a scene the narrator invented this turn.\n * Canon ids are never shadowed, and the art key is always a real one.\n */\nexport function registerScene(state, spec) {\n  if (!spec || typeof spec !== \"object\") return null;\n  const rawId = spec.id || spec.title || \"scene\";\n  const id = slugify(rawId);\n\n  if (SCENES[id]) return { id, scene: SCENES[id], existing: true };\n\n  const art = ART_KEYS.includes(spec.art) ? spec.art : \"gate\";\n  const title = String(spec.title || \"جایی در دره\").trim().slice(0, 60) || \"جایی در دره\";\n  const scene = {\n    id,\n    title,\n    brief: String(spec.brief || \"\").trim().slice(0, 240),\n    chapter: String(spec.chapter || \"\").trim().slice(0, 60) || \"دره‌ی آوَرن\",\n    caption: String(spec.caption || title).trim().slice(0, 60),\n    art,\n    dynamic: true,\n    beats: [],\n    fallback: { narration: [] },\n  };\n\n  state.dynamicScenes = state.dynamicScenes || {};\n  state.dynamicScenes[id] = scene;\n  return { id, scene };\n}\n\n/** Every place the narrator may move the hero to (canon + improvised). */\nexport function knownScenes(state) {\n  const ids = Object.keys(SCENES).filter((id) => !SCENES[id].ending);\n  const dynamic = Object.keys(state?.dynamicScenes || {});\n  return [...ids, ...dynamic];\n}\n","js/i18n.js":"const english = {\n  'مه بر دره‌ی آوَرن':'Mist over Avern', 'پرده‌ی یکم':'Act I', 'تنظیمات':'Settings', 'راوی':'Narrator',\n  'محلی':'Local', 'هوش مصنوعی':'AI', 'سرویس':'Provider', 'کلید API':'API key', 'مدل':'Model',\n  'آدرس پایه':'Base URL', 'مسیر درخواست':'Request route', 'مستقیم از مرورگر':'Direct from browser',\n  'پروکسی محلی':'Local proxy', 'آزمایش اتصال':'Test connection', 'تست':'Test', 'صدای راوی':'Narrator voice',\n  'سرعت گفتار':'Speech rate', 'اندازه‌ی متن':'Text size', 'کارت قهرمان':'Hero card', 'نوشتن حرف‌به‌حرف':'Typewriter effect',\n  'ماجراجویی':'Adventure', 'شروع دوباره':'Start over', 'بستن':'Close', 'جان':'Health', 'امید':'Hope',\n  'قدرت':'Might', 'زیرکی':'Wits', 'حضور':'Presence', 'چیزی همراه نداری':'No items',\n  '🔊 دوباره بشنو':'🔊 Listen again', 'موفقیت درخشان':'Critical success', 'موفقیت':'Success',\n  'موفقیت با هزینه':'Success at a cost', 'شکست':'Failure', 'شکست سخت':'Critical failure',\n  'آزمون':'Check', 'راوی در حال نوشتن است…':'The narrator is writing…',\n  'منتظر راوی (Codex)…':'Waiting for the narrator (Codex)…', 'این داستان تمام شد.':'This story has ended.',\n  'ماجراجویی تازه‌ای شروع کن':'Start a new adventure', 'کلید تنظیم نشده':'API key missing',\n  'بدون کلید':'No key required', 'ذخیره‌ی خودکار در همین مرورگر نگه داشته می‌شود.':'Your game is saved in this browser.',\n  'کلید فقط در همین مرورگر ذخیره می‌شود و مستقیم به سرویس می‌رود.':'The key is stored in this browser and sent to the selected provider.',\n  'در حال آزمایش…':'Testing…', 'برای پاک کردن ماجراجویی، دوباره بزن':'Press again to restart the adventure.',\n  'ماجراجویی تازه شروع شد':'A new adventure has begun.', 'ماجراجویی قبلی بازیابی شد':'Your previous adventure was restored.',\n  'راوی محلی روشن شد':'Local narrator enabled.', 'راوی هوش مصنوعی روشن شد':'AI narrator enabled.', 'راوی Codex روشن شد':'Codex narrator enabled.',\n  'آرمان — شوالیه‌ی فانوس نقره‌ای':'Arman — Knight of the Silver Lantern',\n  'فانوس نیلا':'Nila’s lantern', 'شیشه‌ی روغن چراغ':'A bottle of lamp oil',\n  'سازگار با OpenAI':'OpenAI-compatible', 'نوع راوی':'Narrator type', 'وضعیت قهرمان':'Hero status',\n  'دفتر روایت':'Story', 'کارهای پیش‌رو':'Suggested actions', 'کاری که می‌کنی':'Your action', 'بفرست':'Send',\n  'در این حالت راوی خودِ دستیار Codex است: هر نوبت در پوشه‌ی':'In this mode, the Codex assistant answers each turn. Requests are queued in',\n  'صف می‌شود و وقتی دستیار جوابش را بنویسد، روایت روی صفحه می‌آید. کلید API لازم نیست.':'and the response appears when the assistant replies. No API key is required.',\n  'برای هر نوبت، در چت Codex بنویس «نوبت را جواب بده» تا صف را بخواند و ادامه بدهد.':'For each turn, ask Codex in chat to answer the queued turn.',\n  'پایان.':'The end.',\n};\n\nexport const language = localStorage.getItem('avern.language') || 'fa';\nexport function tr(value) { return language === 'en' ? (english[value] || value) : value; }\nexport function translatePage(root = document.body) {\n  if (language !== 'en') return;\n  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);\n  const nodes = [];\n  while (walker.nextNode()) nodes.push(walker.currentNode);\n  for (const node of nodes) {\n    const text = node.nodeValue.trim();\n    if (english[text]) node.nodeValue = node.nodeValue.replace(text, english[text]);\n  }\n}\n","js/main.js":"import { SCENES, PLAYER, createInitialState } from \"./engine/story.js\";\nimport { resolveScene } from \"./engine/world.js\";\nimport { LocalNarrator, availableBeats } from \"./engine/narrator.js\";\nimport {\n  AIChatNarrator,\n  DEFAULT_API,\n  providerDefaults,\n  testConnection,\n  iconForAction,\n  defaultChoices,\n} from \"./engine/ai.js\";\nimport { ATTRIBUTES, OUTCOMES } from \"./engine/dice.js\";\nimport { rollEvent } from \"./engine/events.js\";\nimport { applyEffects } from \"./engine/effects.js\";\nimport { renderArt } from \"./ui/art.js\";\nimport { Voice } from \"./ui/voice.js\";\nimport { saveGame, loadGame, clearGame } from \"./storage.js\";\nimport { sleep, toParagraphs, faNum, pick } from \"./util.js\";\nimport { englishScenes } from './engine/english.js';\nimport { language, tr, translatePage } from './i18n.js';\n\nif (language === 'en') Object.assign(SCENES, englishScenes());\ndocument.documentElement.lang = language;\ndocument.documentElement.dir = language === 'en' ? 'ltr' : 'rtl';\n\n/* ------------------------------------------------------------------ */\n/* elements                                                            */\n/* ------------------------------------------------------------------ */\nconst el = {\n  app: document.getElementById(\"app\"),\n  stage: document.querySelector(\".stage\"),\n  chronicle: document.getElementById(\"chronicle\"),\n  choices: document.getElementById(\"choices\"),\n  composer: document.getElementById(\"composer\"),\n  input: document.getElementById(\"playerInput\"),\n  thinking: document.getElementById(\"thinking\"),\n  vitals: document.getElementById(\"vitals\"),\n  chapter: document.getElementById(\"chapterLabel\"),\n  art: document.getElementById(\"sceneArt\"),\n  toast: document.getElementById(\"toast\"),\n  btnVoice: document.getElementById(\"btnVoice\"),\n  btnSettings: document.getElementById(\"btnSettings\"),\n  dialog: document.getElementById(\"settingsDialog\"),\n  optVoice: document.getElementById(\"optVoice\"),\n  optRate: document.getElementById(\"optRate\"),\n  optFont: document.getElementById(\"optFont\"),\n  optTypewriter: document.getElementById(\"optTypewriter\"),\n  rateOut: document.getElementById(\"rateOut\"),\n  fontOut: document.getElementById(\"fontOut\"),\n  voiceHint: document.getElementById(\"voiceHint\"),\n  btnRestart: document.getElementById(\"btnRestart\"),\n  thinkingLabel: document.getElementById(\"thinkingLabel\"),\n  modeBadge: document.getElementById(\"modeBadge\"),\n  modeHint: document.getElementById(\"modeHint\"),\n  narratorMode: document.getElementById(\"narratorMode\"),\n  aiPanel: document.getElementById(\"aiPanel\"),\n  codexPanel: document.getElementById(\"codexPanel\"),\n  optProvider: document.getElementById(\"optProvider\"),\n  optKey: document.getElementById(\"optKey\"),\n  optModel: document.getElementById(\"optModel\"),\n  optBaseUrl: document.getElementById(\"optBaseUrl\"),\n  optTransport: document.getElementById(\"optTransport\"),\n  baseUrlField: document.getElementById(\"baseUrlField\"),\n  apiStatus: document.getElementById(\"apiStatus\"),\n  btnTestApi: document.getElementById(\"btnTestApi\"),\n  heroCard: document.getElementById(\"heroCard\"),\n};\n\n/* ------------------------------------------------------------------ */\n/* state                                                               */\n/* ------------------------------------------------------------------ */\nlet state = null;\nlet busy = false;\nlet skipCurrent = null;\nconst voice = new Voice();\nconst localNarrator = new LocalNarrator();\nconst aiNarrator = new AIChatNarrator({ fallback: localNarrator });\n\nconst isAIMode = () => Boolean(state) && state.settings.narrator !== \"local\";\nconst isCodexMode = () => state?.settings.narrator === \"codex\";\nconst activeNarrator = () => (isAIMode() ? aiNarrator : localNarrator);\n\n/* ------------------------------------------------------------------ */\n/* small helpers                                                       */\n/* ------------------------------------------------------------------ */\nlet toastTimer = 0;\nfunction toast(text) {\n  el.toast.textContent = tr(text);\n  el.toast.classList.add(\"is-on\");\n  clearTimeout(toastTimer);\n  toastTimer = setTimeout(() => el.toast.classList.remove(\"is-on\"), 2600);\n}\n\nfunction scrollToBottom(force = false) {\n  const s = el.stage;\n  const nearBottom = s.scrollHeight - s.scrollTop - s.clientHeight \u003c 160;\n  if (force || nearBottom) s.scrollTop = s.scrollHeight;\n}\n\nlet thinkTimer = 0;\nfunction startThinking() {\n  el.thinking.hidden = false;\n  const waiting = isCodexMode();\n  el.thinkingLabel.textContent = tr(waiting ? \"منتظر راوی (Codex)…\" : \"راوی در حال نوشتن است…\");\n  scrollToBottom(true);\n  const started = Date.now();\n  clearInterval(thinkTimer);\n  thinkTimer = setInterval(() => {\n    const sec = Math.floor((Date.now() - started) / 1000);\n    if (sec >= 2) {\n      el.thinkingLabel.textContent = language === 'en' ? `${waiting ? 'Waiting for Codex' : 'Narrator is writing'}… ${sec}s` : waiting\n        ? `منتظر راوی (Codex)… ${faNum(sec)} ثانیه`\n        : `راوی در حال نوشتن است… ${faNum(sec)} ثانیه`;\n    }\n  }, 500);\n}\n\nfunction stopThinking() {\n  clearInterval(thinkTimer);\n  el.thinking.hidden = true;\n  el.thinkingLabel.textContent = \"راوی در حال نوشتن است…\";\n}\n\n/** Fills in settings added after a save was written. */\nfunction normalizeState(saved) {\n  const base = createInitialState();\n  return {\n    ...base,\n    ...saved,\n    stats: { ...base.stats, ...(saved.stats || {}) },\n    settings: {\n      ...base.settings,\n      ...(saved.settings || {}),\n      api: { ...DEFAULT_API, ...(saved.settings?.api || {}) },\n    },\n    flags: saved.flags || {},\n    inventory: saved.inventory || [],\n    consumed: saved.consumed || {},\n    attributes: { ...base.attributes, ...(saved.attributes || {}) },\n    lastEventTurn: saved.lastEventTurn ?? null,\n    lastEventId: saved.lastEventId ?? null,\n    log: saved.log || [],\n    aiChoices: saved.aiChoices || null,\n    dynamicScenes: saved.dynamicScenes || {},\n    summary: saved.summary || \"\",\n    spineDone: saved.spineDone || [],\n  };\n}\n\n/* ------------------------------------------------------------------ */\n/* rendering                                                           */\n/* ------------------------------------------------------------------ */\nfunction renderVitals() {\n  const { health, maxHealth, hope, maxHope } = state.stats;\n  el.vitals.innerHTML = `\n    \u003cdiv class=\"vital vital--health${health \u003c= 3 ? \" is-low\" : \"\"}\">\n      \u003cdiv class=\"vital__label\">\u003cspan>جان\u003c/span>\u003cb>${faNum(health)}/${faNum(maxHealth)}\u003c/b>\u003c/div>\n      \u003cdiv class=\"vital__bar\">\u003cdiv class=\"vital__fill\" style=\"width:${(health / maxHealth) * 100}%\">\u003c/div>\u003c/div>\n    \u003c/div>\n    \u003cdiv class=\"vital vital--hope${hope \u003c= 2 ? \" is-low\" : \"\"}\">\n      \u003cdiv class=\"vital__label\">\u003cspan>امید\u003c/span>\u003cb>${faNum(hope)}/${faNum(maxHope)}\u003c/b>\u003c/div>\n      \u003cdiv class=\"vital__bar\">\u003cdiv class=\"vital__fill\" style=\"width:${(hope / maxHope) * 100}%\">\u003c/div>\u003c/div>\n    \u003c/div>`;\n  renderHeroCard();\n}\n\nfunction renderHeroCard() {\n  if (!el.heroCard) return;\n  const attrs = state.attributes || {};\n  const chips = Object.entries(ATTRIBUTES)\n    .map(\n      ([key, meta]) =>\n        `\u003cspan class=\"attr\">\u003cspan class=\"attr__name\">${meta.icon} ${meta.label}\u003c/span>\u003cb>${faNum(attrs[key] ?? 0)}\u003c/b>\u003c/span>`\n    )\n    .join(\"\");\n  const items = state.inventory.length\n    ? state.inventory.map((i) => i.name).join(\"، \")\n    : \"چیزی همراه نداری\";\n  el.heroCard.innerHTML = `\u003cdiv class=\"hero-card__attrs\">${chips}\u003c/div>\u003cp class=\"hero-card__items\">${items}\u003c/p>`;\n}\n\nfunction renderScene() {\n  const scene = resolveScene(state, state.sceneId) || SCENES.arrival;\n  el.chapter.textContent = scene.chapter;\n  el.art.innerHTML = `${renderArt(scene.art)}\u003cdiv class=\"art__veil\">\u003c/div>\u003cdiv class=\"art__caption\">${scene.caption || \"\"}\u003c/div>`;\n}\n\nfunction buildMessageNode(entry) {\n  const node = document.createElement(\"div\");\n\n  if (entry.role === \"player\") {\n    node.className = \"msg msg--player\";\n    node.textContent = entry.text;\n    return node;\n  }\n\n  if (entry.role === \"system\") {\n    node.className = \"msg msg--system\";\n    node.textContent = entry.text;\n    return node;\n  }\n\n  if (entry.role === \"roll\") {\n    const r = entry.roll;\n    const meta = ATTRIBUTES[r.attribute] || { label: \"تاس\" };\n    const outcome = OUTCOMES[r.outcome] || OUTCOMES.fail;\n    const sign = r.modifier \u003c 0 ? \"−\" : \"+\";\n    node.className = \"msg msg--roll\";\n    node.innerHTML = `\n      \u003cdiv class=\"roll\" data-outcome=\"${outcome.tone}\">\n        \u003cspan class=\"roll__die\" aria-hidden=\"true\">🎲\u003c/span>\n        \u003cspan class=\"roll__label\">آزمون ${meta.label}\u003c/span>\n        \u003cspan class=\"roll__math\" dir=\"ltr\">${faNum(r.d20)} ${sign} ${faNum(Math.abs(r.modifier))} = ${faNum(r.total)} / ${faNum(r.dc)}\u003c/span>\n        \u003cspan class=\"roll__outcome\">${outcome.label}\u003c/span>\n      \u003c/div>`;\n    return node;\n  }\n\n  node.className = `msg msg--narrator${entry.kind === \"ending\" ? \" msg--ending\" : \"\"}`;\n\n  const speaker = document.createElement(\"div\");\n  speaker.className = \"msg__speaker\";\n  speaker.textContent = \"راوی\";\n\n  const body = document.createElement(\"div\");\n  body.className = \"msg__text\";\n\n  node.append(speaker, body);\n\n  if (voice.supported) {\n    const replay = document.createElement(\"button\");\n    replay.type = \"button\";\n    replay.className = \"msg__replay\";\n    replay.textContent = \"🔊 دوباره بشنو\";\n    replay.addEventListener(\"click\", () => {\n      voice.cancel();\n      voice.speak(entry.text);\n    });\n    node.append(replay);\n  }\n\n  return node;\n}\n\nfunction typeText(target, text) {\n  return new Promise((resolve) => {\n    const paras = toParagraphs(text);\n    target.textContent = \"\";\n    const nodes = paras.map(() => {\n      const p = document.createElement(\"p\");\n      target.appendChild(p);\n      return p;\n    });\n\n    const finish = () => {\n      paras.forEach((t, i) => {\n        nodes[i].textContent = t;\n      });\n      skipCurrent = null;\n      resolve();\n    };\n\n    // Never animate in a hidden tab: rAF is paused there and the turn would stall.\n    if (!state.settings.typewriter || paras.length === 0 || document.hidden) {\n      finish();\n      return;\n    }\n\n    const total = text.length;\n    const perFrame = Math.min(48, Math.max(3, Math.ceil(total / 70)));\n    let p = 0;\n    let c = 0;\n    let skipped = false;\n    skipCurrent = () => {\n      skipped = true;\n    };\n\n    const step = () => {\n      if (skipped) {\n        finish();\n        return;\n      }\n      let budget = perFrame;\n      while (budget > 0 && p \u003c paras.length) {\n        const take = Math.min(budget, paras[p].length - c);\n        c += take;\n        budget -= take;\n        nodes[p].textContent = paras[p].slice(0, c);\n        if (c >= paras[p].length) {\n          p += 1;\n          c = 0;\n        }\n      }\n      scrollToBottom();\n      if (p >= paras.length) {\n        skipCurrent = null;\n        resolve();\n        return;\n      }\n      setTimeout(step, 16);\n    };\n    setTimeout(step, 16);\n  });\n}\n\nasync function addMessage(entry, { animate = true, persist = true } = {}) {\n  const node = buildMessageNode(entry);\n  el.chronicle.appendChild(node);\n  if (persist) {\n    state.log.push(entry);\n    if (state.log.length > 200) state.log.splice(0, state.log.length - 200);\n  }\n\n  const body = node.querySelector(\".msg__text\");\n  if (body) {\n    if (animate) await typeText(body, entry.text);\n    else {\n      body.textContent = \"\";\n      toParagraphs(entry.text).forEach((t) => {\n        const p = document.createElement(\"p\");\n        p.textContent = t;\n        body.appendChild(p);\n      });\n    }\n  }\n\n  if (entry.role === \"narrator\") voice.speak(entry.text);\n  scrollToBottom(true);\n}\n\nfunction renderChoices() {\n  const scene = resolveScene(state, state.sceneId);\n  el.choices.innerHTML = \"\";\n\n  if (!scene) return;\n\n  if (scene.ending) {\n    el.input.disabled = true;\n    el.input.placeholder = tr(\"این داستان تمام شد.\");\n    const again = document.createElement(\"button\");\n    again.type = \"button\";\n    again.className = \"choice choice--restart\";\n    again.innerHTML = `\u003cspan class=\"choice__icon\">↺\u003c/span>ماجراجویی تازه‌ای شروع کن`;\n    again.addEventListener(\"click\", restart);\n    el.choices.appendChild(again);\n    return;\n  }\n\n  const ai = isAIMode();\n  el.input.disabled = false;\n  el.input.placeholder = ai\n    ? \"هر کاری می‌خواهی بکن — راوی جواب می‌دهد\"\n    : \"چه می‌کنی؟ مثلاً: شمشیرم را می‌کشم و جلو می‌روم\";\n  if (language === 'en') el.input.placeholder = 'What do you do? Type any action…';\n\n  const items = [];\n  if (ai) {\n    const labels = state.aiChoices?.length ? state.aiChoices : defaultChoices(scene);\n    for (const label of labels) {\n      items.push({ label, icon: iconForAction(label), send: { text: label } });\n    }\n  } else {\n    for (const beat of availableBeats(scene, state)) {\n      items.push({\n        label: beat.label,\n        icon: beat.icon || \"•\",\n        tone: beat.tone,\n        send: ai ? { text: beat.label } : { beatId: beat.id },\n      });\n    }\n  }\n\n  for (const item of items) {\n    const btn = document.createElement(\"button\");\n    btn.type = \"button\";\n    btn.className = `choice${item.tone === \"danger\" ? \" choice--danger\" : \"\"}`;\n    if (item.send.beatId) btn.dataset.beat = item.send.beatId;\n    const icon = document.createElement(\"span\");\n    icon.className = \"choice__icon\";\n    icon.textContent = item.icon;\n    const label = document.createElement(\"span\");\n    label.textContent = item.label;\n    btn.append(icon, label);\n    btn.addEventListener(\"click\", () => takeTurn(item.send, item.label));\n    el.choices.appendChild(btn);\n  }\n}\n\n/* ------------------------------------------------------------------ */\n/* turn loop                                                           */\n/* ------------------------------------------------------------------ */\nasync function takeTurn(input, echo) {\n  if (busy || !state) return;\n  busy = true;\n  el.app.classList.add(\"is-busy\");\n  el.input.disabled = true;\n  voice.cancel();\n\n  if (echo) {\n    await addMessage({ role: \"player\", text: echo });\n  }\n\n  let event = rollEvent(state);\n  if (event && language === 'en') {\n    const events = {bell:'A bell rings once, though nobody is near it.', rain:'Cold rain falls and the mist thins.', dog:'A thin dog appears and follows for a few steps.', voice:'Your own voice calls your name from far away.', stone:'A loose stone slips beneath your foot.', lantern:'The lantern flickers, then burns steadily.', nilaa:'A girl’s sleeping voice calls for her mother.', cold:'The cold mist seeps through your gloves.', mira:'The memory of Mira behind the counter returns.', tracks:'Fresh bare footprints mark the mud.', cough:'A cough disappears into the silence.', coin:'A coin falls into the mud.'};\n    event = { ...event, text: events[event.id] || 'The mist shifts around you.' };\n  }\n  if (event) {\n    applyEffects(state, event.effects);\n    state.lastEventTurn = state.turn;\n    state.lastEventId = event.id;\n    renderVitals();\n  }\n\n  startThinking();\n  if (!isAIMode()) await sleep(320 + Math.random() * 380);\n\n  let result;\n  try {\n    result = await activeNarrator().narrate({ state, input: { ...input, event } });\n  } catch {\n    result = { messages: [{ role: \"narrator\", text: \"راوی برای لحظه‌ای ساکت می‌ماند. دوباره تلاش کن.\" }] };\n  }\n\n  stopThinking();\n\n  if (result.fallbackReason) {\n    const reason = String(result.fallbackReason).slice(0, 70);\n    toast(`اتصال به API برقرار نشد (${reason}) — راوی محلی ادامه داد`);\n  }\n\n  const scene = resolveScene(state, state.sceneId);\n  for (const msg of result.messages || []) {\n    if (msg.kind === \"intro\" || msg.kind === \"ending\") renderScene();\n    await addMessage(msg);\n  }\n\n  if (scene?.ending) {\n    state.log.push({ role: \"system\", text: \"پایان.\" });\n  }\n\n  renderVitals();\n  renderScene();\n  renderChoices();\n  saveGame(state);\n\n  busy = false;\n  el.app.classList.remove(\"is-busy\");\n  if (!resolveScene(state, state.sceneId)?.ending) {\n    el.input.disabled = false;\n    el.input.focus();\n  }\n}\n\n/* ------------------------------------------------------------------ */\n/* game lifecycle                                                      */\n/* ------------------------------------------------------------------ */\nasync function startNew({ animate = true } = {}) {\n  const keepSettings = state?.settings;\n  state = createInitialState();\n  if (keepSettings) {\n    state.settings = {\n      ...state.settings,\n      ...keepSettings,\n      api: { ...DEFAULT_API, ...(keepSettings.api || {}) },\n    };\n  }\n  clearGame();\n  el.chronicle.innerHTML = \"\";\n  voice.cancel();\n\n  applySettings();\n  renderVitals();\n  renderScene();\n  renderChoices();\n\n  await addMessage({\n    role: \"system\",\n    text: tr(`${PLAYER.name} — ${PLAYER.title}`),\n  }, { animate: false });\n\n  const scene = SCENES[state.sceneId];\n  await addMessage({ role: \"narrator\", text: pick(scene.intro, \"arrival:intro\") }, { animate });\n\n  saveGame(state);\n  el.input.focus();\n}\n\nlet restartArmedAt = 0;\nfunction restart() {\n  const now = Date.now();\n  if (now - restartArmedAt \u003c 4000) {\n    restartArmedAt = 0;\n    if (el.dialog.open) el.dialog.close();\n    startNew({ animate: true });\n    toast(\"ماجراجویی تازه شروع شد\");\n    return;\n  }\n  restartArmedAt = now;\n  toast(\"برای پاک کردن ماجراجویی، دوباره بزن\");\n}\n\nfunction restore() {\n  renderVitals();\n  renderScene();\n  el.chronicle.innerHTML = \"\";\n  for (const entry of state.log) {\n    addMessage(entry, { animate: false, persist: false });\n  }\n  renderChoices();\n  scrollToBottom(true);\n}\n\n/* ------------------------------------------------------------------ */\n/* settings                                                            */\n/* ------------------------------------------------------------------ */\nfunction applySettings() {\n  if (!state) return;\n  const s = state.settings;\n  s.language = language;\n  voice.setLanguage(language);\n\n  const ai = s.narrator === \"ai\";\n  const codex = s.narrator === \"codex\";\n  el.narratorMode.querySelectorAll(\"button\").forEach((b) => {\n    b.setAttribute(\"aria-pressed\", String(b.dataset.mode === s.narrator));\n  });\n  el.aiPanel.hidden = !ai;\n  el.codexPanel.hidden = !codex;\n  el.modeBadge.hidden = s.narrator === \"local\";\n  el.modeBadge.textContent = codex ? \"Codex\" : \"AI\";\n\n  const api = s.api;\n  el.modeHint.textContent =\n    ai && !api.key && api.transport === \"direct\" ? \"کلید تنظیم نشده\" : codex ? \"بدون کلید\" : \"\";\n  el.optProvider.value = api.provider;\n  el.optKey.value = api.key;\n  el.optModel.value = api.model;\n  el.optBaseUrl.value = api.baseUrl;\n  el.optTransport.value = api.transport;\n  el.baseUrlField.hidden = api.provider !== \"openai\";\n\n  voice.setEnabled(s.voice);\n  voice.setRate(s.rate);\n  document.documentElement.style.setProperty(\"--prose-size\", `${s.fontSize}px`);\n\n  el.optVoice.checked = s.voice;\n  el.optRate.value = String(s.rate);\n  el.optFont.value = String(s.fontSize);\n  el.optTypewriter.checked = s.typewriter;\n  el.rateOut.textContent = `${faNum(s.rate.toFixed(1).replace(\".\", \"٫\"))}×`;\n  el.fontOut.textContent = faNum(s.fontSize);\n  el.btnVoice.setAttribute(\"aria-pressed\", String(s.voice));\n\n  if (!voice.supported) {\n    el.voiceHint.textContent = \"این مرورگر از خواندن متن پشتیبانی نمی‌کند.\";\n  } else if (!voice.hasPersianVoice()) {\n    el.voiceHint.textContent = \"صدای فارسی روی این دستگاه پیدا نشد. راوی با صدای پیش‌فرض می‌خواند؛ برای کیفیت بهتر یک بسته‌ی صدای فارسی در سیستم نصب کن.\";\n  } else {\n    el.voiceHint.textContent = `صدای انتخاب‌شده: ${voice.voice.name}`;\n  }\n  if (language === 'en') el.voiceHint.textContent = voice.voice ? `Voice: ${voice.voice.name}` : 'No English voice is available on this device.';\n  translatePage();\n}\n\nfunction bindSettings() {\n  el.optVoice.addEventListener(\"change\", () => {\n    state.settings.voice = el.optVoice.checked;\n    voice.setEnabled(state.settings.voice);\n    el.btnVoice.setAttribute(\"aria-pressed\", String(state.settings.voice));\n    saveGame(state);\n  });\n\n  el.optRate.addEventListener(\"input\", () => {\n    const rate = Number(el.optRate.value);\n    state.settings.rate = rate;\n    voice.setRate(rate);\n    el.rateOut.textContent = `${faNum(rate.toFixed(1).replace(\".\", \"٫\"))}×`;\n    saveGame(state);\n  });\n\n  el.optFont.addEventListener(\"input\", () => {\n    const size = Number(el.optFont.value);\n    state.settings.fontSize = size;\n    document.documentElement.style.setProperty(\"--prose-size\", `${size}px`);\n    el.fontOut.textContent = faNum(size);\n    saveGame(state);\n  });\n\n  el.optTypewriter.addEventListener(\"change\", () => {\n    state.settings.typewriter = el.optTypewriter.checked;\n    saveGame(state);\n  });\n\n  /* ---- narrator mode ---- */\n  el.narratorMode.addEventListener(\"click\", (e) => {\n    const btn = e.target.closest(\"button[data-mode]\");\n    if (!btn) return;\n    const mode = btn.dataset.mode;\n    if (state.settings.narrator === mode) return;\n    state.settings.narrator = mode;\n    state.aiChoices = null;\n    applySettings();\n    renderChoices();\n    saveGame(state);\n    const label =\n      mode === \"ai\" ? \"راوی هوش مصنوعی روشن شد\" : mode === \"codex\" ? \"راوی Codex روشن شد\" : \"راوی محلی روشن شد\";\n    toast(label);\n  });\n\n  el.optProvider.addEventListener(\"change\", () => {\n    const provider = el.optProvider.value;\n    const defaults = providerDefaults(provider);\n    state.settings.api = {\n      ...state.settings.api,\n      provider,\n      baseUrl: defaults.baseUrl,\n      model: defaults.model,\n    };\n    el.apiStatus.textContent = \"\";\n    applySettings();\n    saveGame(state);\n  });\n\n  el.optKey.addEventListener(\"input\", () => {\n    state.settings.api.key = el.optKey.value.trim();\n    saveGame(state);\n  });\n\n  el.optModel.addEventListener(\"input\", () => {\n    state.settings.api.model = el.optModel.value.trim() || DEFAULT_API.model;\n    saveGame(state);\n  });\n\n  el.optBaseUrl.addEventListener(\"input\", () => {\n    state.settings.api.baseUrl = el.optBaseUrl.value.trim() || DEFAULT_API.baseUrl;\n    saveGame(state);\n  });\n\n  el.optTransport.addEventListener(\"change\", () => {\n    state.settings.api.transport = el.optTransport.value;\n    saveGame(state);\n  });\n\n  el.btnTestApi.addEventListener(\"click\", async () => {\n    const api = state.settings.api;\n    el.btnTestApi.classList.add(\"is-busy\");\n    el.apiStatus.textContent = \"در حال آزمایش…\";\n    try {\n      const res = await testConnection(api);\n      el.apiStatus.textContent = `اتصال برقرار است — ${faNum((res.ms / 1000).toFixed(1).replace(\".\", \"٫\"))} ثانیه`;\n    } catch (err) {\n      el.apiStatus.textContent = `ناموفق: ${String(err.message).slice(0, 120)}`;\n    } finally {\n      el.btnTestApi.classList.remove(\"is-busy\");\n    }\n  });\n\n  el.btnRestart.addEventListener(\"click\", restart);\n  el.btnSettings.addEventListener(\"click\", () => el.dialog.showModal());\n  el.btnVoice.addEventListener(\"click\", () => {\n    state.settings.voice = !state.settings.voice;\n    voice.setEnabled(state.settings.voice);\n    el.optVoice.checked = state.settings.voice;\n    el.btnVoice.setAttribute(\"aria-pressed\", String(state.settings.voice));\n    saveGame(state);\n    toast(state.settings.voice ? \"صدای راوی روشن شد\" : \"صدای راوی خاموش شد\");\n  });\n}\n\n/* ------------------------------------------------------------------ */\n/* input                                                               */\n/* ------------------------------------------------------------------ */\nfunction bindComposer() {\n  el.composer.addEventListener(\"submit\", (e) => {\n    e.preventDefault();\n    const text = el.input.value.trim();\n    if (!text || busy) return;\n    el.input.value = \"\";\n    takeTurn({ text }, text);\n  });\n\n  el.chronicle.addEventListener(\"click\", () => {\n    if (skipCurrent) skipCurrent();\n  });\n\n  document.addEventListener(\"keydown\", (e) => {\n    if (e.key === \"Escape\" && skipCurrent) skipCurrent();\n  });\n}\n\n/* ------------------------------------------------------------------ */\n/* boot                                                                */\n/* ------------------------------------------------------------------ */\nasync function boot() {\n  if (!['localhost', '127.0.0.1', '::1'].includes(location.hostname)) {\n    el.narratorMode.querySelector('[data-mode=\"codex\"]').hidden = true;\n    el.optTransport.querySelector('[value=\"proxy\"]').disabled = true;\n  }\n  const languageDialog = document.getElementById('languageDialog');\n  const selectLanguage = () => languageDialog.showModal();\n  document.getElementById('changeLanguage').addEventListener('click', selectLanguage);\n  languageDialog.addEventListener('click', (event) => {\n    const choice = event.target.closest('[data-language]');\n    if (!choice) return;\n    localStorage.setItem('avern.language', choice.dataset.language);\n    window.location.reload();\n  });\n  if (!localStorage.getItem('avern.language')) selectLanguage();\n  if (language === 'en') {\n    document.title = 'Mist over Avern';\n    document.getElementById('playerInput').placeholder = 'What do you do?';\n    new MutationObserver(() => translatePage()).observe(document.body, { childList: true, subtree: true });\n    translatePage();\n  }\n  voice.init(() => applySettings());\n  bindSettings();\n  bindComposer();\n\n  const saved = loadGame();\n  if (saved && saved.log?.length) {\n    state = normalizeState(saved);\n    applySettings();\n    restore();\n    toast(\"ماجراجویی قبلی بازیابی شد\");\n  } else {\n    state = createInitialState();\n    state.settings.api = { ...DEFAULT_API };\n    applySettings();\n    await startNew({ animate: true });\n  }\n\n  if (voice.supported) {\n    setTimeout(() => {\n      if (!voice.hasPersianVoice()) {\n        applySettings();\n        toast(\"صدای فارسی پیدا نشد؛ در تنظیمات می‌توانی صدا را خاموش کنی\");\n      }\n    }, 2600);\n  }\n}\n\nboot();\n","js/storage.js":"const KEY = typeof localStorage !== 'undefined' && localStorage.getItem('avern.language') === 'en' ? 'avern.save.en.v1' : 'avern.save.v1';\n\nexport function saveGame(state) {\n  try {\n    const snapshot = { ...state, log: state.log.slice(-120) };\n    localStorage.setItem(KEY, JSON.stringify(snapshot));\n    return true;\n  } catch {\n    return false;\n  }\n}\n\nexport function loadGame() {\n  try {\n    const raw = localStorage.getItem(KEY);\n    if (!raw) return null;\n    const parsed = JSON.parse(raw);\n    if (!parsed || parsed.version !== 1) return null;\n    return parsed;\n  } catch {\n    return null;\n  }\n}\n\nexport function clearGame() {\n  try {\n    localStorage.removeItem(KEY);\n  } catch {\n    /* ignore */\n  }\n}\n","js/ui/art.js":"/**\n * Lightweight 2D scene art. Pure SVG, no image assets — keeps the bundle\n * tiny and scales cleanly from phone to desktop.\n */\n\nconst mist = (id) => `\n  \u003cg class=\"mist\" fill=\"url(#mist-${id})\">\n    \u003cellipse cx=\"240\" cy=\"196\" rx=\"300\" ry=\"34\" />\n    \u003cellipse cx=\"560\" cy=\"212\" rx=\"340\" ry=\"40\" />\n    \u003cellipse cx=\"400\" cy=\"182\" rx=\"260\" ry=\"26\" />\n  \u003c/g>`;\n\nconst defs = (id, sky) => `\n  \u003cdefs>\n    \u003clinearGradient id=\"sky-${id}\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      ${sky}\n    \u003c/linearGradient>\n    \u003cradialGradient id=\"glow-${id}\">\n      \u003cstop offset=\"0%\" stop-color=\"#f0c26a\" stop-opacity=\".55\" />\n      \u003cstop offset=\"55%\" stop-color=\"#d9a441\" stop-opacity=\".12\" />\n      \u003cstop offset=\"100%\" stop-color=\"#d9a441\" stop-opacity=\"0\" />\n    \u003c/radialGradient>\n    \u003cradialGradient id=\"cold-${id}\">\n      \u003cstop offset=\"0%\" stop-color=\"#8fd8e8\" stop-opacity=\".55\" />\n      \u003cstop offset=\"60%\" stop-color=\"#4f9a92\" stop-opacity=\".12\" />\n      \u003cstop offset=\"100%\" stop-color=\"#4f9a92\" stop-opacity=\"0\" />\n    \u003c/radialGradient>\n    \u003clinearGradient id=\"mist-${id}\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      \u003cstop offset=\"0%\" stop-color=\"#c8d2dc\" stop-opacity=\"0\" />\n      \u003cstop offset=\"60%\" stop-color=\"#c8d2dc\" stop-opacity=\".16\" />\n      \u003cstop offset=\"100%\" stop-color=\"#c8d2dc\" stop-opacity=\"0\" />\n    \u003c/linearGradient>\n  \u003c/defs>`;\n\nconst SCENES = {\n  gate: (id) => `\n    ${defs(id, `\u003cstop offset=\"0%\" stop-color=\"#1a1526\"/>\u003cstop offset=\"60%\" stop-color=\"#100d18\"/>\u003cstop offset=\"100%\" stop-color=\"#0a0810\"/>`)}\n    \u003crect width=\"800\" height=\"240\" fill=\"url(#sky-${id})\" />\n    \u003ccircle cx=\"648\" cy=\"46\" r=\"24\" fill=\"#e8dfc8\" opacity=\".13\" />\n    \u003cpath d=\"M0 152 Q130 104 250 144 T500 130 T800 158 V240 H0Z\" fill=\"#131019\" />\n    \u003cpath d=\"M0 176 Q200 148 400 172 T800 168 V240 H0Z\" fill=\"#0e0b14\" />\n    \u003crect x=\"238\" y=\"82\" width=\"30\" height=\"122\" fill=\"#1b1626\" />\n    \u003crect x=\"532\" y=\"82\" width=\"30\" height=\"122\" fill=\"#1b1626\" />\n    \u003cpath d=\"M238 84 Q400 26 562 84 L562 94 Q400 40 238 94Z\" fill=\"#1b1626\" />\n    \u003crect x=\"392\" y=\"92\" width=\"16\" height=\"24\" rx=\"3\" fill=\"#2b2233\" />\n    \u003ccircle cx=\"400\" cy=\"104\" r=\"46\" fill=\"url(#glow-${id})\" class=\"flicker\" />\n    \u003cpath d=\"M268 204 h264\" stroke=\"#241d31\" stroke-width=\"2\" />\n    ${mist(id)}\n  `,\n\n  tavern: (id) => `\n    ${defs(id, `\u003cstop offset=\"0%\" stop-color=\"#221a2c\"/>\u003cstop offset=\"100%\" stop-color=\"#0b0810\"/>`)}\n    \u003crect width=\"800\" height=\"240\" fill=\"url(#sky-${id})\" />\n    \u003cpath d=\"M0 168 Q160 132 330 160 T800 150 V240 H0Z\" fill=\"#120e19\" />\n    \u003cpath d=\"M250 172 L400 96 L556 172 Z\" fill=\"#191322\" />\n    \u003crect x=\"268\" y=\"170\" width=\"272\" height=\"70\" fill=\"#161120\" />\n    \u003crect x=\"352\" y=\"186\" width=\"104\" height=\"54\" rx=\"4\" fill=\"#c98f3d\" opacity=\".5\" class=\"flicker\" />\n    \u003crect x=\"352\" y=\"186\" width=\"104\" height=\"54\" rx=\"4\" fill=\"url(#glow-${id})\" />\n    \u003crect x=\"398\" y=\"186\" width=\"3\" height=\"54\" fill=\"#161120\" />\n    \u003crect x=\"352\" y=\"212\" width=\"104\" height=\"3\" fill=\"#161120\" />\n    \u003crect x=\"560\" y=\"120\" width=\"10\" height=\"40\" fill=\"#1d1729\" />\n    \u003cpath d=\"M566 120 q14 -18 4 -34 q18 12 8 34\" fill=\"#2a2233\" opacity=\".7\" />\n    ${mist(id)}\n  `,\n\n  well: (id) => `\n    ${defs(id, `\u003cstop offset=\"0%\" stop-color=\"#181425\"/>\u003cstop offset=\"100%\" stop-color=\"#09070e\"/>`)}\n    \u003crect width=\"800\" height=\"240\" fill=\"url(#sky-${id})\" />\n    \u003cpath d=\"M0 160 Q200 140 400 158 T800 152 V240 H0Z\" fill=\"#100d17\" />\n    \u003cellipse cx=\"400\" cy=\"196\" rx=\"150\" ry=\"34\" fill=\"#0a0810\" />\n    \u003cpath d=\"M250 196 q0 -46 150 -46 q150 0 150 46\" fill=\"#1c1726\" />\n    \u003cellipse cx=\"400\" cy=\"152\" rx=\"140\" ry=\"22\" fill=\"#07060b\" />\n    \u003cellipse cx=\"400\" cy=\"152\" rx=\"140\" ry=\"22\" fill=\"none\" stroke=\"#2a2335\" stroke-width=\"3\" />\n    \u003cpath d=\"M400 152 v-52\" stroke=\"#3a3145\" stroke-width=\"2\" />\n    \u003cpath d=\"M330 100 h140\" stroke=\"#3a3145\" stroke-width=\"4\" stroke-linecap=\"round\" />\n    \u003ccircle cx=\"400\" cy=\"150\" r=\"90\" fill=\"url(#cold-${id})\" opacity=\".7\" />\n    ${mist(id)}\n  `,\n\n  mine: (id) => `\n    ${defs(id, `\u003cstop offset=\"0%\" stop-color=\"#1b1626\"/>\u003cstop offset=\"100%\" stop-color=\"#09070e\"/>`)}\n    \u003crect width=\"800\" height=\"240\" fill=\"url(#sky-${id})\" />\n    \u003cpath d=\"M0 240 L0 128 L150 66 L330 118 L470 52 L660 110 L800 74 L800 240 Z\" fill=\"#12101a\" />\n    \u003cpath d=\"M300 240 q0 -104 100 -104 q100 0 100 104 Z\" fill=\"#05040a\" />\n    \u003cpath d=\"M314 240 q0 -88 86 -88 q86 0 86 88 Z\" fill=\"#0b0912\" />\n    \u003crect x=\"296\" y=\"132\" width=\"12\" height=\"108\" fill=\"#1f1929\" />\n    \u003ccircle cx=\"302\" cy=\"126\" r=\"3\" fill=\"#d9a441\" class=\"flicker\" />\n    \u003ccircle cx=\"302\" cy=\"126\" r=\"26\" fill=\"url(#glow-${id})\" class=\"flicker\" />\n    \u003cpath d=\"M400 136 q-90 -22 -180 6 M400 136 q90 -22 180 6\" stroke=\"#c8d2dc\" stroke-opacity=\".1\" stroke-width=\"14\" fill=\"none\" />\n    ${mist(id)}\n  `,\n\n  tunnel: (id) => `\n    ${defs(id, `\u003cstop offset=\"0%\" stop-color=\"#0d0b14\"/>\u003cstop offset=\"100%\" stop-color=\"#050409\"/>`)}\n    \u003crect width=\"800\" height=\"240\" fill=\"url(#sky-${id})\" />\n    \u003cpath d=\"M0 0 H800 V240 H0 Z\" fill=\"#08060d\" />\n    \u003cpath d=\"M330 240 L372 118 L428 118 L470 240 Z\" fill=\"#0e0b16\" />\n    \u003cpath d=\"M372 118 L428 118\" stroke=\"#1a1524\" stroke-width=\"2\" />\n    \u003cg stroke=\"#191322\" stroke-width=\"9\" stroke-linecap=\"round\">\n      \u003cpath d=\"M300 240 L318 96\" />\u003cpath d=\"M500 240 L482 96\" />\n      \u003cpath d=\"M318 96 L482 96\" />\n      \u003cpath d=\"M262 240 L286 60\" />\u003cpath d=\"M538 240 L514 60\" />\n      \u003cpath d=\"M286 60 L514 60\" />\n    \u003c/g>\n    \u003cellipse cx=\"400\" cy=\"176\" rx=\"120\" ry=\"60\" fill=\"url(#cold-${id})\" opacity=\".45\" />\n    ${mist(id)}\n  `,\n\n  cultist: (id) => `\n    ${defs(id, `\u003cstop offset=\"0%\" stop-color=\"#151220\"/>\u003cstop offset=\"100%\" stop-color=\"#07060b\"/>`)}\n    \u003crect width=\"800\" height=\"240\" fill=\"url(#sky-${id})\" />\n    \u003cpath d=\"M0 0 H800 V240 H0 Z\" fill=\"#0a0810\" />\n    \u003cellipse cx=\"400\" cy=\"120\" rx=\"200\" ry=\"120\" fill=\"url(#cold-${id})\" opacity=\".5\" />\n    \u003cpath d=\"M400 74 q26 0 26 30 v14 q22 8 26 34 l10 88 h-124 l10 -88 q4 -26 26 -34 v-14 q0 -30 26 -30 Z\" fill=\"#161320\" />\n    \u003cellipse cx=\"400\" cy=\"88\" rx=\"17\" ry=\"20\" fill=\"#161320\" />\n    \u003cellipse cx=\"400\" cy=\"88\" rx=\"17\" ry=\"20\" fill=\"#c8d2dc\" opacity=\".07\" />\n    \u003cpath d=\"M382 92 q18 6 36 0\" stroke=\"#c8d2dc\" stroke-opacity=\".25\" stroke-width=\"1.5\" fill=\"none\" />\n    \u003cpath d=\"M0 200 q200 -30 400 -8 t400 -6 v54 H0Z\" fill=\"#0b0912\" />\n    ${mist(id)}\n  `,\n\n  chamber: (id) => `\n    ${defs(id, `\u003cstop offset=\"0%\" stop-color=\"#0e1220\"/>\u003cstop offset=\"100%\" stop-color=\"#05060c\"/>`)}\n    \u003crect width=\"800\" height=\"240\" fill=\"url(#sky-${id})\" />\n    \u003cpath d=\"M0 0 H800 V240 H0 Z\" fill=\"#070912\" />\n    \u003cpath d=\"M0 240 L120 120 L240 240 Z\" fill=\"#0a0c16\" />\n    \u003cpath d=\"M800 240 L680 110 L560 240 Z\" fill=\"#0a0c16\" />\n    \u003cellipse cx=\"400\" cy=\"130\" rx=\"150\" ry=\"130\" fill=\"url(#cold-${id})\" />\n    \u003cpath d=\"M400 60 q46 10 54 62 q6 44 -22 74 q-16 18 -32 18 q-16 0 -32 -18 q-28 -30 -22 -74 q8 -52 54 -62 Z\" fill=\"#101a24\" />\n    \u003cg stroke=\"#8fd8e8\" stroke-opacity=\".75\" stroke-width=\"1.6\" fill=\"none\" class=\"flicker\">\n      \u003cpath d=\"M400 70 v40 l-14 26 8 30\" />\n      \u003cpath d=\"M418 96 l18 22 -6 34\" />\n      \u003cpath d=\"M382 104 l-16 24 10 30\" />\n      \u003cpath d=\"M400 166 v26\" />\n    \u003c/g>\n    \u003cellipse cx=\"400\" cy=\"196\" rx=\"190\" ry=\"26\" fill=\"#0a0c16\" />\n    \u003cellipse cx=\"470\" cy=\"198\" rx=\"26\" ry=\"8\" fill=\"#1a1626\" />\n    ${mist(id)}\n  `,\n\n  silence: (id) => `\n    ${defs(id, `\u003cstop offset=\"0%\" stop-color=\"#2a2434\"/>\u003cstop offset=\"100%\" stop-color=\"#0d0a14\"/>`)}\n    \u003crect width=\"800\" height=\"240\" fill=\"url(#sky-${id})\" />\n    \u003ccircle cx=\"400\" cy=\"150\" r=\"180\" fill=\"url(#glow-${id})\" opacity=\".5\" />\n    \u003cpath d=\"M0 240 L0 150 Q200 128 400 148 T800 142 V240 Z\" fill=\"#141020\" />\n    \u003cpath d=\"M400 96 l-22 46 14 10 -10 34 h36 l-10 -34 14 -10 Z\" fill=\"#1a1524\" />\n    \u003cpath d=\"M378 142 l44 0\" stroke=\"#c8d2dc\" stroke-opacity=\".2\" stroke-width=\"2\" />\n    \u003ccircle cx=\"400\" cy=\"112\" r=\"4\" fill=\"#d9a441\" opacity=\".8\" class=\"flicker\" />\n    ${mist(id)}\n  `,\n\n  free: (id) => `\n    ${defs(id, `\u003cstop offset=\"0%\" stop-color=\"#1d3a3a\"/>\u003cstop offset=\"55%\" stop-color=\"#16222c\"/>\u003cstop offset=\"100%\" stop-color=\"#0a0d12\"/>`)}\n    \u003crect width=\"800\" height=\"240\" fill=\"url(#sky-${id})\" />\n    \u003ccircle cx=\"400\" cy=\"86\" r=\"120\" fill=\"url(#cold-${id})\" opacity=\".85\" />\n    \u003cg stroke=\"#bfe6ea\" stroke-opacity=\".28\" stroke-width=\"1.4\">\n      \u003cpath d=\"M120 20 l-10 34\" />\u003cpath d=\"M220 44 l-10 34\" />\u003cpath d=\"M320 10 l-10 34\" />\n      \u003cpath d=\"M420 36 l-10 34\" />\u003cpath d=\"M520 14 l-10 34\" />\u003cpath d=\"M620 46 l-10 34\" />\n      \u003cpath d=\"M700 18 l-10 34\" />\u003cpath d=\"M60 60 l-10 34\" />\n    \u003c/g>\n    \u003cpath d=\"M0 240 L0 156 Q200 132 400 152 T800 146 V240 Z\" fill=\"#101a1a\" />\n    \u003cpath d=\"M0 240 L0 196 Q200 176 400 192 T800 188 V240 Z\" fill=\"#0c1414\" />\n    ${mist(id)}\n  `,\n\n  bargain: (id) => `\n    ${defs(id, `\u003cstop offset=\"0%\" stop-color=\"#20182c\"/>\u003cstop offset=\"100%\" stop-color=\"#08060d\"/>`)}\n    \u003crect width=\"800\" height=\"240\" fill=\"url(#sky-${id})\" />\n    \u003cpath d=\"M0 240 L0 168 Q200 148 400 164 T800 158 V240 Z\" fill=\"#100d18\" />\n    \u003cpath d=\"M400 78 q24 0 24 28 v12 q20 8 24 32 l8 82 h-112 l8 -82 q4 -24 24 -32 v-12 q0 -28 24 -28 Z\" fill=\"#141120\" />\n    \u003cellipse cx=\"400\" cy=\"90\" rx=\"15\" ry=\"18\" fill=\"#141120\" />\n    \u003cpath d=\"M300 200 q100 -34 200 -6 q60 16 120 4\" stroke=\"#c8d2dc\" stroke-opacity=\".12\" stroke-width=\"26\" fill=\"none\" stroke-linecap=\"round\" />\n    \u003cpath d=\"M0 214 q120 -26 240 -10\" stroke=\"#c8d2dc\" stroke-opacity=\".1\" stroke-width=\"18\" fill=\"none\" />\n    ${mist(id)}\n  `,\n\n  death: (id) => `\n    ${defs(id, `\u003cstop offset=\"0%\" stop-color=\"#141220\"/>\u003cstop offset=\"100%\" stop-color=\"#050409\"/>`)}\n    \u003crect width=\"800\" height=\"240\" fill=\"url(#sky-${id})\" />\n    \u003cpath d=\"M0 240 L0 178 Q220 158 420 176 T800 172 V240 Z\" fill=\"#0c0a12\" />\n    \u003cg transform=\"rotate(-14 400 190)\">\n      \u003crect x=\"300\" y=\"186\" width=\"200\" height=\"7\" rx=\"3\" fill=\"#2a2434\" />\n      \u003crect x=\"492\" y=\"176\" width=\"14\" height=\"26\" rx=\"3\" fill=\"#2a2434\" />\n      \u003crect x=\"392\" y=\"176\" width=\"16\" height=\"26\" rx=\"3\" fill=\"#221c2c\" />\n    \u003c/g>\n    \u003ccircle cx=\"400\" cy=\"196\" r=\"70\" fill=\"url(#cold-${id})\" opacity=\".35\" />\n    ${mist(id)}\n  `,\n};\n\nexport function renderArt(key) {\n  const build = SCENES[key] || SCENES.gate;\n  const id = key || \"gate\";\n  return `\u003csvg viewBox=\"0 0 800 240\" preserveAspectRatio=\"xMidYMid slice\" role=\"presentation\">${build(id)}\u003c/svg>`;\n}\n","js/ui/voice.js":"import { chunkForSpeech } from \"../util.js\";\n\n/**\n * Narrator voice via the Web Speech API.\n * No network, no API key — the browser's own speech engine does the work.\n */\nexport class Voice {\n  constructor() {\n    this.supported = typeof window !== \"undefined\" && \"speechSynthesis\" in window;\n    this.enabled = true;\n    this.rate = 1;\n    this.voice = null;\n    this.language = 'fa';\n    this.queue = [];\n    this.speaking = false;\n  }\n\n  init(onReady) {\n    if (!this.supported) return;\n    const load = () => {\n      this.voice = this.pickVoice();\n      if (this.voice && onReady) onReady();\n    };\n    load();\n    window.speechSynthesis.addEventListener(\"voiceschanged\", load);\n  }\n\n  pickVoice() {\n    const voices = window.speechSynthesis.getVoices() || [];\n    if (!voices.length) return null;\n    const fa = voices.filter((v) => this.language === 'en' ? /^en(\\b|-)/i.test(v.lang) : /^fa(\\b|-)/i.test(v.lang) || /persian|farsi/i.test(v.name));\n    if (fa.length) return fa.find((v) => v.localService) || fa[0];\n    return null;\n  }\n\n  hasPersianVoice() {\n    return Boolean(this.voice);\n  }\n\n  setLanguage(language) {\n    this.language = language;\n    this.voice = this.supported ? this.pickVoice() : null;\n  }\n\n  setEnabled(on) {\n    this.enabled = on;\n    if (!on) this.cancel();\n  }\n\n  setRate(rate) {\n    this.rate = rate;\n  }\n\n  cancel() {\n    this.queue = [];\n    this.speaking = false;\n    if (this.supported) window.speechSynthesis.cancel();\n  }\n\n  /** Speaks a block of narration. Long text is chunked for engine limits. */\n  speak(text) {\n    if (!this.supported || !this.enabled) return;\n    const chunks = chunkForSpeech(text);\n    if (!chunks.length) return;\n    this.queue.push(...chunks);\n    if (!this.speaking) this._drain();\n  }\n\n  _drain() {\n    const next = this.queue.shift();\n    if (!next) {\n      this.speaking = false;\n      return;\n    }\n    this.speaking = true;\n    const u = new SpeechSynthesisUtterance(next);\n    if (this.voice) {\n      u.voice = this.voice;\n      u.lang = this.voice.lang;\n    } else {\n      u.lang = this.language === 'en' ? 'en-US' : 'fa-IR';\n    }\n    u.rate = this.rate;\n    u.pitch = 0.95;\n\n    // Some engines never fire `onend` (blocked autoplay, missing voice pack).\n    // Without this watchdog the queue would stay stuck forever.\n    let settled = false;\n    const settle = () => {\n      if (settled) return;\n      settled = true;\n      clearTimeout(watchdog);\n      this._drain();\n    };\n    const watchdog = setTimeout(settle, 1500 + next.length * 90);\n    u.onend = settle;\n    u.onerror = settle;\n\n    window.speechSynthesis.speak(u);\n  }\n}\n","js/util.js":"export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));\n\n/** Stable 32-bit hash so a given (seed) always picks the same variant. */\nexport function hash(str) {\n  let h = 2166136261;\n  for (let i = 0; i \u003c str.length; i++) {\n    h ^= str.charCodeAt(i);\n    h = Math.imul(h, 16777619);\n  }\n  return h >>> 0;\n}\n\n/** Deterministic pick from a list. */\nexport function pick(list, seed) {\n  if (!list || list.length === 0) return \"\";\n  if (list.length === 1) return list[0];\n  return list[hash(String(seed)) % list.length];\n}\n\nexport function clamp(n, min, max) {\n  return Math.min(max, Math.max(min, n));\n}\n\n/** Normalises Persian/Arabic text for keyword matching. */\nexport function normalizeFa(text) {\n  return String(text)\n    .replace(/[\\u064B-\\u0652\\u0670\\u0640]/g, \"\")\n    .replace(/\\u200c/g, \" \")\n    .replace(/[يﻯﻰ]/g, \"ی\")\n    .replace(/[ك]/g, \"ک\")\n    .replace(/[أإآ]/g, \"ا\")\n    .replace(/[ؤ]/g, \"و\")\n    .replace(/[ۀة]/g, \"ه\")\n    .replace(/[０-９]/g, (d) => String.fromCharCode(d.charCodeAt(0) - 0xfee0))\n    .replace(/\\s+/g, \" \")\n    .trim()\n    .toLowerCase();\n}\n\nexport function escapeHtml(text) {\n  return String(text)\n    .replace(/&/g, \"&amp;\")\n    .replace(/\u003c/g, \"&lt;\")\n    .replace(/>/g, \"&gt;\")\n    .replace(/\"/g, \"&quot;\");\n}\n\n/** Splits narration into paragraphs on blank lines. */\nexport function toParagraphs(text) {\n  return String(text)\n    .split(/\\n{2,}/)\n    .map((p) => p.trim())\n    .filter(Boolean);\n}\n\nconst FA_DIGITS = [\"۰\", \"۱\", \"۲\", \"۳\", \"۴\", \"۵\", \"۶\", \"۷\", \"۸\", \"۹\"];\nexport function faNum(n) {\n  return String(n).replace(/\\d/g, (d) => FA_DIGITS[Number(d)]);\n}\n\n/** Strips text down to something a speech engine reads naturally. */\nexport function forSpeech(text) {\n  return String(text)\n    .replace(/[«»\"“”]/g, \"\")\n    .replace(/[—–]/g, \"، \")\n    .replace(/\\.{3,}/g, \"…\")\n    .replace(/\\s+/g, \" \")\n    .trim();\n}\n\n/** Splits long text into speech-sized chunks (some engines choke on long strings). */\nexport function chunkForSpeech(text, maxLen = 180) {\n  const clean = forSpeech(text);\n  const parts = clean.split(/(?\u003c=[.!?؟…؛:])\\s+/);\n  const out = [];\n  let buf = \"\";\n  for (const part of parts) {\n    if (!part) continue;\n    if ((buf + \" \" + part).trim().length > maxLen && buf) {\n      out.push(buf.trim());\n      buf = part;\n    } else {\n      buf = `${buf} ${part}`.trim();\n    }\n  }\n  if (buf.trim()) out.push(buf.trim());\n  return out;\n}\n"};const urls={};function load(path){if(urls[path])return urls[path];let src=sources[path];if(!src)throw new Error('Missing module '+path);src=src.replace(/(from\s*["'])(\.[^"']+)(["'])/g,(_,prefix,relative,suffix)=>{const resolved=new URL(relative,'https://bundle.invalid/'+path).pathname.slice(1);return prefix+load(resolved)+suffix});return urls[path]=URL.createObjectURL(new Blob([src],{type:'text/javascript'}));}import(load('js/main.js'));</script>
+</body>
+</html>
